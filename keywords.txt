@@ -1,18 +1,56 @@
 #########################################################
-# Syntax Coloring Map for TODO: Add name                #
+# Syntax Coloring Map for SparkFun XM125                #
 #########################################################
 # Class
 #########################################################
 
-# TODO: Add this
-TemplateClass KEYWORD1
+XM125 KEYWORD1
+sfeTkArdI2C KEYWORD1
 
 #########################################################
 # Methods and Functions
 #########################################################
 
-# TODO: Add these
 begin KEYWORD2
+acconeerBegin KEYWORD2
+disableInterrupts KEYWORD2 
+enableInterrupts KEYWORD2
+preparePowerDown KEYWORD2
+resumePowerDown KEYWORD2
+getRTCTick KEYWORD2
+rtcTickToTime KEYWORD2
+setRTCWakeupTime KEYWORD2
+waitForI2CIdle KEYWORD2
+prepareRegisterData KEYWORD2
+initI2CApplicationSystem KEYWORD2x
+resetI2CApplicationSystem KEYWORD2
+i2cApplicationSystemWaitForInterrupt KEYWORD2
+i2cApplicationSystemTestWakeupPin KEYWORD2
+setI2CApplicationSystemReadyPin KEYWORD2
+configureI2CApplicationGPIO0Pin KEYWORD2
+setI2CApplicationGPIO0Pin KEYWORD2
+enterI2CApplicationLowerPowerState KEYWORD2
+setI2CApplicationPeriodicWakeup KEYWORD2
+errorI2CCallback KEYWORD2
+getI2CDistanceDetectorConfig KEYWORD2
+distanceDetectorCommand KEYWORD2
+getDistanceDetectorStatus KEYWORD2
+getDistanceDetectorResult KEYWORD2
+getDistanceDetectorCounter KEYWORD2
+getDistanceDetectorPeakDistance KEYWORD2
+getDistanceDetectorPeakStrength KEYWORD2
+setDistanceDetectorMeasureOnWakeup KEYWORD2
+getDistanceDetectorMeasureOnWakeup KEYWORD2
+presenceDetectorCommand KEYWORD2
+getpresenceDetectorConfig KEYWORD2
+getPresenceDetectorStatus KEYWORD2
+getPresenceDetectorResult KEYWORD2
+getPresenceDetectorDistance KEYWORD2
+getPresenceDetectorIntraPresenceScore KEYWORD2 
+getPresenceDetectorInterPresenceScore KEYWORD2
+getPresenceDetectorCounter KEYWORD2
+getPresenceDetectorGPIODetection KEYWORD2
+getPresenceDetectorPresenceDetection KEYWORD2
 
 #########################################################
 # Constants

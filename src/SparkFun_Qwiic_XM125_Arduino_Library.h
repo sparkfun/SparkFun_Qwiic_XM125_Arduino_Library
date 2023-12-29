@@ -20,6 +20,11 @@ class XM125
         bool begin();
 
         // --------------------- I2C Application System functions ---------------------
+        /// @brief This function starts the Acconeer main() function to Initialize
+        ///  the device correctly
+        /// @return Error code (0 no error)
+        int32_t acconeerBegin();
+        
         /// @brief Disable interrupts
         /// @return Error code (0 no error)
         int32_t disableInterrupts(); // disable_interrupts
@@ -75,17 +80,24 @@ class XM125
         /// @return Error code (0 no error)
         int32_t i2cApplicationSystemTestWakeupPin(); // i2c_application_system_test_wakeup_pin
         
+        /// @brief Function to enable the Reset pin state
+        /// @param en 0 disable, 1 enable
+        /// @return Error code (0 no error)
+        int32_t setI2CApplicationSystemReadyPin(bool en); // i2c_application_system_set_ready_pin
+        
+        /// @brief Function to set GPIO0 to pull or no pull
+        /// @param en 0 disable, 1 enable
+        /// @return Error code (0 no error)
+        int32_t configureI2CApplicationGPIO0Pin(bool en); // i2c_application_system_setup_generic_gpio_pin
+        
+        /// @brief Function to enable the GPIO0 state 
+        /// @param en 0 disable, 1 enable
+        /// @return Error code (0 no error)
+        int32_t setI2CApplicationGPIO0Pin(bool en); // i2c_application_system_set_generic_gpio_pin
+ 
         /// @brief 
         /// @return Error code (0 no error)
-        int32_t setI2CApplicationSystemReadyPin(); // i2c_application_system_set_ready_pin
-
-        /// @brief 
-        /// @return Error code (0 no error)
-        int32_t i2cApplicationSystemSetupGPIOPin(); // i2c_application_system_set_generic_gpio_pin
-
-        /// @brief 
-        /// @return Error code (0 no error)
-        int32_t setI2CApplicationLowerPowerState(); // i2c_application_enter_low_power_state
+        int32_t enterI2CApplicationLowerPowerState(); // i2c_application_enter_low_power_state
 
         /// @brief 
         /// @return Error code (0 no error)
