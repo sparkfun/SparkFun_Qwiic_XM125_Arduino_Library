@@ -110,79 +110,80 @@ class XM125
         // --------------------- I2C Disance Detector Functions ---------------------
         /// @brief 
         /// @return Error code (0 no error)
-        int32_t getI2CDistanceDetectorConfig();
+        int32_t getI2CDistanceDetectorConfig(acc_detector_distance_config_t *config);
 
         /// @brief 
         /// @return Error code (0 no error)
-        int32_t distanceDetectorCommand();
+        int32_t distanceDetectorCommand(uint32_t *cmd);
 
         /// @brief 
         /// @return Error code (0 no error)
-        int32_t getDistanceDetectorStatus();
+        int32_t getDistanceDetectorStatus(uint32_t *status);
 
         /// @brief 
         /// @return Error code (0 no error)
-        int32_t getDistanceDetectorResult();
+        int32_t getDistanceDetectorResult(uint32_t *result);
 
         /// @brief 
         /// @return Error code (0 no error)
-        int32_t getDistanceDetectorCounter();
+        int32_t getDistanceDetectorCounter(uint32_t *count);
 
         /// @brief 
         /// @return Error code (0 no error)
-        int32_t getDistanceDetectorPeakDistance();
+        int32_t getDistanceDetectorPeakDistance(float *distance);
 
         /// @brief 
         /// @return Error code (0 no error) 
-        int32_t getDistanceDetectorPeakStrength();
+        int32_t getDistanceDetectorPeakStrength(float *peak, uint16_t id);
 
         /// @brief 
         /// @return Error code (0 no error) 
-        int32_t setDistanceDetectorMeasureOnWakeup(bool enable);
+        int32_t setDistanceDetectorMeasureOnWakeup(bool *en);
 
         /// @brief 
         /// @return Error code (0 no error) 
-        int32_t getDistanceDetectorMeasureOnWakeup();
+        int32_t getDistanceDetectorMeasureOnWakeup(bool *meas);
 
         // --------------------- I2C Presence Detector Functions ---------------------
         /// @brief 
         /// @return Error code (0 no error)  
-        int32_t presenceDetectorCommand();
+        int32_t presenceDetectorCommand(uint32_t cmd);
 
         /// @brief 
         /// @return Error code (0 no error)  
-        int32_t getpresenceDetectorConfig();
+        int32_t getpresenceDetectorConfig(acc_detector_presence_config_t *config);
 
         /// @brief 
         /// @return Error code (0 no error) 
-        int32_t getPresenceDetectorStatus();
+        int32_t getPresenceDetectorStatus(uint32_t *status);
 
         /// @brief 
         /// @return Error code (0 no error)  
-        int32_t getPresenceDetectorResult();
+        int32_t getPresenceDetectorResult(uint32_t *result);
+
+        /// @brief the distance, in millimeters, for the detected presence
+        /// @return Error code (0 no error)  
+        int32_t getPresenceDetectorDistance(float *distance);
+
+        /// @brief Returns the measure of the amount of fast motion detected
+        /// @return Error code (0 no error)  
+        int32_t getPresenceDetectorIntraPresenceScore(float *intraScore);
+
+        /// @brief Returns the measure of the amount of slow motion detected
+        /// @return Error code (0 no error)  
+        int32_t getPresenceDetectorInterPresenceScore(float *interScore);
+
+        /// @brief Get the measure counter, the number of measurements performed
+        ///  since restart. 
+        /// @return Error code (0 no error)  
+        int32_t getPresenceDetectorCounter(uint32_t *counter);
 
         /// @brief 
         /// @return Error code (0 no error)  
-        int32_t getPresenceDetectorDistance();
+        int32_t getPresenceDetectorGPIODetection(bool *en);
 
         /// @brief 
         /// @return Error code (0 no error)  
-        int32_t getPresenceDetectorIntraPresenceScore();
-
-        /// @brief 
-        /// @return Error code (0 no error)  
-        int32_t getPresenceDetectorInterPresenceScore();
-
-        /// @brief 
-        /// @return Error code (0 no error)  
-        int32_t getPresenceDetectorCounter();
-
-        /// @brief 
-        /// @return Error code (0 no error)  
-        int32_t getPresenceDetectorGPIODetection();
-
-        /// @brief 
-        /// @return Error code (0 no error)  
-        int32_t getPresenceDetectorPresenceDetection();
+        int32_t getPresenceDetectorGPIODetected(bool detected);
 
 };
