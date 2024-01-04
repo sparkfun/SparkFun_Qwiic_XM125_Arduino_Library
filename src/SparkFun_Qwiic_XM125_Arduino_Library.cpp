@@ -29,22 +29,15 @@ bool XM125::begin()
     detector_gpio_output();
 
     // Clear busy bit once the handler is complete 
-
+    detector_status_clr_bits(PRESENCE_REG_DETECTOR_STATUS_FIELD_BUSY_MASK);
     // Set ready pin HIGH when command processing is done
-
-
+    i2c_application_system_set_ready_pin(true);
 
     // TODO: Return whether successful
 
 
     return errorI2CCallback();
 }
-
-// int32_t XM125::acconeerBegin()
-// {
-//     // Return an error if there is an issue with setting up the device 
-//     return acconeer_main();
-// }
 
 int32_t XM125::disableInterrupts()
 {
@@ -76,9 +69,9 @@ int32_t XM125::getRTCTick()
     return errorI2CCallback();
 }
 
-int32_t XM125::rtcTickToTime()
+int32_t XM125::rtcTickToTime(uint32_t tick, RTC_TimeTypeDef *time)
 {
-    rtc_tick_to_time();
+    rtc_tick_to_time(tick, time);
     return errorI2CCallback();
 }
 
@@ -94,9 +87,9 @@ int32_t XM125::waitForI2CIdle()
     return errorI2CCallback();
 }
 
-int32_t XM125::prepareRegisterData()
+int32_t XM125::prepareRegisterData(I2C_HandleTypeDef *hi2c)
 {
-    prepare_register_data();
+    prepare_register_data(*hi2c);
     return errorI2CCallback();
 }
 
@@ -112,11 +105,11 @@ int32_t XM125::i2cApplicationSystemWaitForInterrupt()
     return errorI2CCallback();
 }
 
-int32_t XM125::resetI2CApplicationSystem()
-{
-    //
-    return errorI2CCallback();
-}
+// int32_t XM125::resetI2CApplicationSystem()
+// {
+//     //
+//     return errorI2CCallback();
+// }
 
 int32_t XM125::i2cApplicationSystemTestWakeupPin()
 {
@@ -126,8 +119,17 @@ int32_t XM125::i2cApplicationSystemTestWakeupPin()
 
 int32_t XM125::setI2CApplicationSystemReadyPin(bool en)
 {
-    i2c_application_system_set_ready_pin(en);
-    return errorI2CCallback();
+    bool err = i2c_application_system_set_ready_pin(en);
+
+    if(err == true)
+    {
+        return -1;
+    }
+    else 
+    {
+        return errorI2CCallback();
+    }
+    
 }
 
 int32_t XM125::configureI2CApplicationGPIO0Pin(bool en)
@@ -148,9 +150,9 @@ int32_t XM125::enterI2CApplicationLowerPowerState()
     return errorI2CCallback();
 }
 
-int32_t XM125::setI2CApplicationPeriodicWakeup()
+int32_t XM125::setI2CApplicationPeriodicWakeup(uint32_t period)
 {
-    //
+    i2c_application_set_periodic_wakeup(period);
     return errorI2CCallback();
 }
 

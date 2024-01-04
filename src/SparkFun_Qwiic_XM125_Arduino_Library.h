@@ -20,11 +20,7 @@ class XM125
         bool begin();
 
         // --------------------- I2C Application System functions ---------------------
-        /// @brief This function starts the Acconeer main() function to Initialize
-        ///  the device correctly
-        /// @return Error code (0 no error)
-        int32_t acconeerBegin();
-        
+    
         /// @brief Disable interrupts
         /// @return Error code (0 no error)
         int32_t disableInterrupts(); // disable_interrupts
