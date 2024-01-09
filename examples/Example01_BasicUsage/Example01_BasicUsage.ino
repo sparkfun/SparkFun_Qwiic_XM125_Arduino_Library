@@ -1,5 +1,5 @@
 // TODO: Add includes as needed
-#include "SparkFun_Template_Arduino_Library.h"
+#include "SparkFun_Qwiic_XM125_Arduino_Library.h"
 
 // TODO: Change Template
 TemplateClass myDevice;
@@ -18,5 +18,5 @@ void setup()
 
 void loop()
 {
-    // TODO: Demonstrate minimal code needed for basic usage
+    // Request Presence Data to the device 
 }
