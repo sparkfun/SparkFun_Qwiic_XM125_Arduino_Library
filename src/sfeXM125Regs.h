@@ -283,10 +283,94 @@ typedef struct
 } sfe_xm125_presence_result_t;
 
 const uint16_t SFE_XM125_PRESENCE_DISTANCE = 0x11;
-
 const uint16_t SFE_XM125_INTRA_PRESENCE_SCORE = 0x12;
+const uint16_t SFE_XM125_INTER_PRESENCE = 0x13;
 
-const uint16_t SFE_XM125_INTER_PRESENCE
+const uint16_t SFE_XM125_PRESENCE_SWEEPS_PER_FRAME = 0x40;
+const uint16_t sfe_xm125_presence_sweeps_per_frame_default = 16;
 
+const uint16_t SFE_XM125_PRESENCE_INTER_FRAME_TIMEOUT = 0x41;
+const uint16_t sfe_xm125_presence_inter_frame_timeout_default = 3;
 
+const uint16_t SFE_XM125_PRESENCE_INTER_PHASE_BOOST_ENABLED = 0x42;
+const bool sfe_xm125_presence_inter_phase_boost_enabled_defaultS = false;
+
+const uint16_t SFE_XM125_PRESENCE_INTRA_DETECTION_ENABLED = 0x43;
+const bool sfe_xm125_presence_intra_detection_enabled_default = true;
+
+const uint16_t SFE_XM125_PRESENCE_INTER_DETECTION_ENABLED = 0x44;
+const bool sfe_xm125_presence_inter_detection_enabled_default = true; 
+
+const uint16_t SFE_XM125_PRESENCE_FRAME_RATE = 0x45;
+const uint16_t sfe_xm125_presence_frame_rate_default = 12000;
+
+const uint16_t SFE_XM125_PRESENCE_INTRA_DETECTION_THRESHOLD = 0x46;
+const uint16_t sfe_xm125_presence_intra_detection_threshold_default = 1300;
+
+const uint16_t SFE_XM125_PRESENCE_INTER_DETECTION_THRESHOLD = 0x47;
+const uint16_t sfe_xm125_presence_inter_detection_threshold_default = 1000;
+
+const uint16_t SFE_XM125_PRESENCE_INTER_FRAME_DEVIATION = 0x48;
+const uint16_t sfe_xm125_presence_inter_frame_deviation_default = 500;
+
+const uint16_t SFE_XM125_PRESENCE_INTER_FRAME_FAST_CUTOFF = 0x49;
+const uint16_t sfe_xm125_presence_inter_frame_fast_cutoff_default = 6000;
+
+const uint16_t SFE_XM125_PRESENCE_INTER_FRAME_SLOW_CUTOFF = 0x4a;
+const uint16_t sfe_xm125_presence_inter_frame_slow_cutoff_default = 200;
+
+const uint16_t SFE_XM125_PRESENCE_INTRA_FRAME_TIME_CONST = 0x4b;
+const uint16_t sfe_xm125_presence_intra_frame_time_const_default = 150;
+
+const uint16_t SFE_XM125_PRESENCE_INTRA_OUTPUT_TIME_CONST = 0x4c;
+const uint16_t sfe_xm125_presence_intra_output_time_const_default = 300;
+
+const uint16_t SFE_XM125_PRESENCE_INTER_OUTPUT_TIME_CONST = 0x4d;
+const uint16_t sfe_xm125_presence_inter_output_time_const_default = 2000;
+
+const uint16_t SFE_XM125_PRESENCE_AUTO_PROFILE_ENABLED = 0x4e;
+const bool sfe_xm125_presence_auto_profile_enabled_default = true;
+
+const uint16_t SFE_XM125_PRESENCE_AUTO_STEP_LENGTH_ENABLED = 0x4f;
+const bool sfe_xm125_presence_auto_step_length_enabled_default = true;
+
+const uint16_t SFE_XM125_PRESENCE_MANUAL_PROFILE = 0x50;
+typedef enum
+{
+    XM125_PRESENCE_PROFILE1 = 1,
+    XM125_PRESENCE_PROFILE2 = 2,
+    XM125_PRESENCE_PROFILE3 = 3,
+    XM125_PRESENCE_PROFILE1 = 4,
+    XM125_PRESENCE_PROFILE1 = 5,
+} sfe_xm125_presence_manual_profile_t;
+
+const uint16_t SFE_XM125_PRESENCE_MANUAL_STEP_LENGTH = 0x51;
+const uint16_t sfe_xm125_presence_manual_step_length_default = 72; 
+
+const uint16_t SFE_XM125_PRESENCE_START = 0x52;
+const uint16_t sfe_xm125_presence_start_default = 300;
+
+const uint16_t SFE_XM125_PRESENCE_END = 0x53;
+const uint16_t sfe_xm125_presence_end_default = 2500;
+
+const uint16_t SFE_XM125_PRESENCE_RESET_FILTERS_ON_PREPARE = 0x54;
+const bool sfe_xm125_presence_reset_filters_on_prepare_default = true;
+
+const uint16_t SFE_XM125_PRESENCE_HWAAS = 0x55;
+const uint16_t sfe_xm125_presence_hwaas_default = 32;
+
+const uint16_t SFE_XM125_PRESENCE_DETECTION_ON_GPIO = 0x80;
+const bool sfe_xm125_presence_detection_on_gpio_default = false; 
+
+const uint16_t SFE_XM125_PRESENCE_COMMAND = 0x100;
+typedef enum
+{
+    XM125_PRESENCE_APPLY_CONFIGURATION = 1,
+    XM125_PRESENCE_START_DETECTOR = 2,
+    XM125_PRESENCE_STOP_DETECTOR = 3,
+    XM125_PRESENCE_ENABLE_UART_LOGS = 32,
+    XM125_PRESENCE_DISABLE_UART_LOGS = 33,
+    XM125_PRESENCE_LOG_CONFIGURATION = 34,
+    XM125_PRESENCE_RESET_MODULE = 138119737,
+} sfe_xm125_presence_command_t;
 
