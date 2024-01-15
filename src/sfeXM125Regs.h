@@ -145,7 +145,7 @@ const bool sfe_xm125_distance_close_range_leakage_default = true;
 
 // Default Value: 15000
 const uint16_t SFE_XM125_DISTANCE_SIGNAL_QUALITY = 0x44;
-const uint16_t sfe_xm125_disatnce_signal_quality_default = 15000;
+const uint16_t sfe_xm125_distance_signal_quality_default = 15000;
 
 // Default: PROFILE5 (enum)
 const uint16_t SFE_XM125_DISTANCE_MAX_PROFILE = 0x45;
@@ -199,10 +199,6 @@ typedef enum
 // Default Value: 0
 const uint16_t SFE_XM125_DISTANCE_FIXED_STRENGTH_THRESHOLD_VAL = 0x4c;
 const uint16_t sfe_xm125_distance_fixed_strength_threshold_val_default = 0;
-
-// Default Value: False
-const uint16_t SFE_XM125_DISTANCE_FIXED_STRENGTH_THRESHOLD_VAL = 0x4c;
-const bool sfe_xm125_distance_fixed_strength_threshold_val_default = false;
 
 // Default Value: False
 const uint16_t SFE_XM125_DISTANCE_MEASURE_ON_WAKEUP = 0x80;
@@ -348,7 +344,7 @@ const uint16_t SFE_XM125_PRESENCE_MANUAL_STEP_LENGTH = 0x51;
 const uint16_t sfe_xm125_presence_manual_step_length_default = 72; 
 
 const uint16_t SFE_XM125_PRESENCE_START = 0x52;
-const uint16_t sfe_xm125_presence_start_default = 300;
+const uint16_t sfe_xm125_presence_start_default = 250;
 
 const uint16_t SFE_XM125_PRESENCE_END = 0x53;
 const uint16_t sfe_xm125_presence_end_default = 2500;
