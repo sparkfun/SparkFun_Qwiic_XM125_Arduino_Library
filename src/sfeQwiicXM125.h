@@ -2,11 +2,11 @@
 
 // TODO: Add includes as needed (e.g. #include <Wire.h>, #include <SPI.h>)
 #include "Arduino.h"
+#include <Wire.h>
 
 #include "xm125/Inc/i2c_presence_detector.h"
 #include "xm125/Inc/i2c_distance_detector.h"
 
-// TODO: Add constants
 
 class XM125
 {
@@ -19,6 +19,11 @@ class XM125
         bool begin();
 
         // --------------------- I2C Disance Detector Functions ---------------------
+        
+        /// @brief This function begins the presence examples/communication.
+        /// @return Error code (0 no error)
+        bool distanceBegin();
+
         /// @brief This function returns the version number of the device 
         ///  structure: major.minor.patch
         /// @return Error code (0 no error)
@@ -604,7 +609,6 @@ class XM125
         /// @param time time const in ms
         /// @return Error code (0 no error)
         int32_t setPresenceIntraOutputTimeConst(uint32_t time);
-
 
         /// @brief This function returns time constant for the output in 
         ///  the inter-frame part
