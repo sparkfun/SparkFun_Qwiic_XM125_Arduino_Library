@@ -8,11 +8,11 @@
 #include "xm125/Inc/i2c_distance_detector.h"
 
 
-class XM125
+class QwDevXM125
 {
     public:
         /// @brief TODO
-        XM125();
+        QwDevXM125();
 
         /// @brief This function begins the examples/communication.
         /// @return Error code (0 no error)
@@ -27,7 +27,7 @@ class XM125
         /// @brief This function returns the version number of the device 
         ///  structure: major.minor.patch
         /// @return Error code (0 no error)
-        int32_t getDistanceDetectorVersion(float *version, uint8_t *patch);
+        int32_t getDistanceDetectorVersion(uint8_t *major, uint8_t *minor, uint8_t *patch);
 
         /// @brief This function returns if there was an error from the 
         ///  protocol status register 
@@ -362,7 +362,7 @@ class XM125
         /// @param version Version number
         /// @param patch Patch version number 
         /// @return Error code (0 no error)   
-        int32_t getPresenceDetectorVersion(float *version, uint8_t *version);
+        int32_t getPresenceDetectorVersion(uint8_t *major, uint8_t *minor, uint8_t *patch);;
 
         /// @brief This function returns the protocol state erorr 
         /// @param state Error code for device 
