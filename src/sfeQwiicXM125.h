@@ -37,7 +37,7 @@ class QwDevXM125
         /// @brief This function returns the measure counter, the number of measurements
         ///   performed since restart. 
         /// @return Error code (0 no error)
-        int32_t getDistanceMeasureCounter(uint16_t *counter);
+        int32_t getDistanceMeasureCounter(uint32_t *counter);
 
         /// @brief This function returns the status of the device if there are any issues 
         ///  with any of the status's listed defined. 
@@ -75,144 +75,144 @@ class QwDevXM125
         /// @brief This function returns the distance to peak 0
         ///  Note: This value is a factor 1000 larger than the RSS value
         /// @return Error code (0 no error)
-        int32_t getDistancePeak0Distance(uint16_t *peak);
+        int32_t getDistancePeak0Distance(uint32_t *peak);
 
         /// @brief This function returns the distance to peak 1
         ///  Note: This value is a factor 1000 larger than the RSS value
         /// @return Error code (0 no error)
-        int32_t getDistancePeak1Distance(uint16_t *peak);
+        int32_t getDistancePeak1Distance(uint32_t *peak);
 
         /// @brief This function returns the distance to peak 2
         ///  Note: This value is a factor 1000 larger than the RSS value
         /// @return Error code (0 no error)
-        int32_t getDistancePeak2Distance(uint16_t *peak);
+        int32_t getDistancePeak2Distance(uint32_t *peak);
 
         /// @brief This function returns the distance to peak 3
         ///  Note: This value is a factor 1000 larger than the RSS value
         /// @return Error code (0 no error)
-        int32_t getDistancePeak3Distance(uint16_t *peak);
+        int32_t getDistancePeak3Distance(uint32_t *peak);
 
         /// @brief This function returns the distance to peak 4
         ///  Note: This value is a factor 1000 larger than the RSS value
         /// @return Error code (0 no error)
-        int32_t getDistancePeak4Distance(uint16_t *peak);
+        int32_t getDistancePeak4Distance(uint32_t *peak);
 
         /// @brief This function returns the distance to peak 5
         ///  Note: This value is a factor 1000 larger than the RSS value
         /// @return Error code (0 no error)
-        int32_t getDistancePeak5Distance(uint16_t *peak);
+        int32_t getDistancePeak5Distance(uint32_t *peak);
 
         /// @brief This function returns the distance to peak 6
         ///  Note: This value is a factor 1000 larger than the RSS value
         /// @return Error code (0 no error)
-        int32_t getDistancePeak6Distance(uint16_t *peak);
+        int32_t getDistancePeak6Distance(uint32_t *peak);
 
         /// @brief This function returns the distance to peak 7
         ///  Note: This value is a factor 1000 larger than the RSS value
         /// @return Error code (0 no error)
-        int32_t getDistancePeak7Distance(uint16_t *peak);
+        int32_t getDistancePeak7Distance(uint32_t *peak);
 
         /// @brief This function returns the distance to peak 8
         ///  Note: This value is a factor 1000 larger than the RSS value
         /// @return Error code (0 no error)
-        int32_t getDistancePeak8Distance(uint16_t *peak);
+        int32_t getDistancePeak8Distance(uint32_t *peak);
 
         /// @brief This function returns the distance to peak 9
         ///  Note: This value is a factor 1000 larger than the RSS value
         /// @return Error code (0 no error)
-        int32_t getDistancePeak9Distance(uint16_t *peak);
+        int32_t getDistancePeak9Distance(uint32_t *peak);
 
         /// @brief This function returns the strength of peak 0
         ///  Note: This value is a factor 1000 larger than the RSS value
         /// @return Error code (0 no error)
-        int32_t getDistancePeak0Strength(uint16_t *peak);
+        int32_t getDistancePeak0Strength(uint32_t *peak);
 
         /// @brief This function returns the strength of peak 1
         ///  Note: This value is a factor 1000 larger than the RSS value
         /// @return Error code (0 no error)
-        int32_t getDistancePeak1Strength(uint16_t *peak);
+        int32_t getDistancePeak1Strength(uint32_t *peak);
 
         /// @brief This function returns the strength of peak 2
         ///  Note: This value is a factor 1000 larger than the RSS value
         /// @return Error code (0 no error)
-        int32_t getDistancePeak2Strength(uint16_t *peak);
+        int32_t getDistancePeak2Strength(uint32_t *peak);
 
         /// @brief This function returns the strength of peak 3
         ///  Note: This value is a factor 1000 larger than the RSS value
         /// @return Error code (0 no error)
-        int32_t getDistancePeak3Strength(uint16_t *peak);
+        int32_t getDistancePeak3Strength(uint32_t *peak);
 
         /// @brief This function returns the strength of peak 4
         ///  Note: This value is a factor 1000 larger than the RSS value
         /// @return Error code (0 no error)
-        int32_t getDistancePeak4Strength(uint16_t *peak);
+        int32_t getDistancePeak4Strength(uint32_t *peak);
 
         /// @brief This function returns the strength of peak 5
         ///  Note: This value is a factor 1000 larger than the RSS value
         /// @return Error code (0 no error)
-        int32_t getDistancePeak5Strength(uint16_t *peak);
+        int32_t getDistancePeak5Strength(uint32_t *peak);
 
         /// @brief This function returns the strength of peak 6
         ///  Note: This value is a factor 1000 larger than the RSS value
         /// @return Error code (0 no error)
-        int32_t getDistancePeak6Strength(uint16_t *peak);
+        int32_t getDistancePeak6Strength(uint32_t *peak);
 
         /// @brief This function returns the strength of peak 7
         ///  Note: This value is a factor 1000 larger than the RSS value
         /// @return Error code (0 no error)
-        int32_t getDistancePeak7Strength(uint16_t *peak);
+        int32_t getDistancePeak7Strength(uint32_t *peak);
 
         /// @brief This function returns the strength of peak 8
         ///  Note: This value is a factor 1000 larger than the RSS value
         /// @return Error code (0 no error)
-        int32_t getDistancePeak8Strength(uint16_t *peak);
+        int32_t getDistancePeak8Strength(uint32_t *peak);
 
         /// @brief This function returns the strength of peak 9
         ///  Note: This value is a factor 1000 larger than the RSS value
         /// @return Error code (0 no error)
-        int32_t getDistancePeak9Strength(uint16_t *peak);
+        int32_t getDistancePeak9Strength(uint32_t *peak);
 
         /// @brief This function returns the start of measured interval 
         ///  in millimeters. 
         ///  Note: This value is a factor 1000 larger than the RSS value
         ///  Default Value: 250
         /// @return Error code (0 no error)
-        int32_t getDistanceStart(uint16_t *startVal);
+        int32_t getDistanceStart(uint32_t *startVal);
 
         /// @brief This function sets the start of measured interval in 
         ///  millimeters. 
         ///  Note: This value is a factor 1000 larger than the RSS value
         ///  Default Value: 250
         /// @return Error code (0 no error)
-        int32_t setDistanceStart(uint16_t start);
+        int32_t setDistanceStart(uint32_t start);
 
         /// @brief This function returns the end of measured interval 
         ///  in millimeters. 
         ///  Note: This value is a factor 1000 larger than the RSS value
         ///  Default Value: 3000
         /// @return Error code (0 no error)
-        int32_t getDistanceEnd(uint16_t *end);
+        int32_t getDistanceEnd(uint32_t *end);
 
         /// @brief This function sets the end of measured interval 
         ///  in millimeters. 
         ///  Note: This value is a factor 1000 larger than the RSS value
         ///  Default Value: 3000
         /// @return Error code (0 no error)
-        int32_t setDistanceEnd(uint16_t end);
+        int32_t setDistanceEnd(uint32_t end);
 
         /// @brief This function returns the used to limit step length.
         ///  If set to 0 (default), the step length is calculated 
         ///  based on profile. 
         ///  Default Value: 0
         /// @return Error code (0 no error)
-        int32_t getDistanceMaxStepLength(uint16_t *length);
+        int32_t getDistanceMaxStepLength(uint32_t *length);
 
         /// @brief This function sets the used to limit step length.
         ///  If set to 0 (default), the step length is calculated 
         ///  based on profile. 
         ///  Default Value: 0
         /// @return Error code (0 no error)
-        int32_t setDistanceMaxStepLength(uint16_t length);
+        int32_t setDistanceMaxStepLength(uint32_t length);
 
         /// @brief This function reads if the close range leakage 
         ///  cancellation logic is enabled. 
@@ -231,14 +231,14 @@ class QwDevXM125
         ///  Note: This value is a factor 1000 larger than the RSS value
         ///  Default Value: 15000
         /// @return Error code (0 no error)
-        int32_t getDistanceSignalQuality(uint16_t *signal);
+        int32_t getDistanceSignalQuality(uint32_t *signal);
 
         /// @brief This function sets the high signal quality in a 
         ///  better SNR (because of higher HWAAS) and higher power consumption.
         ///  Note: This value is a factor 1000 larger than the RSS value
         ///  Default Value: 15000
         /// @return Error code (0 no error)
-        int32_t setDistanceSignalQuality(uint16_t signal);
+        int32_t setDistanceSignalQuality(uint32_t signal);
 
         /// @brief This function returns the max profile of the device. 
         ///  Default value = PROFILE5
@@ -273,27 +273,27 @@ class QwDevXM125
         ///  Default Value: 100
         /// @param thresh Number of frames 
         /// @return Error code (0 no error) 
-        int32_t getDistanceNumFramesRecordedThreshold(uint16_t *thresh);
+        int32_t getDistanceNumFramesRecordedThreshold(uint32_t *thresh);
 
         /// @brief This function sets the number frames to use for recorded threshold. 
         ///  Default Value: 100
         /// @param thresh Number of frames 
         /// @return Error code (0 no error) 
-        int32_t setDistanceNumFramesRecordedThreshold(uint16_t thresh);
+        int32_t setDistanceNumFramesRecordedThreshold(uint32_t thresh);
 
         /// @brief This function returns the fixed amplitude threshold value. 
         ///  Note: This value is a factor 1000 larger than the RSS value
         ///  Default Value: 100000
         /// @param thresh Fixed amplitude threshold value
         /// @return Error code (0 no error) 
-        int32_t getDistanceFixedAmpThreshold(uint16_t *thresh);
+        int32_t getDistanceFixedAmpThreshold(uint32_t *thresh);
 
         /// @brief This function sets the fixed amplitude threshold value. 
         ///  Note: This value is a factor 1000 larger than the RSS value
         ///  Default Value: 100000
         /// @param thresh Fixed amplitude threshold value
         /// @return Error code (0 no error) 
-        int32_t setDistanceFixedAmpThreshold(uint16_t thresh);
+        int32_t setDistanceFixedAmpThreshold(uint32_t thresh);
 
         /// @brief This function returns the threshold sensitivity 
         ///  (0 <= sensitivity <= 1000)
@@ -301,7 +301,7 @@ class QwDevXM125
         ///  Default Value: 500
         /// @param thresh* Threshold sensitivity  
         /// @return Error code (0 no error) 
-        int32_t getDistanceThresholdSensitivity(uint16_t *thresh);
+        int32_t getDistanceThresholdSensitivity(uint32_t *thresh);
 
         /// @brief This function sets the threshold sensitivity 
         ///  (0 <= sensitivity <= 1000)
@@ -309,7 +309,7 @@ class QwDevXM125
         ///  Default Value: 500
         /// @param thresh Threshold sensitivity  
         /// @return Error code (0 no error) 
-        int32_t setDistanceThresholdSensitivity(uint16_t thresh);
+        int32_t setDistanceThresholdSensitivity(uint32_t thresh);
 
         /// @brief This function returns the reflector shape
         ///   Default Value: GENERIC
@@ -328,14 +328,14 @@ class QwDevXM125
         ///  Note: This value is a factor 1000 larger than the RSS value
         /// @param thresh fixed threshold strength value 
         /// @return Error code (0 no error) 
-        int32_t getDistanceFixedStrengthThresholdValue(int16_t *thresh);
+        int32_t getDistanceFixedStrengthThresholdValue(int32_t *thresh);
 
         /// @brief This function sets the fixed strength threshold value. 
         ///  Default Value: 0
         ///  Note: This value is a factor 1000 larger than the RSS value
         /// @param thresh fixed threshold strength value 
         /// @return Error code (0 no error) 
-        int32_t setDistanceFixedStrengthThresholdValue(int16_t thresh);
+        int32_t setDistanceFixedStrengthThresholdValue(int32_t thresh);
 
         /// @brief This function returns the measure on wakeup status.
         ///   Default Value: false
@@ -362,7 +362,7 @@ class QwDevXM125
         /// @param version Version number
         /// @param patch Patch version number 
         /// @return Error code (0 no error)   
-        int32_t getPresenceDetectorVersion(uint8_t *major, uint8_t *minor, uint8_t *patch);;
+        int32_t getPresenceDetectorVersion(uint8_t *major, uint8_t *minor, uint8_t *patch);
 
         /// @brief This function returns the protocol state erorr 
         /// @param state Error code for device 
@@ -397,11 +397,11 @@ class QwDevXM125
         /// @return Error code (0 no error) 
         int32_t getPresenceNearStartEdge(uint32_t *nearEdge);
 
-        /// @brief This function the indication of sensor calibration required. The sensor
-        ///  calibration needs to be redone. 
+        /// @brief This function returns the indication that the presence detector
+        ///  failed. 
         /// @param calibrate Indication of sensor calibration 
         /// @return Error code (0 no error) 
-        int32_t getPresenceCalibrationNeeded(uint32_t *calibrate);
+        int32_t getPresenceDetectorRegError(uint32_t *error);
 
         /// @brief This function returns the temperature in sensor during measurement (in
         ///   degree Celsius). Note that it has poor absolute accuracy and should only 

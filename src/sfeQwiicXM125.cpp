@@ -89,7 +89,7 @@ int32_t QwDevXM125::getDistanceDetectorError(sfe_xm125_distance_protocol_status_
     return retVal;
 }
 
-int32_t QwDevXM125::getDistanceMeasureCounter(uint16_t *counter)
+int32_t QwDevXM125::getDistanceMeasureCounter(uint32_t *counter)
 {
     // Read from 16-Bit Register
     return read16BitRegisterRegion(SFE_XM125_DISTANCE_MEASURE_COUNTER, &counter, 4, 4);
@@ -171,132 +171,132 @@ int32_t QwDevXM125::getDistanceTemperature(sfe_xm125_distance_result_t *temperat
     return retVal;
 }
 
-int32_t QwDevXM125::getDistancePeak0Distance(uint16_t *peak)
+int32_t QwDevXM125::getDistancePeak0Distance(uint32_t *peak)
 {
     return read16BitRegisterRegion(SFE_XM125_DISTANCE_PEAK0_DISTANCE, &peak, 4, 4);
 }
 
-int32_t QwDevXM125::getDistancePeak1Distance(uint16_t *peak)
+int32_t QwDevXM125::getDistancePeak1Distance(uint32_t *peak)
 {
     return read16BitRegisterRegion(SFE_XM125_DISTANCE_PEAK1_DISTANCE, &peak, 4, 4);
 }
 
-int32_t QwDevXM125::getDistancePeak2Distance(uint16_t *peak)
+int32_t QwDevXM125::getDistancePeak2Distance(uint32_t *peak)
 {
     return read16BitRegisterRegion(SFE_XM125_DISTANCE_PEAK2_DISTANCE, &peak, 4, 4);
 }
 
-int32_t QwDevXM125::getDistancePeak3Distance(uint16_t *peak)
+int32_t QwDevXM125::getDistancePeak3Distance(uint32_t *peak)
 {
     return read16BitRegisterRegion(SFE_XM125_DISTANCE_PEAK3_DISTANCE, &peak, 4, 4);
 }
 
-int32_t QwDevXM125::getDistancePeak4Distance(uint16_t *peak)
+int32_t QwDevXM125::getDistancePeak4Distance(uint32_t *peak)
 {
     return read16BitRegisterRegion(SFE_XM125_DISTANCE_PEAK4_DISTANCE, &peak, 4, 4);
 }
 
-int32_t QwDevXM125::getDistancePeak5Distance(uint16_t *peak)
+int32_t QwDevXM125::getDistancePeak5Distance(uint32_t *peak)
 {
     return read16BitRegisterRegion(SFE_XM125_DISTANCE_PEAK5_DISTANCE, &peak, 4, 4);
 }
 
-int32_t QwDevXM125::getDistancePeak6Distance(uint16_t *peak)
+int32_t QwDevXM125::getDistancePeak6Distance(uint32_t *peak)
 {
     return read16BitRegisterRegion(SFE_XM125_DISTANCE_PEAK6_DISTANCE, &peak, 4, 4);
 }
 
-int32_t QwDevXM125::getDistancePeak7Distance(uint16_t *peak)
+int32_t QwDevXM125::getDistancePeak7Distance(uint32_t *peak)
 {
     return read16BitRegisterRegion(SFE_XM125_DISTANCE_PEAK7_DISTANCE, &peak, 4, 4);
 }
 
-int32_t QwDevXM125::getDistancePeak8Distance(uint16_t *peak)
+int32_t QwDevXM125::getDistancePeak8Distance(uint32_t *peak)
 {
     return read16BitRegisterRegion(SFE_XM125_DISTANCE_PEAK8_DISTANCE, &peak, 4, 4);
 }
 
-int32_t QwDevXM125::getDistancePeak9Distance(uint16_t *peak)
+int32_t QwDevXM125::getDistancePeak9Distance(uint32_t *peak)
 {
     return read16BitRegisterRegion(SFE_XM125_DISTANCE_PEAK9_DISTANCE, &peak, 4, 4);
 }
 
-int32_t QwDevXM125::getDistancePeak0Strength(uint16_t *peak)
+int32_t QwDevXM125::getDistancePeak0Strength(uint32_t *peak)
 {
     return read16BitRegisterRegion(SFE_XM125_DISTANCE_PEAK0_STRENGTH, &peak, 4, 4);
 }
 
-int32_t QwDevXM125::getDistancePeak1Strength(uint16_t *peak)
+int32_t QwDevXM125::getDistancePeak1Strength(uint32_t *peak)
 {
     return read16BitRegisterRegion(SFE_XM125_DISTANCE_PEAK1_STRENGTH, &peak, 4, 4);
 }
 
-int32_t QwDevXM125::getDistancePeak2Strength(uint16_t *peak)
+int32_t QwDevXM125::getDistancePeak2Strength(uint32_t *peak)
 {
     return read16BitRegisterRegion(SFE_XM125_DISTANCE_PEAK2_STRENGTH, &peak, 4, 4));
 }
 
-int32_t QwDevXM125::getDistancePeak3Strength(uint16_t *peak)
+int32_t QwDevXM125::getDistancePeak3Strength(uint32_t *peak)
 {
     return read16BitRegisterRegion(SFE_XM125_DISTANCE_PEAK3_STRENGTH, &peak, 4, 4);
 }
 
-int32_t QwDevXM125::getDistancePeak4Strength(uint16_t *peak)
+int32_t QwDevXM125::getDistancePeak4Strength(uint32_t *peak)
 {
     return read16BitRegisterRegion(SFE_XM125_DISTANCE_PEAK4_STRENGTH, &peak, 4, 4);
 }
 
-int32_t QwDevXM125::getDistancePeak5Strength(uint16_t *peak)
+int32_t QwDevXM125::getDistancePeak5Strength(uint32_t *peak)
 {
     return read16BitRegisterRegion(SFE_XM125_DISTANCE_PEAK5_STRENGTH, &peak, 4, 4);
 }
 
-int32_t QwDevXM125::getDistancePeak6Strength(uint16_t *peak)
+int32_t QwDevXM125::getDistancePeak6Strength(uint32_t *peak)
 {
     return read16BitRegisterRegion(SFE_XM125_DISTANCE_PEAK6_STRENGTH, &peak, 4, 4);
 }
 
-int32_t QwDevXM125::getDistancePeak7Strength(uint16_t *peak)
+int32_t QwDevXM125::getDistancePeak7Strength(uint32_t *peak)
 {
     return read16BitRegisterRegion(SFE_XM125_DISTANCE_PEAK7_STRENGTH, &peak, 4, 4);
 }
 
-int32_t QwDevXM125::getDistancePeak8Strength(uint16_t *peak)
+int32_t QwDevXM125::getDistancePeak8Strength(uint32_t *peak)
 {
     return read16BitRegisterRegion(SFE_XM125_DISTANCE_PEAK8_STRENGTH, &peak, 4, 4);
 }
 
-int32_t QwDevXM125::getDistancePeak9Strength(uint16_t *peak)
+int32_t QwDevXM125::getDistancePeak9Strength(uint32_t *peak)
 {
     return read16BitRegisterRegion(SFE_XM125_DISTANCE_PEAK9_STRENGTH, &peak, 4, 4);
 }
 
-int32_t QwDevXM125::getDistanceStart(uint16_t *startVal)
+int32_t QwDevXM125::getDistanceStart(uint32_t *startVal)
 {
     return read16BitRegisterRegion(SFE_XM125_DISTANCE_START, &startVal, 4, 4);
 }
 
-int32_t QwDevXM125::setDistanceStart(uint16_t start)
+int32_t QwDevXM125::setDistanceStart(uint32_t start)
 {
     return write16BitRegisterRegion(SFE_XM125_DISTANCE_START, start, 4);
 }
 
-int32_t QwDevXM125::getDistanceEnd(uint16_t *end)
+int32_t QwDevXM125::getDistanceEnd(uint32_t *end)
 {
     return read16BitRegisterRegion(SFE_XM125_DISTANCE_END, &end, 4, 4);
 }
 
-int32_t QwDevXM125::setDistanceEnd(uint16_t end)
+int32_t QwDevXM125::setDistanceEnd(uint32_t end)
 {
     return write16BitRegisterRegion(SFE_XM125_DISTANCE_START, start, 4);
 }
 
-int32_t QwDevXM125::getDistanceMaxStepLength(uint16_t *length)
+int32_t QwDevXM125::getDistanceMaxStepLength(uint32_t *length)
 {
     return read16BitRegisterRegion(SFE_XM125_DISTANCE_MAX_STEP_LENGTH, &length, 4, 4);
 }
 
-int32_t QwDevXM125::setDistanceMaxStepLength(uint16_t length)
+int32_t QwDevXM125::setDistanceMaxStepLength(uint32_t length)
 {
     return write16BitRegisterRegion(SFE_XM125_DISTANCE_MAX_STEP_LENGTH, length, 4);
 }
@@ -311,12 +311,12 @@ int32_t QwDevXM125::setDistanceCloseRangeLeakageCancellation(bool range)
     return write16BitRegisterRegion(SFE_XM125_DISTANCE_CLOSE_RANGE_LEAKAGE, range, 4);
 }
 
-int32_t QwDevXM125::getDistanceSignalQuality(uint16_t *signal)
+int32_t QwDevXM125::getDistanceSignalQuality(uint32_t *signal)
 {
     return read16BitRegisterRegion(SFE_XM125_DISTANCE_SIGNAL_QUALITY, &signal, 4, 4);
 }
 
-int32_t QwDevXM125::setDistanceSignalQuality(uint16_t signal)
+int32_t QwDevXM125::setDistanceSignalQuality(uint32_t signal)
 {
     return write16BitRegisterRegion(SFE_XM125_DISTANCE_SIGNAL_QUALITY, signal, 4);
 }
@@ -351,32 +351,32 @@ int32_t QwDevXM125::setDistancePeakSorting(sfe_xm125_distance_peak_sorting_t pea
     return write16BitRegisterRegion(SFE_XM125_DISTANCE_PEAK_SORTING, peak, 4);
 }
 
-int32_t QwDevXM125::getDistanceNumFramesRecordedThreshold(uint16_t *thresh)
+int32_t QwDevXM125::getDistanceNumFramesRecordedThreshold(uint32_t *thresh)
 {
     return read16BitRegisterRegion(SFE_XM125_DISTANCE_NUM_FRAMES_RECORDED_THRESH, &thresh, 4, 4);
 }
 
-int32_t QwDevXM125::setDistanceNumFramesRecordedThreshold(uint16_t thresh)
+int32_t QwDevXM125::setDistanceNumFramesRecordedThreshold(uint32_t thresh)
 {
     return write16BitRegisterRegion(SFE_XM125_DISTANCE_NUM_FRAMES_RECORDED_THRESH, thresh, 4);
 }
 
-int32_t QwDevXM125::getDistanceFixedAmpThreshold(uint16_t *thresh)
+int32_t QwDevXM125::getDistanceFixedAmpThreshold(uint32_t *thresh)
 {
     return read16BitRegisterRegion(SFE_XM125_DISTANCE_FIXED_AMPLITUDE_THRESHOLD_VAL, &thresh, 4, 4);
 }
 
-int32_t QwDevXM125::setDistanceFixedAmpThreshold(uint16_t thresh)
+int32_t QwDevXM125::setDistanceFixedAmpThreshold(uint32_t thresh)
 {
     return write16BitRegisterRegion(SFE_XM125_DISTANCE_FIXED_AMPLITUDE_THRESHOLD_VAL, thresh, 4);
 }
 
-int32_t QwDevXM125::getDistanceThresholdSensitivity(uint16_t *thresh)
+int32_t QwDevXM125::getDistanceThresholdSensitivity(uint32_t *thresh)
 {
     return read16BitRegisterRegion(SFE_XM125_DISTANCE_THREHSOLD_SENSITIVITY, &thresh, 4, 4);
 }
 
-int32_t QwDevXM125::setDistanceThresholdSensitivity(uint16_t thresh)
+int32_t QwDevXM125::setDistanceThresholdSensitivity(uint32_t thresh)
 {
     return write16BitRegisterRegion(SFE_XM125_DISTANCE_THREHSOLD_SENSITIVITY, thresh, 4);
 }
@@ -391,12 +391,12 @@ int32_t QwDevXM125::setDistanceReflectorShape(sfe_xm125_distance_reflector_shape
     return write16BitRegisterRegion(SFE_XM125_DISTANCE_REFLECTOR_SHAPE, shape, 4);
 }
 
-int32_t QwDevXM125::getDistanceFixedStrengthThresholdValue(int16_t *thresh)
+int32_t QwDevXM125::getDistanceFixedStrengthThresholdValue(int32_t *thresh)
 {
     return read16BitRegisterRegion(SFE_XM125_DISTANCE_FIXED_STRENGTH_THRESHOLD_VAL, &thresh, 4, 4);
 }
 
-int32_t QwDevXM125::setDistanceFixedStrengthThresholdValue(int16_t thresh)
+int32_t QwDevXM125::setDistanceFixedStrengthThresholdValue(int32_t thresh)
 {
     return write16BitRegisterRegion(SFE_XM125_DISTANCE_FIXED_STRENGTH_THRESHOLD_VAL, thresh, 4);
 }
@@ -423,278 +423,333 @@ int32_t QwDevXM125::presenceBegin()
     // 
 }
 
-int32_t QwDevXM125::getPresenceDetectorVersion(float *version, uint8_t *version)
+int32_t QwDevXM125::getPresenceDetectorVersion(uint8_t *major, uint8_t *minor, uint8_t *patch)
 {
-    // 
+    int32_t retVal;
+    uint32_t regVal;
+
+    // Read from 16-Bit Register
+    retVal = read16BitRegisterRegion(SFE_XM125_PRESENCE_VERSION, regVal, 4, 4);
+
+    // Mask unused bits from register 
+    &major = (regVal & 0xffff0000) >> 16;
+    &minor = (regVal & 0x0000ff00) >> 8;
+    &patch = regVal & 0x000000ff;
+
+    return retVal;
 }
 
 int32_t QwDevXM125::getPresenceDetectorError(uint32_t *error)
 {
-    // 
+    int32_t retVal;
+    uint32_t regVal;
+
+    retVal = read16BitRegisterRegion(SFE_XM125_DISTANCE_PROTOCOL_STATUS, &regVal, 4, 4);
 }
 
 int32_t QwDevXM125::getPresenceMeasureCounter(uint32_t *counter)
 {
-    // 
+    return read16BitRegisterRegion(SFE_XM125_PRESENCE_MEASURE_COUNTER, &counter, 4, 4);
 }
 
 int32_t QwDevXM125::getPresenceDetectorStatus(uint32_t *status)
 {
-    // 
+    // Determine best way to do this - bounce ideas off of Dryw
 }
 
 int32_t QwDevXM125::getPresenceDistanceResult(uint32_t *detected)
 {
-    // 
+    int32_t retVal;
+    uint32_t regVal;
+
+    // Read from 16-Bit Register
+    retVal = read16BitRegisterRegion(SFE_XM125_PRESENCE_DISTANCE, regVal, 4, 4);
+
+    // Mask unused bits from register 
+    &detected = (regVal & 0x00000001);
+
+    return retVal;
 }
 
 int32_t QwDevXM125::getPresenceNearStartEdge(uint32_t *nearEdge)
 {
-    // 
+    int32_t retVal;
+    uint32_t regVal;
+
+    // Read from 16-Bit Register
+    retVal = read16BitRegisterRegion(SFE_XM125_PRESENCE_DISTANCE, regVal, 4, 4);
+
+    // Mask unused bits from register 
+    &nearEdge = (regVal & 0x00000002) >> 1;
+
+    return retVal;
 }
 
-int32_t QwDevXM125::getPresenceCalibrationNeeded(uint32_t *calibrate)
+int32_t QwDevXM125::getPresenceDetectorRegError(uint32_t *error)
 {
-    // 
+    int32_t retVal;
+    uint32_t regVal;
+
+    // Read from 16-Bit Register
+    retVal = read16BitRegisterRegion(SFE_XM125_PRESENCE_DISTANCE, regVal, 4, 4);
+
+    // Mask unused bits from register 
+    &error = (regVal & 0x00008000) >> 2;
+
+    return retVal;
 }
 
 int32_t QwDevXM125::getPresenceTemperature(uint32_t *temp)
 {
-    // 
+    int32_t retVal;
+    uint32_t regVal;
+
+    // Read from 16-Bit Register
+    retVal = read16BitRegisterRegion(SFE_XM125_PRESENCE_DISTANCE, regVal, 4, 4);
+
+    // Mask unused bits from register 
+    &temp = (regVal & 0xffff0000) >> 16;
+
+    return retVal;
 }
 
 int32_t QwDevXM125::getPresenceDistance(uint32_t *distance)
 {
-    // 
+    return read16BitRegisterRegion(SFE_XM125_PRESENCE_DISTANCE, &distance, 4, 4);
 }
 
 int32_t QwDevXM125::getPresenceIntraPresenceScore(uint32_t *intra)
 {
-    // 
+    return read16BitRegisterRegion(SFE_XM125_INTRA_PRESENCE_SCORE, &intra, 4, 4);
 }
 
 int32_t QwDevXM125::getPresenceInterPresenceScore(uint32_t *inter)
 {
-    // 
+    return read16BitRegisterRegion(SFE_XM125_INTER_PRESENCE, &inter, 4, 4);
 }
 
 int32_t QwDevXM125::getPresenceSweepsPerFrame(uint32_t *sweeps)
 {
-    // 
+    return read16BitRegisterRegion(SFE_XM125_INTRA_PRESENCE_SCORE, &sweeps, 4, 4);
 }
 
 int32_t QwDevXM125::setPresenceSweepsPerFrame(uint32_t sweeps)
 {
-    // 
+    return write16BitRegisterRegion(SFE_XM125_PRESENCE_SWEEPS_PER_FRAME, sweeps, 4);
 }
 
 int32_t QwDevXM125::getPresenceInterFramePresenceTimeout(uint32_t *time)
 {
-    // 
+    return read16BitRegisterRegion(SFE_XM125_PRESENCE_INTER_FRAME_TIMEOUT, &time, 4, 4);
 }
 
 int32_t QwDevXM125::setPresenceInterFramePresenceTimeout(uint32_t time)
 {
-    // 
+    return write16BitRegisterRegion(SFE_XM125_PRESENCE_INTER_FRAME_TIMEOUT, time, 4);
 }
 
 int32_t QwDevXM125::getPresenceInterPhaseBoostEnabled(bool *en)
 {
-    // 
+    return read16BitRegisterRegion(SFE_XM125_PRESENCE_INTER_PHASE_BOOST_ENABLED, &en, 4, 4);
 }
 
 int32_t QwDevXM125::setPresenceInterPhaseBoostEnabled(bool en)
 {
-    // 
+    return write16BitRegisterRegion(SFE_XM125_PRESENCE_INTER_PHASE_BOOST_ENABLED, en, 4);
 }
 
 int32_t QwDevXM125::getPresenceIntraDetectionEnabled(bool *en)
 {
-    // 
+    return read16BitRegisterRegion(SFE_XM125_PRESENCE_INTRA_DETECTION_ENABLED, &en, 4, 4);
 }
 
 int32_t QwDevXM125::setPresenceInterDetectionEnabled(bool en)
 {
-    // 
+    return write16BitRegisterRegion(SFE_XM125_PRESENCE_INTRA_DETECTION_ENABLED, en, 4);
 }
 
 int32_t QwDevXM125::getPresenceFrameRate(uint32_t *rate)
 {
-    // 
+    return read16BitRegisterRegion(SFE_XM125_PRESENCE_FRAME_RATE, &rate, 4, 4);
 }
 
 int32_t QwDevXM125::setPresenceFrameRate(uint32_t rate)
 {
-    // 
+    return write16BitRegisterRegion(SFE_XM125_PRESENCE_FRAME_RATE, rate, 4);
 }
 
 int32_t QwDevXM125::getPresenceIntraDetectionThreshold(uint32_t *thresh)
 {
-    // 
+    return read16BitRegisterRegion(SFE_XM125_PRESENCE_INTRA_DETECTION_THRESHOLD, &thresh, 4, 4);
 }
 
 int32_t QwDevXM125::setPresenceIntraDetectionThreshold(uint32_t thresh)
 {
-    // 
+    return write16BitRegisterRegion(SFE_XM125_PRESENCE_INTRA_DETECTION_THRESHOLD, thresh, 4);
 }
 
 int32_t QwDevXM125::getPresenceInterDetectionThreshold(uint32_t *thresh)
 {
-    // 
+    return read16BitRegisterRegion(SFE_XM125_PRESENCE_INTRA_DETECTION_THRESHOLD, &thresh, 4, 4);
 }
 
 int32_t QwDevXM125::setPresenceInterDetectionThreshold(uint32_t thresh)
 {
-    // 
+    return write16BitRegisterRegion(SFE_XM125_PRESENCE_INTER_DETECTION_THRESHOLD, thresh, 4);
 }
 
 int32_t QwDevXM125::getPresenceInterFrameDeviationTime(uint32_t *time)
 {
-    // 
+    return read16BitRegisterRegion(SFE_XM125_PRESENCE_INTER_FRAME_DEVIATION, &time, 4, 4);
 }
 
 int32_t QwDevXM125::setPresenceInterFrameDeviationTime(uint32_t time)
 {
-    // 
+    return write16BitRegisterRegion(SFE_XM125_PRESENCE_INTER_FRAME_DEVIATION, time, 4);
 }
 
 int32_t QwDevXM125::getPresenceInterFrameFastCutoff(uint32_t *cut)
 {
-    // 
+    return read16BitRegisterRegion(SFE_XM125_PRESENCE_INTER_FRAME_FAST_CUTOFF, &cut, 4, 4);
 }
 
 int32_t QwDevXM125::setPresenceInterFrameFastCutoff(uint32_t cut)
 {
-    // 
+    return write16BitRegisterRegion(SFE_XM125_PRESENCE_INTER_FRAME_FAST_CUTOFF, cut, 4);
 }
 
 int32_t QwDevXM125::getPresenceInterFrameSlowCutoff(uint32_t *cut)
 {
-    // 
+    return read16BitRegisterRegion(SFE_XM125_PRESENCE_INTER_FRAME_SLOW_CUTOFF, &cut, 4, 4);
 }
 
 int32_t QwDevXM125::setPresenceInterFrameSlowCutoff(uint32_t cut)
 {
-    // 
+    return write16BitRegisterRegion(SFE_XM125_PRESENCE_INTER_FRAME_SLOW_CUTOFF, cut, 4);
 }
 
 int32_t QwDevXM125::getPresenceIntraFrameTimeConst(uint32_t *time)
 {
-    // 
+    return read16BitRegisterRegion(SFE_XM125_PRESENCE_INTRA_FRAME_TIME_CONST, &time, 4, 4);
 }
 
 int32_t QwDevXM125::setPresenceIntraFrameTimeConst(uint32_t time)
 {
-    // 
+    return write16BitRegisterRegion(SFE_XM125_PRESENCE_INTRA_FRAME_TIME_CONST, time, 4);
 }
 
 int32_t QwDevXM125::getPresenceIntraOutputTimeConst(uint32_t *time)
 {
-    // 
+    return read16BitRegisterRegion(SFE_XM125_PRESENCE_INTRA_OUTPUT_TIME_CONST, &time, 4, 4);
+}
+
+int32_t QwDevXM125::setPresenceIntraOutputTimeConst(uint32_t time)
+{
+    return write16BitRegisterRegion(SFE_XM125_PRESENCE_INTRA_OUTPUT_TIME_CONST, time, 4);
 }
 
 int32_t QwDevXM125::getPresenceInterOutputTimeConst(uint32_t *time)
 {
-    // 
+    return read16BitRegisterRegion(SFE_XM125_PRESENCE_INTER_OUTPUT_TIME_CONST, &time, 4, 4);
 }
 
 int32_t QwDevXM125::setPresenceInterOutputTimeConst(uint32_t time)
 {
-    // 
+    return write16BitRegisterRegion(SFE_XM125_PRESENCE_INTER_OUTPUT_TIME_CONST, time, 4);
 }
 
 int32_t QwDevXM125::getPresenceAutoProfileEn(bool *en)
 {
-    // 
+    return read16BitRegisterRegion(SFE_XM125_PRESENCE_AUTO_PROFILE_ENABLED, &en, 4, 4);
 }
 
 int32_t QwDevXM125::setPresenceAutoProfileEn(bool en)
 {
-    // 
+    return write16BitRegisterRegion(SFE_XM125_PRESENCE_AUTO_PROFILE_ENABLED, en, 4);
 }
 
 int32_t QwDevXM125::getPresenceAutoStepLengthEn(bool *en)
 {
-    // 
+    return read16BitRegisterRegion(SFE_XM125_PRESENCE_AUTO_STEP_LENGTH_ENABLED, &en, 4, 4);
 }
 
 int32_t QwDevXM125::setPresenceAutoStepLengthEn(bool en)
 {
-    // 
+    return write16BitRegisterRegion(SFE_XM125_PRESENCE_AUTO_STEP_LENGTH_ENABLED, en, 4);
 }
 
 int32_t QwDevXM125::getPresenceManualProfile(sfe_xm125_presence_manual_profile_t *prof)
 {
-    // 
+    return read16BitRegisterRegion(SFE_XM125_PRESENCE_MANUAL_PROFILE, &prof, 4, 4);
 }
 
 int32_t QwDevXM125::setPresenceManualProfile(sfe_xm125_presence_manual_profile_t prof)
 {
-    // 
+    return write16BitRegisterRegion(SFE_XM125_PRESENCE_MANUAL_PROFILE, prof, 4);
 }
 
 int32_t QwDevXM125::getPresenceManualStepLength(uint32_t *length)
 {
-    // 
+    return read16BitRegisterRegion(SFE_XM125_PRESENCE_MANUAL_STEP_LENGTH, &length, 4, 4);
 }
 
 int32_t QwDevXM125::setPresenceManualStepLength(uint32_t length)
 {
-    // 
+    return write16BitRegisterRegion(SFE_XM125_PRESENCE_MANUAL_STEP_LENGTH, length, 4);
 }
 
 int32_t QwDevXM125::getPresenceStart(uint32_t *start)
 {
-    // 
+    return read16BitRegisterRegion(SFE_XM125_PRESENCE_START, &start, 4, 4);
 }
 
 int32_t QwDevXM125::setPresenceStart(uint32_t start)
 {
-    // 
+    return write16BitRegisterRegion(SFE_XM125_PRESENCE_START, start, 4);
 }
 
 int32_t QwDevXM125::getPresenceEnd(uint32_t *end)
 {
-    // 
+    return read16BitRegisterRegion(SFE_XM125_PRESENCE_END, &end, 4, 4);
 }
 
 int32_t QwDevXM125::setPresenceEnd(uint32_t end)
 {
-    // 
+    return write16BitRegisterRegion(SFE_XM125_PRESENCE_END, end, 4);
 }
 
 int32_t QwDevXM125::getPresenceResetFilters(bool *reset)
 {
-    // 
+    return read16BitRegisterRegion(SFE_XM125_PRESENCE_RESET_FILTERS_ON_PREPARE, &reset, 4, 4);
 }
 
 int32_t QwDevXM125::setPresenceResetFilters(bool reset)
 {
-    // 
+    return write16BitRegisterRegion(SFE_XM125_PRESENCE_RESET_FILTERS_ON_PREPARE, reset, 4);
 }
 
 int32_t QwDevXM125::getPresenceHWAAS(uint32_t *avg)
 {
-    // 
+    return read16BitRegisterRegion(SFE_XM125_PRESENCE_HWAAS, &avg, 4, 4);
 }
 
 int32_t QwDevXM125::setPresenceHWAAS(uint32_t avg)
 {
-    // 
+    return write16BitRegisterRegion(SFE_XM125_PRESENCE_HWAAS, avg, 4);
 }
 
 int32_t QwDevXM125::getPresenceDetectionOnGPIO(bool *detected)
 {
-    // 
+    return read16BitRegisterRegion(SFE_XM125_PRESENCE_HWAAS, &detected, 4, 4);
 }
 
 int32_t QwDevXM125::setPresenceDetectionOnGPIO(bool detected)
 {
-    // 
+    return write16BitRegisterRegion(SFE_XM125_PRESENCE_HWAAS, detected, 4);
 }
 int32_t QwDevXM125::setPresenceCommand(sfe_xm125_presence_command_t cmd)
 {
-    // 
+    return write16BitRegisterRegion(SFE_XM125_PRESENCE_COMMAND, cmd, 4);
 }
 
 

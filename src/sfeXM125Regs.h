@@ -241,7 +241,7 @@ typedef struct
     uint32_t reserved1 : 27;
 } sfe_xm125_presence_protocol_status_t;
 
-const uint16_t SFE_XM125_PRESENCE_MEASURE_COUNTER = 0x02;
+const uint16_t SFE_XM125_PRESENCE_RESULT = 0x02;
 
 const uint16_t SFE_XM125_DISTANCE_DETECTOR_STATUS = 0x03;
 typedef struct 
