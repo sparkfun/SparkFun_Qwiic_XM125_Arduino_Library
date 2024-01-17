@@ -18,5 +18,6 @@ void setup()
 
 void loop()
 {
-    // Request Presence Data to the device 
+    // Request Distance Data to the device 
+    
 }

@@ -22,17 +22,12 @@ bool QwDevXM125::begin()
     // Create the sensor
     create_sensor(&detector_resources);
 
-    // Setup I2C Protocol (from acconeer) - Can we just skip this and Start I2C?
-    initI2CApplicationSystem();
-    presence_reg_protocol_setup();
+    
 
     // Handle GPIO outputs and commands
-    detector_gpio_output();
 
     // Clear busy bit once the handler is complete 
-    detector_status_clr_bits(PRESENCE_REG_DETECTOR_STATUS_FIELD_BUSY_MASK);
     // Set ready pin HIGH when command processing is done
-    i2c_application_system_set_ready_pin(true);
 
     // TODO: Return whether successful
 

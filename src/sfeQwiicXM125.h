@@ -4,8 +4,8 @@
 #include "Arduino.h"
 #include <Wire.h>
 
-#include "xm125/Inc/i2c_presence_detector.h"
-#include "xm125/Inc/i2c_distance_detector.h"
+//#include "xm125/Inc/i2c_presence_detector.h"
+//#include "xm125/Inc/i2c_distance_detector.h"
 
 
 class QwDevXM125
