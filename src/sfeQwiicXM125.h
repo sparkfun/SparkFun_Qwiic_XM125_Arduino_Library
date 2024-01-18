@@ -1,12 +1,7 @@
 #pragma once
 
-// TODO: Add includes as needed (e.g. #include <Wire.h>, #include <SPI.h>)
-#include "Arduino.h"
-#include <Wire.h>
-
-//#include "xm125/Inc/i2c_presence_detector.h"
-//#include "xm125/Inc/i2c_distance_detector.h"
-
+#include "SparkFun_Toolkit.h"
+#include "sfeXM125Regs.h"
 
 class QwDevXM125
 {
@@ -16,13 +11,13 @@ class QwDevXM125
 
         /// @brief This function begins the examples/communication.
         /// @return Error code (0 no error)
-        bool begin();
+        bool begin(sfeTkII2C *theBus = nullptr);
 
         // --------------------- I2C Disance Detector Functions ---------------------
         
         /// @brief This function begins the presence examples/communication.
         /// @return Error code (0 no error)
-        bool distanceBegin();
+        int32_t distanceBegin();
 
         /// @brief This function returns the version number of the device 
         ///  structure: major.minor.patch
@@ -756,6 +751,12 @@ class QwDevXM125
         int32_t setPresenceCommand(sfe_xm125_presence_command_t cmd);
 
 
+protected: 
+        sfeTkII2C *_theBus;
+
+};
+
+
 // Bad code - need to access registers instead
 
         // // --------------------- I2C Application System functions ---------------------
@@ -921,4 +922,4 @@ class QwDevXM125
         // /// @return Error code (0 no error)  
         // int32_t getPresenceDetectorGPIODetected(bool detected);
 
-};
+

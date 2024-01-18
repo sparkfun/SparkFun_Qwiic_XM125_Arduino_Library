@@ -184,7 +184,7 @@ const uint16_t sfe_xm125_distance_num_frames_recorded_thresh_default = 100;
 
 // Default Value: 100000
 const uint16_t SFE_XM125_DISTANCE_FIXED_AMPLITUDE_THRESHOLD_VAL = 0x49;
-const uint16_t sfe_xm125_distance_fixed_amp_thresh_val_default = 100000;
+const uint32_t sfe_xm125_distance_fixed_amp_thresh_val_default = 100000;
 
 // Default Value: 500
 const uint16_t SFE_XM125_DISTANCE_THREHSOLD_SENSITIVITY = 0x4a;
@@ -230,7 +230,7 @@ typedef struct
     uint32_t presence_patch : 8;
 } sfe_xm125_presence_version_t;
 
-const uint16_t SFE_XM125_DISTANCE_PROTOCOL_STATUS = 0x01;
+const uint16_t SFE_XM125_PRESENCE_PROTOCOL_STATUS = 0x01;
 typedef struct 
 {
     uint32_t presence_protocol_state_error : 1;
@@ -241,9 +241,9 @@ typedef struct
     uint32_t reserved1 : 27;
 } sfe_xm125_presence_protocol_status_t;
 
-const uint16_t SFE_XM125_PRESENCE_RESULT = 0x02;
+const uint16_t SFE_XM125_PRESENCE_MEASURE_COUNTER = 0x02;
 
-const uint16_t SFE_XM125_DISTANCE_DETECTOR_STATUS = 0x03;
+const uint16_t SFE_XM125_PRESENCE_DETECTOR_STATUS = 0x03;
 typedef struct 
 {
     uint32_t presence_rss_register_ok : 1;
@@ -338,8 +338,8 @@ typedef enum
     XM125_PRESENCE_PROFILE1 = 1,
     XM125_PRESENCE_PROFILE2 = 2,
     XM125_PRESENCE_PROFILE3 = 3,
-    XM125_PRESENCE_PROFILE1 = 4,
-    XM125_PRESENCE_PROFILE1 = 5,
+    XM125_PRESENCE_PROFILE4 = 4,
+    XM125_PRESENCE_PROFILE5 = 5,
 } sfe_xm125_presence_manual_profile_t;
 
 const uint16_t SFE_XM125_PRESENCE_MANUAL_STEP_LENGTH = 0x51;
