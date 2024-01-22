@@ -22,37 +22,29 @@ bool QwDevXM125::begin(sfeTkII2C *theBus)
     // Sets communication bus 
     _theBus = theBus;
 
-    
-    // TODO: Check if device is connected
+    // Check errors from device 
+    uint32_t distanceError = 0;
+    uint32_t presenceError = 0;
+    int32_t distFuncErr = getDistanceDetectorError(&distanceError);
+    int32_t presFuncErr = getDistanceDetectorError(&presenceError);
+    if(distanceError != 0 )
+    {
+        return -1;
+    }
+    if(presenceError != 0)
+    {
+        return -2;
+    }
+    if((distFuncErr != 0)|| (presFuncErr != 0))
+    {
+        return -3;
+    }
 
-    // TODO: Initialize hardware
-
-
-    // Turn the sensor on
-    //acc_hal_integration_sensor_supply_on(SENSOR_ID);
-    
-
-    // Create the sensor
-    //create_sensor(&detector_resources);
-
-
-
-    // Handle GPIO outputs and commands
-
-    // Clear busy bit once the handler is complete 
-    // Set ready pin HIGH when command processing is done
-
-    // TODO: Return whether successful
-
+    // If no errors, return 0
     return 0;
 }
 
 // --------------------- I2C Disance Detector Functions ---------------------
-
-int32_t QwDevXM125::distanceBegin()
-{
-    return 0;
-}
 
 int32_t QwDevXM125::getDistanceDetectorVersion(uint8_t *major, uint8_t *minor, uint8_t *patch)
 {
@@ -70,7 +62,7 @@ int32_t QwDevXM125::getDistanceDetectorVersion(uint8_t *major, uint8_t *minor, u
     return retVal;
 }
 
-int32_t QwDevXM125::getDistanceDetectorError(sfe_xm125_distance_protocol_status_t *error)
+int32_t QwDevXM125::getDistanceDetectorError(uint32_t *error)
 {
     // Read from 16-Bit Register
     return _theBus->read16BitRegisterRegion(SFE_XM125_DISTANCE_PROTOCOL_STATUS, (uint8_t*)error, 4);
@@ -318,12 +310,12 @@ int32_t QwDevXM125::setDistanceMaxProfile(sfe_xm125_distance_profile_t profile)
     return _theBus->write16BitRegisterRegion(SFE_XM125_DISTANCE_MAX_PROFILE, (uint8_t*)profile, 4);
 }
 
-int32_t QwDevXM125::getDistanceThresholdMethod(sfe_xm125_threshold_method_t *method)
+int32_t QwDevXM125::getDistanceThresholdMethod(sfe_xm125_distance_threshold_method_t *method)
 {
     return _theBus->read16BitRegisterRegion(SFE_XM125_DISTANCE_THRESHOLD_METHOD, (uint8_t*)method, 4);
 }
 
-int32_t QwDevXM125::setDistanceThresholdMethod(sfe_xm125_threshold_method_t method)
+int32_t QwDevXM125::setDistanceThresholdMethod(sfe_xm125_distance_threshold_method_t method)
 {
     return _theBus->write16BitRegisterRegion(SFE_XM125_DISTANCE_THRESHOLD_METHOD, (uint8_t*)method, 4);
 }
@@ -404,11 +396,6 @@ int32_t QwDevXM125::setDistanceCommand(sfe_xm125_distance_command_t *command)
 }
 
 // --------------------- I2C Presence Detector Functions ---------------------
-
-int32_t QwDevXM125::presenceBegin()
-{
-    return 0;
-}
 
 int32_t QwDevXM125::getPresenceDetectorVersion(uint8_t *major, uint8_t *minor, uint8_t *patch)
 {

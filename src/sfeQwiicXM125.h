@@ -14,10 +14,6 @@ class QwDevXM125
         bool begin(sfeTkII2C *theBus = nullptr);
 
         // --------------------- I2C Disance Detector Functions ---------------------
-        
-        /// @brief This function begins the distance examples/communication.
-        /// @return Error code (0 no error)
-        int32_t distanceBegin();
 
         /// @brief This function returns the version number of the device 
         ///  structure: major.minor.patch
@@ -27,7 +23,7 @@ class QwDevXM125
         /// @brief This function returns if there was an error from the 
         ///  protocol status register 
         /// @return Error code (0 no error)
-        int32_t getDistanceDetectorError(sfe_xm125_distance_protocol_status_t *error);
+        int32_t getDistanceDetectorError(uint32_t *error);
 
         /// @brief This function returns the measure counter, the number of measurements
         ///   performed since restart. 
@@ -247,12 +243,12 @@ class QwDevXM125
 
         /// @brief This function returns the threshold method 
         /// @return Error code (0 no error)
-        int32_t getDistanceThresholdMethod(sfe_xm125_threshold_method_t *method);
+        int32_t getDistanceThresholdMethod(sfe_xm125_distance_threshold_method_t *method);
 
         /// @brief This function sets the threshold method
         /// @param method Threshold method (enum)
         /// @return Error code (0 no error)
-        int32_t setDistanceThresholdMethod(sfe_xm125_threshold_method_t method);
+        int32_t setDistanceThresholdMethod(sfe_xm125_distance_threshold_method_t method);
 
         /// @brief This function returns the peak sorting method
         /// @param peak Peak sorting method 
@@ -351,10 +347,6 @@ class QwDevXM125
         int32_t setDistanceCommand(sfe_xm125_distance_command_t *command);
 
         // --------------------- I2C Presence Detector Functions ---------------------
-
-        /// @brief This function begins the presence examples/communication.
-        /// @return Error code (0 no error)
-        int32_t presenceBegin();
 
         /// @brief This function returns the RSS version number     
         /// @param version Version number

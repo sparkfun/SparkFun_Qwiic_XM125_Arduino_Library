@@ -17,7 +17,6 @@ sfe_xm125_presence_command_t KEYWORD1
 #########################################################
 
 begin KEYWORD2
-distanceBegin KEYWORD2
 getDistanceDetectorVersion KEYWORD2
 getDistanceDetectorError KEYWORD2
 getDistanceMeasureCounter KEYWORD2
@@ -76,7 +75,6 @@ setDistanceFixedStrengthThresholdValue KEYWORD2
 getDistanceMeasureOneWakeup KEYWORD2
 setDistanceMeasureOneWakeup KEYWORD2
 setDistanceCommand KEYWORD2
-presenceBegin KEYWORD2
 getPresenceDetectorVersion KEYWORD2
 getPresenceDetectorError KEYWORD2
 getPresenceMeasureCounter KEYWORD2

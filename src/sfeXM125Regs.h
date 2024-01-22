@@ -44,6 +44,8 @@
 /* ****************************** Distance Values ****************************** */
 
 const uint16_t SFE_XM125_I2C_ADDRESS = 0x52;
+const bool SFE_XM125_DISTANCE = false;
+const bool SFE_XM125_PRESENCE = true;
 
 const uint16_t SFE_XM125_DISTANCE_VERSION = 0x00;
 typedef struct 
