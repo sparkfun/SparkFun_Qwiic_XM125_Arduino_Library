@@ -28,10 +28,9 @@ bool QwDevXM125::begin(sfeTkII2C *theBus)
     // TODO: Initialize hardware
 
 
-    // Replicate what is in the main() funciton (without print)
-
     // Turn the sensor on
     //acc_hal_integration_sensor_supply_on(SENSOR_ID);
+    
 
     // Create the sensor
     //create_sensor(&detector_resources);
@@ -399,7 +398,7 @@ int32_t QwDevXM125::setDistanceMeasureOneWakeup(bool measure)
     return _theBus->write16BitRegisterRegion(SFE_XM125_DISTANCE_MEASURE_ON_WAKEUP, (uint8_t*)measure, 4);
 }
 
-int32_t QwDevXM125::setCommand(sfe_xm125_distance_command_t *command)
+int32_t QwDevXM125::setDistanceCommand(sfe_xm125_distance_command_t *command)
 {
     return _theBus->read16BitRegisterRegion(SFE_XM125_DISTANCE_COMMAND, (uint8_t*)command, 4);
 }

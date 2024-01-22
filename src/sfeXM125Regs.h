@@ -168,7 +168,7 @@ typedef enum
     XM125_DISTANCE_RECORDED = 2,
     XM125_DISTANCE_CFAR = 3,
     XM125_DISTANCE_FIXED_STRENGTH = 4,
-} sfe_xm125_threshold_method_t;
+} sfe_xm125_distance_threshold_method_t;
 
 // Default Value: STRONGEST (enum)
 const uint16_t SFE_XM125_DISTANCE_PEAK_SORTING = 0x47;
@@ -291,7 +291,7 @@ const uint16_t SFE_XM125_PRESENCE_INTER_FRAME_TIMEOUT = 0x41;
 const uint16_t sfe_xm125_presence_inter_frame_timeout_default = 3;
 
 const uint16_t SFE_XM125_PRESENCE_INTER_PHASE_BOOST_ENABLED = 0x42;
-const bool sfe_xm125_presence_inter_phase_boost_enabled_defaultS = false;
+const bool sfe_xm125_presence_inter_phase_boost_enabled_default = false;
 
 const uint16_t SFE_XM125_PRESENCE_INTRA_DETECTION_ENABLED = 0x43;
 const bool sfe_xm125_presence_intra_detection_enabled_default = true;

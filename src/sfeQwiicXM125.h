@@ -348,7 +348,7 @@ class QwDevXM125
         ///   datasheet on Page 25, Section 6.2.40 Command.
         /// @param apply Enable configuration and calibrate
         /// @return Error code (0 no error) 
-        int32_t setCommand(sfe_xm125_distance_command_t *command);
+        int32_t setDistanceCommand(sfe_xm125_distance_command_t *command);
 
         // --------------------- I2C Presence Detector Functions ---------------------
 
