@@ -36,6 +36,8 @@ void setup()
     Serial.println("XM125 Example 1: Basic Distance Readings");
     Serial.println("");
 
+    Wire.begin();
+
     // If begin is successful (0), then start example
     if(radarSensor.begin(i2cAddress, Wire) == 1)
     {

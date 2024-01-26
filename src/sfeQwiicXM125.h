@@ -13,6 +13,8 @@ class QwDevXM125
         /// @return Error code (0 no error)
         bool begin(sfeTkII2C *theBus = nullptr);
 
+        int32_t returnRegister(uint32_t *regVal);
+
         // --------------------- I2C Disance Detector Functions ---------------------
 
         /// @brief This function returns the version number of the device 
@@ -376,7 +378,7 @@ class QwDevXM125
         /// @return Error code (0 no error)  
         int32_t getPresenceDetectorStatus(uint32_t *status);
 
-        /// @brief This function returns the number of detected distance. 
+        /// @brief This function returns if presence was detected
         /// @param detected Number of detected distance
         /// @return Error code (0 no error)  
         int32_t getPresenceDistanceResult(uint32_t *detected);

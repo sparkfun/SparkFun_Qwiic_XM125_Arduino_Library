@@ -35,6 +35,8 @@ void setup()
     Serial.println("XM125 Example 2: Distance Threshold Settings");
     Serial.println("");
 
+    Wire.begin();
+
     // If begin is successful (0), then start example
     if(radarSensor.begin(i2cAddress, Wire) == 1)
     {
@@ -47,8 +49,10 @@ void setup()
     }
 
     // Set the fixed amplitude threshold
-    radarSensor.();
+    radarSensor.setDistanceFixedAmpThreshold();
     // Set the fixed strength threshold
+    radarSensor.setDistanceFixedStrengthThresholdValue(5);
+    // Set the distance threshold sensitivity
     radarSensor.();
 
 }

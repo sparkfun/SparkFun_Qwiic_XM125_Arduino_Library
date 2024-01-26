@@ -44,6 +44,16 @@ bool QwDevXM125::begin(sfeTkII2C *theBus)
     return 0;
 }
 
+
+/*Test functions below - delete once complete with library */
+int32_t QwDevXM125::returnRegister(uint32_t *regVal)
+{
+    return _theBus->read16BitRegisterRegion(SFE_XM125_DISTANCE_VERSION, (uint8_t*)regVal, 4);
+}
+
+
+
+
 // --------------------- I2C Disance Detector Functions ---------------------
 
 int32_t QwDevXM125::getDistanceDetectorVersion(uint8_t *major, uint8_t *minor, uint8_t *patch)

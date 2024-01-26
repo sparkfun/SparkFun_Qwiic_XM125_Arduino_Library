@@ -39,6 +39,8 @@ void setup()
     Serial.println("XM125 Example 3: Distance Subsweeps - Power Consumption Optimization");
     Serial.println("");
 
+    Wire.begin();
+
     // If begin is successful (0), then start example
     if(radarSensor.begin(i2cAddress, Wire) == 1)
     {

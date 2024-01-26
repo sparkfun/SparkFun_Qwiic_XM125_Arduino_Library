@@ -5,6 +5,7 @@
 
   This example shows how operate the XM125 when the device is in Presence Reading Mode.
   The sensor is initialized, then the presence values will print out to the terminal.
+  For full algorithm for 
 
   By: Madison Chodikov
   SparkFun Electronics
@@ -28,12 +29,18 @@ SfeXM125 radarSensor;
 // I2C default address
 uint8_t i2cAddress = SFE_XM125_I2C_ADDRESS;
 
+// Value to fill presence distance (in mm) 
+uint32_t distance; 
+uint32_t presenceDetected;
+
 void setup()
 {
     // Start serial
     Serial.begin(115200);
     Serial.println("XM125 Example 4: Basic Presence Readings");
     Serial.println("");
+
+    Wire.begin();
 
     // If begin is successful (0), then start example
     if(radarSensor.begin(i2cAddress, Wire) == 1)
@@ -45,11 +52,34 @@ void setup()
         Serial.println("Device failed to setup - Freezing code.");
         while(1); // Runs forever
     }
+
+    // uint32_t regVal;
+    // int32_t retVal;
+    // retVal = radarSensor.returnRegister(&regVal);
+    // Serial.println(regVal, HEX);
+    // Serial.println(retVal);
+
+    delay(2000);
+
 }
 
 void loop()
 {
-    // Request Presence Data from the device 
+    // If Presence is detected, then print out distance from device 
+    radarSensor.getPresenceDistanceResult(&presenceDetected);
+    
+    radarSensor.getPresenceDistance(&distance);
+    Serial.print("Presence detected at ");
+    Serial.print(distance);
+    Serial.println("mm");
+
+    if(presenceDetected == 1)
+    {
+      radarSensor.getPresenceDistance(&distance);
+      Serial.print("Presence detected at ");
+      Serial.print(distance);
+      Serial.println("mm");
+    }
 
     delay(100);
 }

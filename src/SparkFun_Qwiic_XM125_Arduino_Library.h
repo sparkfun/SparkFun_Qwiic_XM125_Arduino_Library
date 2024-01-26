@@ -19,7 +19,7 @@ class SfeXM125 : public QwDevXM125
             _i2cBus.init(wirePort, deviceAddress);
 
             // Initialize the system - return results
-            return this->QwDevXM125::begin(&_i2cBus);
+            return this->QwDevXM125::begin(&_i2cBus) == 0;
         }
 
     private: 

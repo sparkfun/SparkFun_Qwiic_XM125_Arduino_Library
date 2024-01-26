@@ -35,6 +35,8 @@ void setup()
     Serial.println("XM125 Example 5: Presence Subsweeps - Power Consumption Optimization");
     Serial.println("");
 
+    Wire.begin();
+
     // If begin is successful (0), then start example
     if(radarSensor.begin(i2cAddress, Wire) == 1)
     {
@@ -45,6 +47,9 @@ void setup()
         Serial.println("Device failed to setup - Freezing code.");
         while(1); // Runs forever
     }
+
+    // Set minimum start range for profile
+    radarSensor.setPresenceStart();
 }
 
 void loop()
