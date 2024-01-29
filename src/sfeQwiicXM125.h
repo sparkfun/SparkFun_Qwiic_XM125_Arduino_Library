@@ -350,6 +350,11 @@ class QwDevXM125
 
         // --------------------- I2C Presence Detector Functions ---------------------
 
+        /// @brief This function sets all the beginning values for a basic I2C
+        ///  example to be run on the device for presence sensing. 
+        /// @return Error code (0 no error)
+        int32_t presenceDetectorStart();
+
         /// @brief This function returns the RSS version number     
         /// @param version Version number
         /// @param patch Patch version number 
@@ -746,7 +751,25 @@ class QwDevXM125
         /// @param cmd command to send to device 
         /// @return Error code (0 no error) 
         int32_t setPresenceCommand(sfe_xm125_presence_command_t cmd);
+        
+        /// @brief Completes a busy wait loop while the device is uploading
+        ///  information by waiting for the status
+        /// @param stat Status of device - busy or not 
+        /// @return Error code (0 no error) 
+        int32_t presenceBusyWait();
 
+        /// @brief This functions starts the presence detector 
+        /// @return Error code (0 no error) 
+        int32_t startPresenceDetector();
+
+        /// @brief This function stops the presence detector
+        /// @return Error code (0 no error)
+        int32_t stopPresenceDetector();
+
+        /// @brief This function resets the presence detector settings 
+        ///  of the device
+        /// @return Error code (0 no error)
+        int32_t presenceReset();
 
 protected: 
         sfeTkII2C *_theBus;

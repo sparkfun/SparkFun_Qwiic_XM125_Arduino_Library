@@ -45,7 +45,7 @@ bool QwDevXM125::begin(sfeTkII2C *theBus)
 }
 
 
-/*Test functions below - delete once complete with library */
+/* ************Test functions below - delete once complete with library************ */
 int32_t QwDevXM125::returnRegister(uint32_t *regVal)
 {
     return _theBus->read16BitRegisterRegion(SFE_XM125_DISTANCE_VERSION, (uint8_t*)regVal, 4);
@@ -407,6 +407,66 @@ int32_t QwDevXM125::setDistanceCommand(sfe_xm125_distance_command_t *command)
 
 // --------------------- I2C Presence Detector Functions ---------------------
 
+int32_t QwDevXM125::presenceDetectorStart()
+{
+    Serial.println("Presence Sensor Start function");
+    // Set Start to 1000mm
+    if(setPresenceStart(1000) != 0)
+    {
+      return -1;
+    }
+    else 
+    {
+      Serial.println("Presence Start Set: 1000");
+    }
+
+    //delay(500);
+    Serial.println("Presence Sensor End function");
+    // Set end at 5000mm
+    if(setPresenceEnd(5000) != 0)
+    {
+      return -2;
+    }
+    else 
+    {
+      Serial.println("Presence End Set: 5000");
+    }
+
+    // Apply configuration
+    if(setPresenceCommand(XM125_PRESENCE_APPLY_CONFIGURATION) != 0)
+    {
+      return -3;
+    }
+    else 
+    {
+      Serial.println("Presence Configuration applied to device");
+    }
+
+    // Wait for configuration to be done
+    if(presenceBusyWait() != 0)
+    {
+        return -4;
+    }
+
+    // Start detector -- mask 0x02 with Presence Reg command address 
+    if(startPresenceDetector() != 0)
+    {
+      return -5;
+    }
+    else 
+    {
+      Serial.println("Presence Detector Started!");
+    }
+
+    // Wait for configuration to be done
+    if(presenceBusyWait() != 0)
+    {
+      return -6;
+    }
+
+    return 0;
+}
+
 int32_t QwDevXM125::getPresenceDetectorVersion(uint8_t *major, uint8_t *minor, uint8_t *patch)
 {
     int32_t retVal;
@@ -676,17 +736,26 @@ int32_t QwDevXM125::getPresenceManualStepLength(uint32_t *length)
 
 int32_t QwDevXM125::setPresenceManualStepLength(uint32_t length)
 {
-    return _theBus->write16BitRegisterRegion(SFE_XM125_PRESENCE_MANUAL_STEP_LENGTH, (uint8_t*)length, 4);
+    uint8_t foo[] = uint32To8(length);
+    return _theBus->write16BitRegisterRegion(SFE_XM125_PRESENCE_MANUAL_STEP_LENGTH, foo, 4);
 }
 
 int32_t QwDevXM125::getPresenceStart(uint32_t *start)
 {
-    return _theBus->read16BitRegisterRegion(SFE_XM125_PRESENCE_START, (uint8_t*)start, 4);
+    uint8_t data[4];
+    sfeTkError_t error = _theBus->read16BitRegisterRegion(SFE_XM125_PRESENCE_START, data, 4);
+
+    if(error != kSTkErrOk)
+        return error;
+
+    *start = uint8To32(data);
+    return kSTkErrOk;
 }
 
 int32_t QwDevXM125::setPresenceStart(uint32_t start)
 {
-    return _theBus->write16BitRegisterRegion(SFE_XM125_PRESENCE_START, (uint8_t*)start, 4);
+    uint8_t foo[] = uint32To8(start);
+    return _theBus->write16BitRegisterRegion(SFE_XM125_PRESENCE_START, foo, 4);
 }
 
 int32_t QwDevXM125::getPresenceEnd(uint32_t *end)
@@ -732,4 +801,36 @@ int32_t QwDevXM125::setPresenceDetectionOnGPIO(bool detected)
 int32_t QwDevXM125::setPresenceCommand(sfe_xm125_presence_command_t cmd)
 {
     return _theBus->write16BitRegisterRegion(SFE_XM125_PRESENCE_COMMAND, (uint8_t*)cmd, 4);
+}
+
+int32_t QwDevXM125::presenceBusyWait()
+{
+    uint32_t stat = 0;
+    do
+    {
+
+        if(_theBus->read16BitRegisterRegion(SFE_XM125_PRESENCE_DETECTOR_STATUS, (uint8_t*)stat, 4) != 0)
+        {
+            return -1;
+        }
+    } 
+    while ((stat & SFE_XM125_PRESENCE_DETECTOR_STATUS_MASK) != 0);
+
+    return 0; // 0 on success
+}
+
+int32_t QwDevXM125::startPresenceDetector()
+{
+    return _theBus->write16BitRegisterRegion(SFE_XM125_PRESENCE_COMMAND, (uint8_t*)XM125_PRESENCE_START_DETECTOR, 4);
+}
+
+int32_t QwDevXM125::stopPresenceDetector()
+{
+    return _theBus->write16BitRegisterRegion(SFE_XM125_PRESENCE_COMMAND, (uint8_t*)XM125_PRESENCE_STOP_DETECTOR, 4);
+
+}
+
+int32_t QwDevXM125::presenceReset()
+{
+    return _theBus->write16BitRegisterRegion(SFE_XM125_PRESENCE_COMMAND, (uint8_t*)XM125_PRESENCE_RESET_MODULE, 4);
 }
