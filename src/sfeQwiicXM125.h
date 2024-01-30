@@ -35,35 +35,35 @@ class QwDevXM125
         /// @brief This function returns the status of the device if there are any issues 
         ///  with any of the status's listed defined. 
         /// @return Error code (0 no error)
-        int32_t getDistanceDetectorStatus(sfe_xm125_distance_detector_status_t *status);
+        int32_t getDistanceDetectorStatus(uint32_t *status);
 
         /// @brief This function returns the number of detected distances.
         /// @param distance Number of detected distances
         /// @return Error code (0 no error)
-        int32_t getDistanceNumberDistances(sfe_xm125_distance_result_t *distance);
+        int32_t getDistanceNumberDistances(uint32_t *distance);
 
         /// @brief This function returns the indication that there might be an object 
         ///   near the start point of the measured range.
         /// @param edge Flag to determine object in range 
         /// @return Error code (0 no error)
-        int32_t getDistanceNearStartEdge(sfe_xm125_distance_result_t *edge);
+        int32_t getDistanceNearStartEdge(uint32_t *edge);
 
         /// @brief This function returns the indication of a sensor calibration needed.
         /// @param calibrate Flag to indicate calibration required 
         /// @return Error code (0 no error)
-        int32_t getDistanceCalibrationNeeded(sfe_xm125_distance_result_t *calibrate);
+        int32_t getDistanceCalibrationNeeded(uint32_t *calibrate);
 
         /// @brief This function returns if the measure command failed. 
         /// @param error Flag to indicate measure command error 
         /// @return Error code (0 no error)
-        int32_t getDistanceMeasureDistanceError(sfe_xm125_distance_result_t *error);
+        int32_t getDistanceMeasureDistanceError(uint32_t *error);
 
         /// @brief This function returns the temperature in sensor during measurements
         ///   (in degree Celsius). Note that it has poor absolute accuracy and should 
         ///   only be used for relative temperature measurements. 
         /// @param temperature Relative tempertaure of device 
         /// @return Error code (0 no error)
-        int32_t getDistanceTemperature(sfe_xm125_distance_result_t *temperature);
+        int32_t getDistanceTemperature(uint32_t *temperature);
 
         /// @brief This function returns the distance to peak 0
         ///  Note: This value is a factor 1000 larger than the RSS value
@@ -383,16 +383,16 @@ class QwDevXM125
         /// @return Error code (0 no error)  
         int32_t getPresenceDetectorStatus(uint32_t *status);
 
-        /// @brief This function returns if presence was detected
-        /// @param detected Number of detected distance
-        /// @return Error code (0 no error)  
-        int32_t getPresenceDistanceResult(uint32_t *detected);
-
-        /// @brief This function returns the indication that there might be an object near 
-        ///  the start point of measure range
-        /// @param nearEdge Object near start point
+        /// @brief This function returns if there was presence detected
+        /// @param detected Presence Detected 
         /// @return Error code (0 no error) 
-        int32_t getPresenceNearStartEdge(uint32_t *nearEdge);
+        int32_t getPresenceDetectorPresenceDetected(uint32_t *detected);
+
+        /// @brief This function returns if there was presence detected, sticky bit with
+        ///  clear on read.
+        /// @param sticky Sticky Presence Detected 
+        /// @return Error code (0 no error) 
+        int32_t getPresenceDetectorPresenceStickyDetected(uint32_t *sticky);
 
         /// @brief This function returns the indication that the presence detector
         ///  failed. 
@@ -653,7 +653,7 @@ class QwDevXM125
         ///  be used if profile auto selection was disabled. 
         /// @param prof Profile to use (enum)
         /// @return Error code (0 no error)
-        int32_t getPresenceManualProfile(sfe_xm125_presence_manual_profile_t *prof);
+        int32_t getPresenceManualProfile(uint8_t *prof);
 
         /// @brief This function sets the profile to use. The profile will only 
         ///  be used if profile auto selection was disabled. 

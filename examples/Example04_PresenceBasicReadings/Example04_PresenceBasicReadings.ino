@@ -54,82 +54,26 @@ void setup()
     }
 
     delay(200);
-    
+
     int32_t sensorStartError = radarSensor.presenceDetectorStart();
-    Serial.println("here");
     if(sensorStartError != 0)
     {
       Serial.println("Sensor Started Successfully");
     }
     else
     {
-      Serial.print("Error upon Setup: ");
-      Serial.println(sensorStartError);
+      Serial.println("Sensor not initialized correctly - Freezing code.");
+      while(1); // Runs forever 
     }
 
-    // // Set Start to 1000mm
-    // if(radarSensor.setPresenceStart(1000) != 0)
-    // {
-    //   Serial.println("Presence Start Error");
-    // }
-    // else 
-    // {
-    //   Serial.println("Presence Start Set: 1000");
-    // }
-
-    // delay(500);
-    
-    // // Set end at 5000mm
-    // if(radarSensor.setPresenceEnd(5000) != 0)
-    // {
-    //   Serial.println("Presence End Error");
-    // }
-    // else 
-    // {
-    //   Serial.println("Presence End Set: 5000");
-    // }
-
-    // // Apply configuration
-    // if(radarSensor.setPresenceCommand(XM125_PRESENCE_APPLY_CONFIGURATION) != 0)
-    // {
-    //   Serial.println("Presence Command Error");
-    // }
-    // else 
-    // {
-    //   Serial.println("Presence Configuration applied to device");
-    // }
-
-    // // Wait for configuration to be done
-    // if(radarSensor.presenceBusyWait() != 0)
-    // {
-    //   Serial.println("Device is busy");
-    // }
-
-    // // Start detector -- mask 0x02 with Presence Reg command address 
-    // if(radarSensor.startPresenceDetector() != 0)
-    // {
-    //   Serial.println("Presence Detector Start Error");
-    // }
-    // else 
-    // {
-    //   Serial.println("Presence Detector Started!");
-    // }
-
-    // // Wait for configuration to be done
-    // if(radarSensor.presenceBusyWait() != 0)
-    // {
-    //   Serial.println("Device is busy");
-    // }
-
-    Serial.println("Presence Setup Complete");
-
+    delay(1000);
 
 }
 
 void loop()
 {
     // If Presence is detected, then print out distance from device 
-    radarSensor.getPresenceDistanceResult(&presenceDetected);
+    radarSensor.getPresenceDetectorPresenceDetected(&presenceDetected);
     
     radarSensor.getPresenceDistance(&distance);
     Serial.print("Presence detected at ");
@@ -144,8 +88,7 @@ void loop()
       Serial.println("mm");
     }
 
-    
+    Serial.println("loop");
 
-
-    delay(100);
+    delay(500);
 }
