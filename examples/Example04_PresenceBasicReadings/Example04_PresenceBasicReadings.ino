@@ -67,28 +67,25 @@ void setup()
     }
 
     delay(1000);
-
 }
 
 void loop()
 {
     // If Presence is detected, then print out distance from device 
-    radarSensor.getPresenceDetectorPresenceDetected(&presenceDetected);
+    radarSensor.getPresenceDetectorPresenceDetected(presenceDetected);
     
-    radarSensor.getPresenceDistance(&distance);
+    radarSensor.getPresenceDistance(distance);
     Serial.print("Presence detected at ");
     Serial.print(distance);
     Serial.println("mm");
 
-    if(presenceDetected == 1)
-    {
-      radarSensor.getPresenceDistance(&distance);
-      Serial.print("Presence detected at ");
-      Serial.print(distance);
-      Serial.println("mm");
-    }
-
-    Serial.println("loop");
+    // if(presenceDetected == 1)
+    // {
+    //   radarSensor.getPresenceDistance(distance);
+    //   Serial.print("Presence detected at ");
+    //   Serial.print(distance);
+    //   Serial.println("mm");
+    // }
 
     delay(500);
 }

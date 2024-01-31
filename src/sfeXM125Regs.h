@@ -47,6 +47,8 @@ const uint16_t SFE_XM125_I2C_ADDRESS = 0x52;
 const bool SFE_XM125_DISTANCE = false;
 const bool SFE_XM125_PRESENCE = true;
 
+const uint32_t SFE_XM125_DISTANCE_DETECTOR_STATUS_MASK = 0b10010000111111110000000011111111;
+
 const uint16_t SFE_XM125_DISTANCE_VERSION = 0x00;
 typedef struct 
 {
@@ -222,13 +224,20 @@ typedef enum
     XM125_DISTANCE_RESET_MODULE = 1381192737,
 } sfe_xm125_distance_command_t;
 
+const uint32_t SFE_XM125_DISTANCE_START_DETECTOR = 2;
+const uint32_t SFE_XM125_DISTANCE_STOP_DETECTOR = 3;
+const uint32_t SFE_XM125_DISTANCE_RESET_MODULE = 1381192737;
+
 /* ****************************** Presence Values ****************************** */
 
-const uint16_t SFE_XM125_PRESENCE_VERSION = 0x00;
+
 const uint32_t SFE_XM125_PRESENCE_DETECTOR_STATUS_MASK = 0b10010000111111110000000011111111;
 
-#define uint32To8(foo) {(uint8_t)(((uint32_t) foo >> 24) & 0xFF), (uint8_t)(((uint32_t) foo >> 16) & 0xFF), (uint8_t)(((uint32_t) foo >> 8) & 0xFF), (uint8_t)(((uint32_t) foo >> 0) & 0xFF)}
-#define uint8To32(foo) (((uint32_t) foo[0] << 24) | ((uint32_t) foo[1] << 16) | ((uint32_t) foo[2] << 8) | ((uint32_t) foo[3] << 0))
+//#define uint32To8(foo) {(uint8_t)(((uint32_t) foo >> 24) & 0xFF), (uint8_t)(((uint32_t) foo >> 16) & 0xFF), (uint8_t)(((uint32_t) foo >> 8) & 0xFF), (uint8_t)(((uint32_t) foo >> 0) & 0xFF)}
+//#define uint8To32(foo) (((uint32_t) foo[0] << 24) | ((uint32_t) foo[1] << 16) | ((uint32_t) foo[2] << 8) | ((uint32_t) foo[3] << 0))
+
+
+const uint16_t SFE_XM125_PRESENCE_VERSION = 0x00;
 typedef struct 
 {
     uint32_t presence_major : 16;
@@ -378,3 +387,7 @@ typedef enum
     XM125_PRESENCE_RESET_MODULE = 138119737,
 } sfe_xm125_presence_command_t;
 
+const uint32_t SFE_XM125_PRESENCE_APPLY_CONFIGURATION = 1;
+const uint32_t SFE_XM125_PRESENCE_START_DETECTOR = 2;
+const uint32_t SFE_XM125_PRESENCE_STOP_DETECTOR = 3;
+const uint32_t SFE_XM125_PRESENCE_RESET_MODULE = 1381192737;
