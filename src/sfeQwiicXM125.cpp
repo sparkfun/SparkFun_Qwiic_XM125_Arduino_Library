@@ -50,6 +50,42 @@ bool QwDevXM125::begin(sfeTkII2C *theBus)
 
 int32_t QwDevXM125::distanceBegin()
 {
+    // Set start to 1000mm
+    if(setDistanceStart(1000) != 0)
+    {
+        return -1;
+    }
+    if(setDistanceEnd(5000) != 0)
+    {
+        return -2;
+    }
+
+    // Apply configuration
+    if(setPresenceCommand(SFE_XM125_DISTANCE_APPLY_CONFIGURATION) != 0)
+    {
+        return -3;
+    }
+
+    // Wait for configuration to be done
+    // Wait for configuration to be done
+    if(distanceBusyWait() != 0)
+    {
+      return -4;
+    }
+
+    // Start detector
+    if(setDistanceCommand(SFE_XM125_DISTANCE_START_DETECTOR) != 0)
+    {
+        return -5;
+    }
+
+    // Wait for configuration to be done
+        // Wait for configuration to be done
+    if(distanceBusyWait() != 0)
+    {
+      return -6;
+    }
+
     return 0;
 }
 
@@ -420,17 +456,16 @@ int32_t QwDevXM125::distanceBusyWait()
 
 // --------------------- I2C Presence Detector Functions ---------------------
 
-int32_t QwDevXM125::presenceDetectorStart()
+int32_t QwDevXM125::presenceDetectorStart(uint32_t start, uint32_t stop)
 {
-    Serial.println("Presence Sensor Start function");
     // Set Start to 1000mm
-    if(setPresenceStart(1000) != 0)
+    if(setPresenceStart(start) != 0)
     {
       return -1;
     }
 
     // Set end at 5000mm
-    if(setPresenceEnd(5000) != 0)
+    if(setPresenceEnd(stop) != 0)
     {
       return -2;
     }

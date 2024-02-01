@@ -362,8 +362,10 @@ class QwDevXM125
 
         /// @brief This function sets all the beginning values for a basic I2C
         ///  example to be run on the device for presence sensing. 
+        /// @param start Value in mm to start, default 1000mm 
+        /// @param stop  Value in mm to stop, default 5000mm
         /// @return Error code (0 no error)
-        int32_t presenceDetectorStart();
+        int32_t presenceDetectorStart(uint32_t start = 1000, uint32_t stop = 5000);
 
         /// @brief This function returns the RSS version number     
         /// @param version Version number
@@ -768,7 +770,8 @@ class QwDevXM125
         int32_t presenceReset();
 
         /// @brief Completes a busy wait loop while the device is uploading
-        ///  information by waiting for the status
+        ///  information by waiting for the status. Checks the error status register
+        ///  to wait until errors are completed/gone
         /// @return Error code (0 no error) 
         int32_t presenceBusyWait();
 

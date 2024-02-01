@@ -55,6 +55,7 @@ void setup()
 
     delay(200);
 
+    // Default start = 1000; Default stop = 5000
     int32_t sensorStartError = radarSensor.presenceDetectorStart();
     if(sensorStartError != 0)
     {
@@ -66,14 +67,28 @@ void setup()
       while(1); // Runs forever 
     }
 
+    // Test code below - delete once complete 
+    uint32_t startVal = 0;
+    uint32_t endVal = 0;
+    radarSensor.getPresenceStart(startVal);
+    radarSensor.getPresenceEnd(endVal);
+    Serial.print("Start Val: ");
+    Serial.println(startVal);
+    Serial.print("End Val: ");
+    Serial.println(endVal);
+
     delay(1000);
+    while(1);
 }
 
 void loop()
 {
+    radarSensor.setPresenceCommand(SFE_XM125_PRESENCE_START_DETECTOR);
     // If Presence is detected, then print out distance from device 
     radarSensor.getPresenceDetectorPresenceDetected(presenceDetected);
-    
+    Serial.print("Presence Detector flag: ");
+    Serial.println(presenceDetected);
+
     radarSensor.getPresenceDistance(distance);
     Serial.print("Presence detected at ");
     Serial.print(distance);
