@@ -12,6 +12,8 @@ class SfeXM125 : public QwDevXM125
 
         /// @brief  Sets up Arduino I2C driver using the specified I2C address then calls the super class begin.
         /// @param address Address of the I2C device.
+        /// @param wirePort Wire port of the I2C device.
+        /// @param version Distance (0) or Presence (1) version 
         /// @return True if successful, false otherwise.
         bool begin(uint8_t deviceAddress = SFE_XM125_I2C_ADDRESS, TwoWire &wirePort = Wire)
         {

@@ -40,12 +40,18 @@
 
 #include <stdint.h>
 
+const uint16_t SFE_XM125_I2C_ADDRESS = 0x52;
 
 /* ****************************** Distance Values ****************************** */
 
-const uint16_t SFE_XM125_I2C_ADDRESS = 0x52;
-const bool SFE_XM125_DISTANCE = false;
-const bool SFE_XM125_PRESENCE = true;
+const uint32_t SFE_XM125_DISTANCE_MAJOR_VERSION_MASK = 0xffff0000;
+const uint32_t SFE_XM125_DISTANCE_MINOR_VERSION_MASK = 0x0000ff00;
+const uint32_t SFE_XM125_DISTANCE_PATCH_VERSION_MASK = 0x000000ff;
+const uint32_t SFE_XM125_DISTANCE_NUMBER_DISTANCES_MASK = 0x0000000f;
+const uint32_t SFE_XM125_DISTANCE_NEAR_START_EDGE_MASK = 0x00000100;
+const uint32_t SFE_XM125_DISTANCE_MEASURE_DISTANCE_ERROR_MASK = 0x00000400;
+const uint32_t SFE_XM125_DISTANCE_TEMPERATURE_MASK = 0xffff0000;
+
 
 const uint32_t SFE_XM125_DISTANCE_DETECTOR_STATUS_MASK = 0b10010000111111110000000011111111;
 
@@ -234,9 +240,14 @@ const uint32_t SFE_XM125_DISTANCE_RESET_MODULE = 1381192737;
 
 const uint32_t SFE_XM125_PRESENCE_DETECTOR_STATUS_MASK = 0b10010000111111110000000011111111;
 
-//#define uint32To8(foo) {(uint8_t)(((uint32_t) foo >> 24) & 0xFF), (uint8_t)(((uint32_t) foo >> 16) & 0xFF), (uint8_t)(((uint32_t) foo >> 8) & 0xFF), (uint8_t)(((uint32_t) foo >> 0) & 0xFF)}
-//#define uint8To32(foo) (((uint32_t) foo[0] << 24) | ((uint32_t) foo[1] << 16) | ((uint32_t) foo[2] << 8) | ((uint32_t) foo[3] << 0))
-
+const uint32_t SFE_XM125_PRESENCE_DETECTED_MASK = 0x00000001;
+const uint32_t SFE_XM125_PRESENCE_DETECTED_STICKY_MASK =  0x00000002;
+const uint32_t SFE_XM125_PRESENCE_DETECTOR_ERROR_MASK = 0x00008000;
+const uint32_t SFE_XM125_PRESENCE_TEMPERATURE_MASK = 0xffff0000;
+const uint32_t SFE_XM125_PRESENCE_BUSY_MASK = 0x80000000;
+const uint32_t SFE_XM125_PRESENCE_MAJOR_VERSION_MASK = 0xffff0000;
+const uint32_t SFE_XM125_PRESENCE_MINOR_VERSION_MASK = 0x0000ff00;
+const uint32_t SFE_XM125_PRESENCE_PATCH_VERSION_MASK = 0x000000ff;
 
 const uint16_t SFE_XM125_PRESENCE_VERSION = 0x00;
 typedef struct 

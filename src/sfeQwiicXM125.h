@@ -20,7 +20,7 @@ class QwDevXM125
         /// @brief This function sets all the beginning values for a basic I2C
         ///  example to be run on the device for presence sensing. 
         /// @return Error code (0 no error)
-        int32_t distanceBegin();
+        int32_t distanceBegin(uint32_t start = 1000, uint32_t stop = 5000);
 
         /// @brief This function returns the version number of the device 
         ///  structure: major.minor.patch
@@ -370,7 +370,7 @@ class QwDevXM125
         /// @brief This function returns the RSS version number     
         /// @param version Version number
         /// @param patch Patch version number 
-        /// @return Error code (0 no error)   
+        /// @return Error code (0 no error)
         int32_t getPresenceDetectorVersion(uint32_t &major, uint32_t &minor, uint32_t &patch);
 
         /// @brief This function returns the protocol state erorr 
@@ -768,6 +768,11 @@ class QwDevXM125
         ///  of the device
         /// @return Error code (0 no error)
         int32_t presenceReset();
+
+        /// @brief This function returns the busy bit of the presence status register
+        /// @param busy Device busy or not 
+        /// @return Error code (0 no error)
+        int32_t getPresenceBusy(uint32_t &busy);
 
         /// @brief Completes a busy wait loop while the device is uploading
         ///  information by waiting for the status. Checks the error status register

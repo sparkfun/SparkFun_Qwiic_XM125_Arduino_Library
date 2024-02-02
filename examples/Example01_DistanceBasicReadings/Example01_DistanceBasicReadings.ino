@@ -29,6 +29,8 @@ SfeXM125 radarSensor;
 // I2C default address
 uint8_t i2cAddress = SFE_XM125_I2C_ADDRESS;
 
+uint32_t distanceVal = 0;
+
 void setup()
 {
     // Start serial
@@ -48,11 +50,47 @@ void setup()
         Serial.println("Device failed to setup - Freezing code.");
         while(1); // Runs forever
     }
+
+    // Default start = 1000; Default stop = 5000
+    if(radarSensor.distanceBegin() != 0)
+    {
+      Serial.println("Sensor started successfully");
+    }
+    else
+    {
+      Serial.println("Sensor not initialized correctly - Freezing code.");
+      while(1);
+    }
+
+
+    // Test code below - delete once complete 
+    uint32_t startVal = 0;
+    uint32_t endVal = 0;
+    radarSensor.getDistanceStart(startVal);
+    radarSensor.getDistanceEnd(endVal);
+    Serial.print("Start Val: ");
+    Serial.println(startVal);
+    Serial.print("End Val: ");
+    Serial.println(endVal);
+
+    delay(1000);
+
+
 }
 
 void loop()
 {
-    // Request Distance Data from the device 
+    // Request Distance Data from the device
+    radarSensor.setDistanceCommand(SFE_XM125_DISTANCE_START_DETECTOR);
+    radarSensor.distanceBusyWait();
+    radarSensor.getDistancePeak0Distance(distanceVal);
+
+    if(distanceVal != 0)
+    {
+      Serial.print("Peak Distance Found: ");
+      Serial.print(distanceVal);
+      Serial.println(" mm");
+    }
 
     delay(100);
 }
