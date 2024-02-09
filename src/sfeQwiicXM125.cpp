@@ -1,5 +1,6 @@
 #include "SparkFun_Qwiic_XM125_Arduino_Library.h"
 #include "sfeQwiicXM125.h"
+#include <arpa/inet.h>
 
 QwDevXM125::QwDevXM125()
 {
@@ -28,9 +29,9 @@ bool QwDevXM125::begin(sfeTkII2C *theBus)
     int32_t distFuncErr = 0;
     int32_t presFuncErr = 0;
     
-    // Reset Module
+    // Reset Module upon start
     setDistanceCommand(SFE_XM125_DISTANCE_RESET_MODULE);
-    setPresenceCommand(SFE_XM125_PRESENCE_RESET_MODULE);
+    setPresenceCommand(XM125_PRESENCE_RESET_MODULE);
 
     distFuncErr = getDistanceDetectorError(distanceError);
     presFuncErr = getDistanceDetectorError(presenceError);
@@ -66,7 +67,7 @@ int32_t QwDevXM125::distanceBegin(uint32_t start, uint32_t stop)
     }
 
     // Apply configuration
-    if(setPresenceCommand(SFE_XM125_DISTANCE_APPLY_CONFIGURATION) != 0)
+    if(setDistanceCommand(XM125_DISTANCE_APPLY_CONFIGURATION) != 0)
     {
         return -3;
     }
@@ -473,7 +474,7 @@ int32_t QwDevXM125::presenceDetectorStart(uint32_t start, uint32_t stop)
     }
 
     // Apply configuration
-    if(setPresenceCommand(SFE_XM125_PRESENCE_APPLY_CONFIGURATION) != 0)
+    if(setPresenceCommand(XM125_PRESENCE_APPLY_CONFIGURATION) != 0)
     {
       return -3;
     }
@@ -485,7 +486,7 @@ int32_t QwDevXM125::presenceDetectorStart(uint32_t start, uint32_t stop)
     }
 
     // Start detector 
-    if(setPresenceCommand(SFE_XM125_PRESENCE_START_DETECTOR) != 0)
+    if(setPresenceCommand(XM125_PRESENCE_START_DETECTOR) != 0)
     {
       return -5;
     }
@@ -530,46 +531,88 @@ int32_t QwDevXM125::getPresenceDetectorStatus(uint32_t &status)
     return _theBus->readRegister16Region(SFE_XM125_PRESENCE_DETECTOR_STATUS, (uint8_t*)&status, 4);
 }
 
+int32_t QwDevXM125::getPresenceDetectorErrorStatus(uint32_t &status)
+{
+    int32_t retVal;
+    uint32_t regVal = 0;
+    retVal = _theBus->readRegister16Region(SFE_XM125_PRESENCE_DETECTOR_STATUS, (uint8_t*)&regVal, 4);
+    flipBytes(regVal);
+
+    if(retVal != 0)
+    {
+        return -1;
+    }
+
+    if(((regVal & SFE_XM125_RSS_REGISTER_ERROR_MASK) >> 15) != 0)
+    {
+        status = 1;
+        return 0;
+    }
+    else if(((regVal & SFE_XM125_CONFIG_CREATE_ERROR_MASK) >> 16) != 0)
+    {
+        status = 2;
+        return 0;
+    }
+    else if(((regVal & SFE_XM125_SENSOR_CREATE_ERROR_MASK) >> 17) != 0)
+    {
+        status = 3;
+        return 0;
+    }
+    else if(((regVal & SFE_XM125_SENSOR_CALIBRATE_ERROR_MASK) >> 18) != 0)
+    {
+        status = 4;
+        return 0;
+    }
+    else if(((regVal & SFE_XM125_DETECTOR_CREATE_ERROR_MASK) >> 19) != 0)
+    {
+        status = 5;
+        return 0;
+    }
+    else if(((regVal & SFE_XM125_DETECTOR_BUFFER_ERROR_MASK) >> 20) != 0)
+    {
+        status = 6;
+        return 0;
+    }
+    else if(((regVal & SFE_XM125_SENSOR_BUFFER_ERROR_MASK) >> 21) != 0)
+    {
+        status = 7;
+        return 0;
+    }
+    else if(((regVal & SFE_XM125_CONFIG_APPLY_ERROR_MASK) >> 22) != 0)
+    {
+        status = 8;
+        return 0;
+    }
+    else if(((regVal & SFE_XM125_DETECTOR_ERROR_MASK) >> 27) != 0)
+    {
+        status = 9;
+        return 0;
+    }
+    else if(((regVal & SFE_XM125_PRESENCE_BUSY_MASK) >> 30) != 0)
+    {
+        status = 10;
+        return 0;
+    }
+
+    return 0; // return 0  with no errors 
+}
+
+
 int32_t QwDevXM125::getPresenceDetectorPresenceDetected(uint32_t &detected)
 {
     int32_t retVal;
     uint32_t regVal = 0;
 
     // Read from 16-Bit Register
-    retVal = _theBus->readRegister16Region(SFE_XM125_PRESENCE_DISTANCE, (uint8_t*)&regVal, 4);
+    retVal = _theBus->readRegister16Region(SFE_XM125_PRESENCE_RESULT, (uint8_t*)&regVal, 4);
+
+    flipBytes(regVal);
 
     // Mask unused bits from register 
-    detected = (regVal & 0x00000001);
+    detected = (regVal & SFE_XM125_PRESENCE_DETECTED_MASK);
 
     return retVal;
 }
-
-// int32_t QwDevXM125::getPresenceResult()
-// {
-//     int32_t retVal;
-//     uint32_t regVal = 0;
-
-//     retVal = _theBus->readRegister16Region(SFE_XM125_PRESENCE_DISTANCE, (uint8_t*)&regVal, 4);
-
-//     bool presenceDetected = (regVal & ) != 0;
-//     bool presenceDetectedSticky = (regVal & ) != 0;
-
-
-// }
-
-// int32_t QwDevXM125::getPresenceDistanceResult(uint32_t &detected)
-// {
-//     int32_t retVal;
-//     uint32_t regVal = 0;
-
-//     // Read from 16-Bit Register
-//     retVal = _theBus->readRegister16Region(SFE_XM125_PRESENCE_DISTANCE, (uint8_t*)&regVal, 4);
-
-//     // Mask unused bits from register 
-//     *detected = (regVal & 0x00000001);
-
-//     return retVal;
-// }
 
 int32_t QwDevXM125::getPresenceDetectorPresenceStickyDetected(uint32_t &sticky)
 {
@@ -577,7 +620,9 @@ int32_t QwDevXM125::getPresenceDetectorPresenceStickyDetected(uint32_t &sticky)
     uint32_t regVal = 0;
 
     // Read from 16-Bit Register
-    retVal = _theBus->readRegister16Region(SFE_XM125_PRESENCE_DISTANCE, (uint8_t*)&regVal, 4);
+    retVal = _theBus->readRegister16Region(SFE_XM125_PRESENCE_RESULT, (uint8_t*)&regVal, 4);
+
+    flipBytes(regVal);
 
     // Mask unused bits from register 
     sticky = (regVal & SFE_XM125_PRESENCE_DETECTED_STICKY_MASK) >> 1;
@@ -591,7 +636,9 @@ int32_t QwDevXM125::getPresenceDetectorRegError(uint32_t &error)
     uint32_t regVal = 0;
 
     // Read from 16-Bit Register
-    retVal = _theBus->readRegister16Region(SFE_XM125_PRESENCE_DISTANCE, (uint8_t*)&regVal, 4);
+    retVal = _theBus->readRegister16Region(SFE_XM125_PRESENCE_RESULT, (uint8_t*)&regVal, 4);
+
+    flipBytes(regVal);
 
     // Mask unused bits from register 
     error = (regVal & SFE_XM125_PRESENCE_DETECTOR_ERROR_MASK) >> 14;
@@ -615,7 +662,10 @@ int32_t QwDevXM125::getPresenceTemperature(uint32_t &temp)
 
 int32_t QwDevXM125::getPresenceDistance(uint32_t &distance)
 {
-    return _theBus->readRegister16Region(SFE_XM125_PRESENCE_DISTANCE, (uint8_t*)&distance, 4);
+    int32_t retVal = 0;
+    retVal = _theBus->readRegister16Region(SFE_XM125_PRESENCE_DISTANCE, (uint8_t*)&distance, 4);
+    flipBytes(distance);
+    return retVal;
 }
 
 int32_t QwDevXM125::getPresenceIntraPresenceScore(uint32_t &intra)
@@ -800,22 +850,28 @@ int32_t QwDevXM125::setPresenceManualStepLength(uint32_t length)
 
 int32_t QwDevXM125::getPresenceStart(uint32_t &start)
 {
-    return _theBus->readRegister16Region(SFE_XM125_PRESENCE_START, (uint8_t*)&start, 4);
+    int32_t retVal = _theBus->readRegister16Region(SFE_XM125_PRESENCE_START, (uint8_t*)&start, 4);
+    flipBytes(start);
+    return retVal;
 }
 
 int32_t QwDevXM125::setPresenceStart(uint32_t start)
 {
-    Serial.println("Start");
+    //htonl(start);
+    flipBytes(start);
     return _theBus->writeRegister16Region(SFE_XM125_PRESENCE_START, (uint8_t*)&start, 4);
 }
 
 int32_t QwDevXM125::getPresenceEnd(uint32_t &end)
 {
-    return _theBus->readRegister16Region(SFE_XM125_PRESENCE_END, (uint8_t*)&end, 4);
+    int32_t retVal = _theBus->readRegister16Region(SFE_XM125_PRESENCE_END, (uint8_t*)&end, 4);
+    flipBytes(end);
+    return retVal;
 }
 
 int32_t QwDevXM125::setPresenceEnd(uint32_t end)
 {
+    flipBytes(end);
     return _theBus->writeRegister16Region(SFE_XM125_PRESENCE_END, (uint8_t*)&end, 4);
 }
 
@@ -851,8 +907,8 @@ int32_t QwDevXM125::setPresenceDetectionOnGPIO(bool detected)
 
 int32_t QwDevXM125::setPresenceCommand(uint32_t cmd)
 {
-    Serial.print("Command Sent: ");
-    Serial.println(cmd, HEX);
+    //presenceBusyWait();
+    flipBytes(cmd);
     return _theBus->writeRegister16Region(SFE_XM125_PRESENCE_COMMAND, (uint8_t*)&cmd, 4);
 }
 
@@ -864,6 +920,7 @@ int32_t QwDevXM125::getPresenceBusy(uint32_t &busy)
     // Read from 16-Bit Register
     retVal = _theBus->readRegister16Region(SFE_XM125_PRESENCE_DETECTOR_STATUS, (uint8_t*)&regVal, 4);
 
+    flipBytes(busy);
     // Mask unused bits from register 
     busy = (regVal & SFE_XM125_PRESENCE_BUSY_MASK) >> 30;
 
@@ -872,24 +929,75 @@ int32_t QwDevXM125::getPresenceBusy(uint32_t &busy)
 
 int32_t QwDevXM125::presenceBusyWait()
 {
-    uint32_t stat = 0;
+    int32_t retVal = 0;
+    //uint32_t stat = 0;
+    uint32_t regVal = 0;
     // Poll Detector Status until Busy bit is cleared 
 
-    // getPresenceBusy(stat);
+    // retVal = getPresenceBusy(stat);
+    // while(stat != 0)
+    // {
+    //     Serial.print("busy wait: ");
+    //     getPresenceRegisterVal(regVal);
+    //     Serial.print("Presence Detector Status: ");
+    //     Serial.println(regVal, BIN);
+    //     getPresenceBusy(stat);
+    //     Serial.println(stat);
+    // }
+
+    retVal = _theBus->readRegister16Region(SFE_XM125_PRESENCE_DETECTOR_STATUS, (uint8_t*)&regVal, 4);
+    flipBytes(regVal);
+
+    while(((regVal & SFE_XM125_PRESENCE_BUSY_MASK) >> 30) != 0)
+    {
+        Serial.println("Busy wait");
+        retVal = _theBus->readRegister16Region(SFE_XM125_PRESENCE_DETECTOR_STATUS, (uint8_t*)&regVal, 4);
+        flipBytes(regVal);
+    }
+
+    if(retVal != 0)
+    {
+        return -1;
+    }
+    
+    return 0;
+
+
+
     // do
     // {
-    //     getPresenceBusy(stat);
-    // } while (stat != 0);
+    //     if(getPresenceBusy(stat) != 0)
+    //     {
+    //         return -1;
+    //     }
+    // } 
+    // while (stat != 0);
 
-    do
+    if(retVal != 0)
     {
-        Serial.println("waiting...");
-        if(getPresenceBusy(stat) != 0)
-        {
-            return -1;
-        }
-    } 
-    while (stat != 0);
-
+        return retVal;
+    }
     return 0; // 0 on success
+}
+
+int32_t QwDevXM125::getPresenceRegisterVal(uint32_t &regVal)
+{
+    int32_t retVal = 0;
+
+    retVal = _theBus->writeRegister16Region(SFE_XM125_PRESENCE_DETECTOR_STATUS, (uint8_t*)&regVal, 4);
+    
+    flipBytes(regVal);
+    return retVal;
+
+}
+
+int32_t QwDevXM125::flipBytes(uint32_t &data)
+{
+    uint32_t data1 = (data & 0x000000ff) << 24;
+    uint32_t data2 = (data & 0x0000ff00) << 8;
+    uint32_t data3 = (data & 0x00ff0000) >> 8;
+    uint32_t data4 = (data & 0xff000000) >> 24;
+    data = data1 | data2 | data3 | data4;
+
+    return 0;
 }

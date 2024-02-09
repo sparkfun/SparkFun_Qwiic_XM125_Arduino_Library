@@ -64,6 +64,10 @@ void setup()
 
 
     // Test code below - delete once complete 
+    radarSensor.setDistanceStart(1000);
+    radarSensor.setDistanceEnd(5000);
+    delay(100);
+    
     uint32_t startVal = 0;
     uint32_t endVal = 0;
     radarSensor.getDistanceStart(startVal);

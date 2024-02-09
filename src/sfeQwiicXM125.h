@@ -395,6 +395,8 @@ class QwDevXM125
         /// @return Error code (0 no error)  
         int32_t getPresenceDetectorStatus(uint32_t &status);
 
+        int32_t getPresenceDetectorErrorStatus(uint32_t &status);
+
         /// @brief This function returns if there was presence detected
         /// @param detected Presence Detected 
         /// @return Error code (0 no error) 
@@ -779,6 +781,10 @@ class QwDevXM125
         ///  to wait until errors are completed/gone
         /// @return Error code (0 no error) 
         int32_t presenceBusyWait();
+
+        int32_t getPresenceRegisterVal(uint32_t &regVal);
+
+        int32_t flipBytes(uint32_t &data);
 
 
 protected: 
