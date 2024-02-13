@@ -32,6 +32,12 @@ class QwDevXM125
         /// @return Error code (0 no error)
         int32_t getDistanceDetectorError(uint32_t &error);
 
+        /// @brief This function returns the error status according to the bit 
+        ///  mask value for the distance devices errors and busy bit 
+        /// @param status Error status of device (see function for exact error)
+        /// @return Error code (0 no error)
+        int32_t getDistanceDetectorErrorStatus(uint32_t &status);
+
         /// @brief This function returns the measure counter, the number of measurements
         ///   performed since restart. 
         /// @return Error code (0 no error)
@@ -358,6 +364,9 @@ class QwDevXM125
         /// @return Error code (0 no error) 
         int32_t distanceBusyWait();
 
+        // Test function
+        int32_t getDistanceReg(uint32_t &regVal);
+
         // --------------------- I2C Presence Detector Functions ---------------------
 
         /// @brief This function sets all the beginning values for a basic I2C
@@ -395,6 +404,10 @@ class QwDevXM125
         /// @return Error code (0 no error)  
         int32_t getPresenceDetectorStatus(uint32_t &status);
 
+        /// @brief This function returns the error status according to the bit 
+        ///  mask value for the presence devices errors and busy bit 
+        /// @param status Error status of device (see function for exact error)
+        /// @return Error code (0 no error)
         int32_t getPresenceDetectorErrorStatus(uint32_t &status);
 
         /// @brief This function returns if there was presence detected

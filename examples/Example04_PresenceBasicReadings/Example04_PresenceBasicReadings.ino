@@ -29,20 +29,15 @@ SfeXM125 radarSensor;
 // I2C default address
 uint8_t i2cAddress = SFE_XM125_I2C_ADDRESS;
 
-// Value to fill presence distance (in mm) 
+// Presence distance values 
 uint32_t distance = 0;
 uint32_t presenceDetected = 0;
 uint32_t presenceDetectedSticky = 0;
-uint32_t errorStatus = 0;
-uint32_t regErr = 0;
-
-// DELETE TEST VARIABLES ONCE COMPLETE
 uint32_t startVal = 0;
 uint32_t endVal = 0;
-uint32_t counter = 0;
-uint32_t intra = 0;
-uint32_t regVal = 0;
-uint32_t busyBit = 0;
+
+// Error statuses
+uint32_t errorStatus = 0;
 uint32_t busyError = 0;
 
 void setup()
@@ -70,8 +65,7 @@ void setup()
 
     delay(200);
 
-
-// Test code setup below:
+  // Presence Sensor Setup
     // Reset sensor configuration to reapply configuration registers
     radarSensor.setPresenceCommand(SFE_XM125_PRESENCE_RESET_MODULE);
 
@@ -96,7 +90,7 @@ void setup()
     
     delay(100);
     // Set End register 
-    if(radarSensor.setPresenceEnd(5200) != 0)
+    if(radarSensor.setPresenceEnd(7000) != 0)
     {
       Serial.println("Presence End Error");
     }
@@ -119,11 +113,10 @@ void setup()
       Serial.println("Configuration application error");
     }
 
-    // Poll detector status until busy bit is cleared - CHECK ON THIS!
+    // Poll detector status until busy bit is cleared
     if(radarSensor.presenceBusyWait() != 0)
     {
-      Serial.print("Busy wait error: ");
-      Serial.println(radarSensor.getPresenceRegisterVal(busyError));
+      Serial.print("Busy wait error");
     }
 
     // Check detector status 
@@ -148,10 +141,8 @@ void setup()
     //   Serial.println("Sensor not initialized correctly - Freezing code.");
     //   while(1); // Runs forever 
     // }
-
     
     delay(1000);
-    //while(1);
 }
 
 void loop()
@@ -182,21 +173,13 @@ void loop()
     radarSensor.getPresenceDetectorErrorStatus(errorStatus);
     if(errorStatus != 0)
     {
-      Serial.println("Detector status error");
+      Serial.print("Detector status error: ");
+      Serial.println(errorStatus);
     }
 
-
-    // Read detector result register and determine 
+    // Read detector result register and determine detection status
     radarSensor.getPresenceDetectorPresenceDetected(presenceDetected);
     radarSensor.getPresenceDetectorPresenceStickyDetected(presenceDetectedSticky);
-    radarSensor.getPresenceDetectorRegError(regErr);
-    radarSensor.getPresenceRegisterVal(regVal);
-
-
-    // Serial.print("Presence Detected: ");
-    // Serial.println(presenceDetected);
-    // Serial.print("Presence Detected Sticky: ");
-    // Serial.println(presenceDetectedSticky);
     
     if((presenceDetected == 1) | (presenceDetectedSticky == 1))
     {
@@ -206,35 +189,6 @@ void loop()
       Serial.println("mm");
     }
 
-    //radarSensor.setPresenceCommand(SFE_XM125_PRESENCE_RESET_MODULE);
-
-    Serial.println();
-
+    // Delay 1 second between readings
     delay(1000);
-
-
-    // ***** PREVIOUS CODE BELOW *****  
-
-    // radarSensor.setPresenceCommand(XM125_PRESENCE_APPLY_CONFIGURATION);
-    // // If Presence is detected, then print out distance from device 
-    // radarSensor.presenceBusyWait();
-    // radarSensor.getPresenceDetectorPresenceDetected(presenceDetected);
-    // Serial.print("Presence Detector flag: ");
-    // Serial.println(presenceDetected);
-
-    // radarSensor.getPresenceDistance(distance);
-    // Serial.print("Presence detected at ");
-    // Serial.print(distance);
-    // Serial.println("mm");
-
-    // if(presenceDetected == 1)
-    // {
-    //   radarSensor.getPresenceDistance(distance);
-    //   Serial.print("Presence detected at ");
-    //   Serial.print(distance);
-    //   Serial.println("mm");
-    // }
-
-    // Read out at a slower rate for easier reading (0.5 second delay)
-    // delay(500);
 }

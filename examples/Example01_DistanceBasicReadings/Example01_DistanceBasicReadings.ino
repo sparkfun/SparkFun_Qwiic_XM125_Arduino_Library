@@ -29,7 +29,24 @@ SfeXM125 radarSensor;
 // I2C default address
 uint8_t i2cAddress = SFE_XM125_I2C_ADDRESS;
 
+// Distance Values 
 uint32_t distanceVal = 0;
+uint32_t startVal = 0;
+uint32_t endVal = 0;
+uint32_t numDistances = 9;
+uint32_t calibrateNeeded = 0;
+uint32_t measDistErr = 0;
+
+// Error statuses 
+uint32_t errorStatus = 0;
+uint32_t busyError = 0;
+
+
+// TEST Values
+uint32_t distanceRegVal = 0;
+uint32_t distancePeak0 = 0;
+uint32_t distancePeakStrength0 = 0;
+
 
 void setup()
 {
@@ -51,50 +68,147 @@ void setup()
         while(1); // Runs forever
     }
 
-    // Default start = 1000; Default stop = 5000
-    if(radarSensor.distanceBegin() != 0)
+  // Distance Sensor Setup
+    // Reset sensor configuration to reapply configuration registers
+    radarSensor.setDistanceCommand(SFE_XM125_DISTANCE_RESET_MODULE);
+
+    radarSensor.distanceBusyWait();
+
+    // Check error and busy bits 
+    radarSensor.getDistanceDetectorErrorStatus(errorStatus);
+    if(errorStatus != 0)
     {
-      Serial.println("Sensor started successfully");
-    }
-    else
-    {
-      Serial.println("Sensor not initialized correctly - Freezing code.");
-      while(1);
+      Serial.print("Detector status error: ");
+      Serial.println(errorStatus);
     }
 
-
-    // Test code below - delete once complete 
-    radarSensor.setDistanceStart(1000);
-    radarSensor.setDistanceEnd(5000);
     delay(100);
-    
-    uint32_t startVal = 0;
-    uint32_t endVal = 0;
+  
+    // Set Start register 
+    if(radarSensor.setDistanceStart(300) != 0)
+    {
+      Serial.println("Distance Start Error");
+    }
     radarSensor.getDistanceStart(startVal);
-    radarSensor.getDistanceEnd(endVal);
     Serial.print("Start Val: ");
     Serial.println(startVal);
+    
+    delay(100);
+    // Set End register 
+    if(radarSensor.setDistanceEnd(4000) != 0)
+    {
+      Serial.println("Distance End Error");
+    }
+    radarSensor.getDistanceEnd(endVal);
     Serial.print("End Val: ");
     Serial.println(endVal);
+    delay(100);
+
+    // Apply configuration 
+    if(radarSensor.setDistanceCommand(SFE_XM125_DISTANCE_APPLY_CONFIGURATION) != 0)
+    {
+      // Check for errors
+      radarSensor.getDistanceDetectorErrorStatus(errorStatus);
+      if(errorStatus != 0)
+      {
+        Serial.print("Detector status error: ");
+        Serial.println(errorStatus);
+      }
+  
+      Serial.println("Configuration application error");
+    }
+
+    // Poll detector status until busy bit is cleared
+    if(radarSensor.distanceBusyWait() != 0)
+    {
+      Serial.print("Busy wait error");
+    }
+
+    // Check detector status 
+    radarSensor.getDistanceDetectorErrorStatus(errorStatus);
+    if(errorStatus != 0)
+    {
+      Serial.print("Detector status error: ");
+      Serial.println(errorStatus);
+    }
+
+    Serial.println();
 
     delay(1000);
-
 
 }
 
 void loop()
 {
-    // Request Distance Data from the device
-    radarSensor.setDistanceCommand(SFE_XM125_DISTANCE_START_DETECTOR);
-    radarSensor.distanceBusyWait();
-    radarSensor.getDistancePeak0Distance(distanceVal);
-
-    if(distanceVal != 0)
+    // Check error bits 
+    radarSensor.getDistanceDetectorErrorStatus(errorStatus);
+    if(errorStatus != 0)
     {
-      Serial.print("Peak Distance Found: ");
-      Serial.print(distanceVal);
-      Serial.println(" mm");
+      Serial.print("Detector status error: ");
+      Serial.println(errorStatus);
+    }
+    
+    
+    // Start detector 
+    if(radarSensor.setDistanceCommand(SFE_XM125_DISTANCE_START_DETECTOR) != 0)
+    {
+      Serial.println("Start detector error");
+    }
+    
+    // Poll detector status until busy bit is cleared - CHECK ON THIS!
+    if(radarSensor.distanceBusyWait() != 0)
+    {
+      Serial.println("Busy wait error");
+    }
+    
+    // Verify that no error bits are set in the detector status register 
+    radarSensor.getDistanceDetectorErrorStatus(errorStatus);
+    if(errorStatus != 0)
+    {
+      Serial.print("Detector status error: ");
+      Serial.println(errorStatus);
     }
 
-    delay(100);
+    // Read Detector Result register
+    radarSensor.getDistanceReg(distanceRegVal);
+// DELETE THIS AFTER TESTING
+    Serial.print("Distance Error Register: 0b");
+    Serial.println(distanceRegVal, BIN);
+
+    // Check MEASURE_DISTANCE_ERROR for measurement failed
+    radarSensor.getDistanceMeasureDistanceError(measDistErr);
+    if(measDistErr == 1)
+    {
+      Serial.println("Measure Distance Error");
+    }
+
+    // If CALIBRATION_NEEDED is set, then write RECALIBRATE command
+    radarSensor.getDistanceCalibrationNeeded(calibrateNeeded);
+    if(calibrateNeeded == 1)
+    {
+      Serial.println("Calibration Needed - Recalibrating.. ");
+      // Calibrate device (write RECALIBRATE command)
+      radarSensor.setDistanceCommand(SFE_XM125_DISTANCE_RECALIBRATE);
+    }
+
+    // Read how many peak distances can be detected 
+    
+    radarSensor.getDistancePeak0Distance(distancePeak0);
+    radarSensor.getDistancePeak0Strength(distancePeakStrength0);
+
+    Serial.print("Peak 0 Distance: ");
+    Serial.println(distancePeak0);
+    Serial.print("Peak 0 Strength: ");
+    Serial.println(distancePeakStrength0);
+    // Read PeakX Distance and PeakX Strength registers for the number of distances detected 
+    // for(int i = 0; i <= numDistances; i++)
+    // {
+    //   // Check thru each peak distance detected 
+    // }
+
+    // Half a second delay for easier readings 
+    delay(500);
+
+    // Empty space for easier readings
+    Serial.println();
 }
