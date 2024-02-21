@@ -1,5 +1,5 @@
 /*
-  Example 5: Presence Subsweeps - Power Consumption Optimization
+  Example 2: Presence Subsweeps - Power Consumption Optimization
 
   Using the Acconeer XM125 A121 60GHz Pulsed Coherent Radar Sensor.
 
@@ -45,7 +45,7 @@ void setup()
 {
     // Start serial
     Serial.begin(115200);
-    Serial.println("XM125 Example 5: Presence GPIO0 Pin Usage");    
+    Serial.println("XM125 Example 2: Presence GPIO0 Pin Usage");    
     Serial.println("");
 
     Wire.begin();

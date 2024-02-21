@@ -644,13 +644,6 @@ int32_t QwDevXM125::distanceBusyWait()
     return 0; // 0 on success
 }
 
-int32_t QwDevXM125::getDistanceReg(uint32_t &regVal)
-{
-    int32_t retVal = _theBus->readRegister16Region(SFE_XM125_DISTANCE_DETECTOR_STATUS, (uint8_t*)&regVal, 4);
-    flipBytes(regVal);
-    return retVal;
-}
-
 // --------------------- I2C Presence Detector Functions ---------------------
 
 int32_t QwDevXM125::presenceDetectorStart(uint32_t start, uint32_t stop)
@@ -1181,16 +1174,6 @@ int32_t QwDevXM125::presenceBusyWait()
         return retVal;
     }
     return 0; // 0 on success
-}
-
-int32_t QwDevXM125::getPresenceRegisterVal(uint32_t &regVal)
-{
-    int32_t retVal = 0;
-
-    retVal = _theBus->writeRegister16Region(SFE_XM125_PRESENCE_DETECTOR_STATUS, (uint8_t*)&regVal, 4);
-    
-    flipBytes(regVal);
-    return retVal;
 }
 
 int32_t QwDevXM125::flipBytes(uint32_t &data)

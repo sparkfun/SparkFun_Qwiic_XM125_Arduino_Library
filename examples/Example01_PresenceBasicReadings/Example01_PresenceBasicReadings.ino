@@ -1,5 +1,5 @@
 /*
-  Example 4: Presence Basic Readings
+  Example 1: Presence Basic Readings
 
   Using the Acconeer XM125 A121 60GHz Pulsed Coherent Radar Sensor.
 
@@ -45,7 +45,7 @@ void setup()
 {
     // Start serial
     Serial.begin(115200);
-    Serial.println("XM125 Example 4: Basic Presence Readings");
+    Serial.println("XM125 Example 1: Basic Presence Readings");
     Serial.println("");
 
     Wire.begin();

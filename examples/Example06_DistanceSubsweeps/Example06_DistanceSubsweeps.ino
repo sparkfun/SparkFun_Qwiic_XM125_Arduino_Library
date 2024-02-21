@@ -1,5 +1,5 @@
 /*
-  Example 3: Distance Subsweeps - Power Consumption Optimization
+  Example 6: Distance Subsweeps - Power Consumption Optimization
 
   Using the Acconeer XM125 A121 60GHz Pulsed Coherent Radar Sensor.
 
@@ -36,7 +36,7 @@ void setup()
 {
     // Start serial
     Serial.begin(115200);
-    Serial.println("XM125 Example 3: Distance Subsweeps - Power Consumption Optimization");
+    Serial.println("XM125 Example 6: Distance Subsweeps - Power Consumption Optimization");
     Serial.println("");
 
     Wire.begin();

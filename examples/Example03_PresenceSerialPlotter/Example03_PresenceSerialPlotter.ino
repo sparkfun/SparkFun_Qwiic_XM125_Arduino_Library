@@ -1,11 +1,11 @@
 /*
-  Example 4: Presence Basic Readings
+  Example 3: Presence Serial Plotter
 
   Using the Acconeer XM125 A121 60GHz Pulsed Coherent Radar Sensor.
 
   This example shows how operate the XM125 when the device is in Presence Reading Mode.
-  The sensor is initialized, then the presence values will print out to the terminal.
-  For full algorithm for 
+  The sensor is initialized, then the presence values will print out to the terminal and
+  the serial monitor.
 
   By: Madison Chodikov
   SparkFun Electronics
@@ -44,7 +44,7 @@ void setup()
 {
     // Start serial
     Serial.begin(115200);
-    Serial.println("XM125 Example 4: Basic Presence Readings");
+    Serial.println("XM125 Example 3: Serial Plotter Presence Readings");
     Serial.println("");
 
     Wire.begin();
