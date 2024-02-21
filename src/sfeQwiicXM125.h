@@ -766,13 +766,13 @@ class QwDevXM125
         ///  generic GPIO.
         /// @param detected Output presence detected 
         /// @return Error code (0 no error) 
-        int32_t getPresenceDetectionOnGPIO(bool &detected);
+        int32_t getPresenceDetectionOnGPIO(uint32_t &detected);
 
         /// @brief This function returns the output presence detection on 
         ///  generic GPIO. 
         /// @param detected Output presence detected 
         /// @return Error code (0 no error) 
-        int32_t setPresenceDetectionOnGPIO(bool detected); 
+        int32_t setPresenceDetectionOnGPIO(uint32_t detected); 
 
         /// @brief This function sets the execute command
         /// @param cmd command to send to device 
@@ -798,6 +798,7 @@ class QwDevXM125
         int32_t getPresenceRegisterVal(uint32_t &regVal);
 
         int32_t flipBytes(uint32_t &data);
+        int32_t flipBytesInt(int32_t &data);
 
 
 protected: 

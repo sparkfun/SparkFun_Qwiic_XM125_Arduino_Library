@@ -85,8 +85,6 @@ void setup()
       Serial.println("Presence Start Error");
     }
     radarSensor.getPresenceStart(startVal);
-    Serial.print("Start Val: ");
-    Serial.println(startVal);
     
     delay(100);
     // Set End register 
@@ -95,8 +93,6 @@ void setup()
       Serial.println("Presence End Error");
     }
     radarSensor.getPresenceEnd(endVal);
-    Serial.print("End Val: ");
-    Serial.println(endVal);
     delay(100);
 
     // Apply configuration 
@@ -184,9 +180,7 @@ void loop()
     if((presenceDetected == 1) | (presenceDetectedSticky == 1))
     {
       radarSensor.getPresenceDistance(distance);
-      Serial.print("Presence Detected: ");
-      Serial.print(distance);
-      Serial.println("mm");
+      Serial.println((distance/10));
     }
 
     // Delay 1 second between readings
