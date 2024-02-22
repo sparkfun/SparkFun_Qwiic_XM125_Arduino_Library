@@ -4,8 +4,8 @@
   Using the Acconeer XM125 A121 60GHz Pulsed Coherent Radar Sensor.
 
   This example shows how operate the XM125 when the device is in Presence Reading Mode.
-  The sensor is initialized, then the presence values will print out to the terminal.
-  For full algorithm for 
+  The sensor is initialized, then the presence distance values will print out 
+  to the terminal.
 
   By: Madison Chodikov
   SparkFun Electronics

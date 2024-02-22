@@ -1,6 +1,5 @@
 #include "SparkFun_Qwiic_XM125_Arduino_Library.h"
 #include "sfeQwiicXM125.h"
-#include <arpa/inet.h>
 
 QwDevXM125::QwDevXM125()
 {
@@ -648,13 +647,13 @@ int32_t QwDevXM125::distanceBusyWait()
 
 int32_t QwDevXM125::presenceDetectorStart(uint32_t start, uint32_t stop)
 {
-    // Set Start to 1000mm
+    // Set Start 
     if(setPresenceStart(start) != 0)
     {
       return -1;
     }
 
-    // Set end at 5000mm
+    // Set end 
     if(setPresenceEnd(stop) != 0)
     {
       return -2;

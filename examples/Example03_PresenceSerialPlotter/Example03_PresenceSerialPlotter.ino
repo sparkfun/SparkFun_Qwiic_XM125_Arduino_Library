@@ -123,21 +123,8 @@ void setup()
       Serial.println(errorStatus);
     }
 
+    // Extra line and 1 second delay for easier readings
     Serial.println();
-
-  // Original code below: 
-    // // Default start = 1000; Default stop = 5000
-    // int32_t sensorStartError = radarSensor.presenceDetectorStart();
-    // if(sensorStartError != 0)
-    // {
-    //   Serial.println("Sensor Started Successfully");
-    // }
-    // else
-    // {
-    //   Serial.println("Sensor not initialized correctly - Freezing code.");
-    //   while(1); // Runs forever 
-    // }
-    
     delay(1000);
 }
 
@@ -180,7 +167,7 @@ void loop()
     if((presenceDetected == 1) | (presenceDetectedSticky == 1))
     {
       radarSensor.getPresenceDistance(distance);
-      Serial.println((distance/10));
+      Serial.println(distance);
     }
 
     // Delay 1 second between readings
