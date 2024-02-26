@@ -31,15 +31,12 @@ uint8_t i2cAddress = SFE_XM125_I2C_ADDRESS;
 
 // Presence distance values 
 uint32_t distance = 0;
-uint32_t presenceDetected = 0;
-uint32_t presenceDetectedSticky = 0;
-uint32_t startVal = 0;
-uint32_t endVal = 0;
-uint32_t gpioUsage;
 
 // Error statuses
-uint32_t errorStatus = 0;
-uint32_t busyError = 0;
+int32_t errorStatus = 0;
+int32_t busyError = 0;
+int32_t setupError = 0;
+int32_t presValError = 0;
 
 void setup()
 {
@@ -66,114 +63,34 @@ void setup()
 
     delay(200);
 
-  // Presence Sensor Setup
-    // Reset sensor configuration to reapply configuration registers
-    radarSensor.setPresenceCommand(SFE_XM125_PRESENCE_RESET_MODULE);
-
-    // Check error and busy bits 
-    radarSensor.getPresenceDetectorErrorStatus(errorStatus);
-    if(errorStatus != 0)
+    // Start the sensor with default register values
+    int32_t setupError = radarSensor.presenceDetectorStart();
+    if(setupError != 0)
     {
-      Serial.print("Detector status error: ");
-      Serial.println(errorStatus);
+      Serial.print("Presence Detection Start Setup Error: ");
+      Serial.println(setupError); 
     }
 
-    delay(100);
-  
-    // Set Start register 
-    if(radarSensor.setPresenceStart(300) != 0)
-    {
-      Serial.println("Presence Start Error");
-    }
-    radarSensor.getPresenceStart(startVal);
-    Serial.print("Start Val: ");
-    Serial.println(startVal);
-    
-    delay(100);
-    // Set End register 
-    if(radarSensor.setPresenceEnd(7000) != 0)
-    {
-      Serial.println("Presence End Error");
-    }
-    radarSensor.getPresenceEnd(endVal);
-    Serial.print("End Val: ");
-    Serial.println(endVal);
-    delay(100);
-
-    // Apply configuration 
-    if(radarSensor.setPresenceCommand(SFE_XM125_PRESENCE_APPLY_CONFIGURATION) != 0)
-    {
-      // Check for errors
-      radarSensor.getPresenceDetectorErrorStatus(errorStatus);
-      if(errorStatus != 0)
-      {
-        Serial.print("Detector status error: ");
-        Serial.println(errorStatus);
-      }
-  
-      Serial.println("Configuration application error");
-    }
-
-    // Poll detector status until busy bit is cleared
-    if(radarSensor.presenceBusyWait() != 0)
-    {
-      Serial.print("Busy wait error");
-    }
-
-    // Check detector status 
-    radarSensor.getPresenceDetectorErrorStatus(errorStatus);
-    if(errorStatus != 0)
-    {
-      Serial.print("Detector status error: ");
-      Serial.println(errorStatus);
-    }
-
+    // New line and delay for easier reading
     Serial.println();
-    
     delay(1000);
 }
 
 void loop()
 {
-    // Check error bits 
-    radarSensor.getPresenceDetectorErrorStatus(errorStatus);
-    if(errorStatus != 0)
-    {
-      Serial.print("Detector status error: ");
-      Serial.println(errorStatus);
-    }
-    
-    
-    // Start detector 
-    if(radarSensor.setPresenceCommand(SFE_XM125_PRESENCE_START_DETECTOR) != 0)
-    {
-      Serial.println("Start detector error");
-    }
-    
-    // Poll detector status until busy bit is cleared - CHECK ON THIS!
-    if(radarSensor.presenceBusyWait() != 0)
-    {
-      Serial.println("Busy wait error");
-    }
-    
-    // Verify that no error bits are set in the detector status register 
-    radarSensor.getPresenceDetectorErrorStatus(errorStatus);
-    if(errorStatus != 0)
-    {
-      Serial.print("Detector status error: ");
-      Serial.println(errorStatus);
-    }
+    radarSensor.presenceBusyWait();
 
-    // Read detector result register and determine detection status
-    radarSensor.getPresenceDetectorPresenceDetected(presenceDetected);
-    radarSensor.getPresenceDetectorPresenceStickyDetected(presenceDetectedSticky);
-    
-    if((presenceDetected == 1) | (presenceDetectedSticky == 1))
+    // Get the presence distance value and print out if no errors
+    presValError = radarSensor.getPresenceDistanceValuemm(distance);
+    if(presValError != 0)
     {
-      radarSensor.getPresenceDistance(distance);
       Serial.print("Presence Detected: ");
       Serial.print(distance);
       Serial.println("mm");
+    }
+    else
+    {
+      Serial.println("Error returning presence distance value");
     }
 
     // Delay 1 second between readings

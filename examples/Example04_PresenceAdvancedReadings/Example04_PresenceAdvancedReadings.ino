@@ -1,11 +1,11 @@
 /*
-  Example 2: Presence GPIO0 Pin Usage
+  Example 4: Presence Advanced Readings
 
   Using the Acconeer XM125 A121 60GHz Pulsed Coherent Radar Sensor.
 
   This example shows how operate the XM125 when the device is in Presence Reading Mode.
-  The sensor is initialized, then the presence values will print out to the terminal 
-  and trigger the GPIO0 pin high when there is a presence detected. 
+  The sensor is initialized, then the presence distance, intra-presence, and 
+  inter-presence values will be printed to the terminal.
 
   By: Madison Chodikov
   SparkFun Electronics
@@ -45,12 +45,12 @@ void setup()
 {
     // Start serial
     Serial.begin(115200);
-    Serial.println("XM125 Example 2: Presence GPIO0 Pin Usage");    
+    Serial.println("XM125 Example 4: Presence Advanced Readings");
     Serial.println("");
 
     Wire.begin();
 
-    // If begin is successful (0), then start example
+    // If begin is successful (1), then start example
     int startErr = radarSensor.begin(i2cAddress, Wire);
     if(startErr == 1)
     {
@@ -66,6 +66,9 @@ void setup()
 
     delay(200);
 
+    // Setup: start the sensor - reset, apply configuration 
+    // Loop: anything there? get the distance 
+
   // Presence Sensor Setup
     // Reset sensor configuration to reapply configuration registers
     radarSensor.setPresenceCommand(SFE_XM125_PRESENCE_RESET_MODULE);
@@ -80,7 +83,7 @@ void setup()
 
     delay(100);
   
-    // Set Start register - NOTE this is a factor 1000 larger than the RSS value
+    // Set Start register 
     if(radarSensor.setPresenceStart(300) != 0)
     {
       Serial.println("Presence Start Error");
@@ -88,9 +91,9 @@ void setup()
     radarSensor.getPresenceStart(startVal);
     Serial.print("Start Val: ");
     Serial.println(startVal);
+    
     delay(100);
-
-    // Set End register - NOTE this is a factor 1000 larger than the RSS value
+    // Set End register 
     if(radarSensor.setPresenceEnd(7000) != 0)
     {
       Serial.println("Presence End Error");
@@ -99,15 +102,6 @@ void setup()
     Serial.print("End Val: ");
     Serial.println(endVal);
     delay(100);
-
-    // Turn presence detection on GPIO0 on 
-    if(radarSensor.setPresenceDetectionOnGPIO(1) != 0)
-    {
-      Serial.println("GPIO0 Pin Setup Error");
-    }
-    radarSensor.getPresenceDetectionOnGPIO(gpioUsage);
-    Serial.print("GPIO0 Detection Status: ");
-    Serial.println(gpioUsage);
 
     // Apply configuration 
     if(radarSensor.setPresenceCommand(SFE_XM125_PRESENCE_APPLY_CONFIGURATION) != 0)
@@ -138,32 +132,12 @@ void setup()
     }
 
     Serial.println();
-
-  // Original code below: 
-    // // Default start = 1000; Default stop = 5000
-    // int32_t sensorStartError = radarSensor.presenceDetectorStart();
-    // if(sensorStartError != 0)
-    // {
-    //   Serial.println("Sensor Started Successfully");
-    // }
-    // else
-    // {
-    //   Serial.println("Sensor not initialized correctly - Freezing code.");
-    //   while(1); // Runs forever 
-    // }
     
     delay(1000);
 }
 
 void loop()
 {
-
-    // Poll detector status until busy bit is cleared - CHECK ON THIS!
-    if(radarSensor.presenceBusyWait() != 0)
-    {
-      Serial.println("Busy wait error");
-    }
-  
     // Check error bits 
     radarSensor.getPresenceDetectorErrorStatus(errorStatus);
     if(errorStatus != 0)
@@ -171,7 +145,6 @@ void loop()
       Serial.print("Detector status error: ");
       Serial.println(errorStatus);
     }
-    
     
     // Start detector 
     if(radarSensor.setPresenceCommand(SFE_XM125_PRESENCE_START_DETECTOR) != 0)

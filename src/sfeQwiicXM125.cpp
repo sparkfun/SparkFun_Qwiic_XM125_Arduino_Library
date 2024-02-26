@@ -48,41 +48,117 @@ bool QwDevXM125::begin(sfeTkII2C *theBus)
 }
 
 // --------------------- I2C Disance Detector Functions ---------------------
-int32_t QwDevXM125::distanceBegin(uint32_t start, uint32_t stop)
+int32_t QwDevXM125::distanceBegin()
 {
-    // Set start distance
-    if(setDistanceStart(start) != 0)
+    uint32_t errorStatus = 0;
+
+  // Distance Sensor Setup
+    // Reset sensor configuration to reapply configuration registers
+    setDistanceCommand(SFE_XM125_DISTANCE_RESET_MODULE);
+
+    distanceBusyWait();
+
+    // Check error and busy bits 
+    if(getDistanceDetectorErrorStatus(errorStatus) != 0)
     {
-        return -1;
-    }
-    // Set stop distance
-    if(setDistanceEnd(stop) != 0)
-    {
-        return -2;
+        return 1;
     }
 
-    // Apply configuration
-    if(setDistanceCommand(XM125_DISTANCE_APPLY_CONFIGURATION) != 0)
+    if(errorStatus != 0)
     {
-        return -3;
+        return 2;
+    }
+    delay(100);
+  
+    // Set Start register 
+    if(setDistanceStart(300) != 0)
+    {
+        return 3;
+    }
+    delay(100);
+
+    // Set End register 
+    if(setDistanceEnd(2500) != 0)
+    {
+        return 4;
+    }
+    delay(100);
+
+    // Apply configuration 
+    if(setDistanceCommand(SFE_XM125_DISTANCE_APPLY_CONFIGURATION) != 0)
+    {
+      // Check for errors
+      getDistanceDetectorErrorStatus(errorStatus);
+      if(errorStatus != 0)
+      {
+        return 5;
+      }
+  
+      return 6;
     }
 
-    // Wait for configuration to be done
+    // Poll detector status until busy bit is cleared
     if(distanceBusyWait() != 0)
     {
-      return -4;
+        return 7; 
     }
 
-    // Start detector
+    // Check detector status 
+    getDistanceDetectorErrorStatus(errorStatus);
+    if(errorStatus != 0)
+    {
+        return 7;
+    }
+
+    // Return 0 on no error
+    return 0;
+}
+
+int32_t QwDevXM125::distanceDetectorReadingSetup()
+{
+    uint32_t errorStatus = 0;
+    uint32_t calibrateNeeded = 0;
+    uint32_t measDistErr = 0;
+
+    // Check error bits 
+    getDistanceDetectorErrorStatus(errorStatus);
+    if(errorStatus != 0)
+    {
+        return 1;
+    }
+    
+    // Start detector 
     if(setDistanceCommand(SFE_XM125_DISTANCE_START_DETECTOR) != 0)
     {
-        return -5;
+        return 2;
     }
-
-    // Wait for configuration to be done
+    
+    // Poll detector status until busy bit is cleared - CHECK ON THIS!
     if(distanceBusyWait() != 0)
     {
-      return -6;
+        return 3;
+    }
+    
+    // Verify that no error bits are set in the detector status register 
+    getDistanceDetectorErrorStatus(errorStatus);
+    if(errorStatus != 0)
+    {
+        return 4;
+    }
+
+    // Check MEASURE_DISTANCE_ERROR for measurement failed
+    getDistanceMeasureDistanceError(measDistErr);
+    if(measDistErr == 1)
+    {
+        return 5;
+    }
+
+    // Recalibrate device if calibration error is triggered 
+    getDistanceCalibrationNeeded(calibrateNeeded);
+    if(calibrateNeeded == 1)
+    {
+        setDistanceCommand(SFE_XM125_DISTANCE_RECALIBRATE);
+        return 6;
     }
 
     return 0;
@@ -621,6 +697,51 @@ int32_t QwDevXM125::setDistanceCommand(uint32_t command)
     return _theBus->writeRegister16Region(SFE_XM125_DISTANCE_COMMAND, (uint8_t*)&command, 4);
 }
 
+int32_t QwDevXM125::distanceApplyConfiguration()
+{
+    return setDistanceCommand(SFE_XM125_DISTANCE_APPLY_CONFIGURATION);
+}
+
+int32_t QwDevXM125::distanceStart()
+{
+    return setDistanceCommand(SFE_XM125_DISTANCE_START_DETECTOR);
+}
+
+int32_t QwDevXM125::distanceStop()
+{
+    return setDistanceCommand(SFE_XM125_DISTANCE_STOP_DETECTOR);
+}
+
+int32_t QwDevXM125::distanceCalibrate()
+{
+    return setDistanceCommand(SFE_XM125_DISTANCE_CALIBRATE);
+}
+
+int32_t QwDevXM125::distanceRecalibrate()
+{
+    return setDistanceCommand(SFE_XM125_DISTANCE_RECALIBRATE);
+}
+
+int32_t QwDevXM125::distanceEnableUartLogs()
+{
+    return setDistanceCommand(SFE_XM125_DISTANCE_ENABLE_UART_LOGS);
+}
+
+int32_t QwDevXM125::distanceDisableUartLogs()
+{
+    return setDistanceCommand(SFE_XM125_DISTANCE_DISABLE_UART_LOGS);
+}
+
+int32_t QwDevXM125::distanceLogConfiguration()
+{
+    return setDistanceCommand(SFE_XM125_DISTANCE_LOG_CONFIGURATION);
+}
+
+int32_t QwDevXM125::distanceReset()
+{
+    return setDistanceCommand(SFE_XM125_DISTANCE_RESET_MODULE);
+}
+
 int32_t QwDevXM125::distanceBusyWait()
 {
     int32_t retVal = 0;
@@ -645,44 +766,112 @@ int32_t QwDevXM125::distanceBusyWait()
 
 // --------------------- I2C Presence Detector Functions ---------------------
 
-int32_t QwDevXM125::presenceDetectorStart(uint32_t start, uint32_t stop)
+int32_t QwDevXM125::presenceDetectorStart()
 {
-    // Set Start 
-    if(setPresenceStart(start) != 0)
+  // Presence Sensor Setup
+    uint32_t errorStatus;
+
+    // Reset sensor configuration to reapply configuration registers
+    if(setPresenceCommand(SFE_XM125_PRESENCE_RESET_MODULE) != 0)
     {
-      return -1;
+        return 1;
     }
 
-    // Set end 
-    if(setPresenceEnd(stop) != 0)
+    // Check detector status error and busy bits 
+    getPresenceDetectorErrorStatus(errorStatus);
+    if(errorStatus != 0)
     {
-      return -2;
+        Serial.println("Error status errrrrr");
+        return errorStatus;
+        // return 2;
+    }
+    delay(100);
+  
+    // Set Presence Start register 
+    if(setPresenceStart(300) != 0)
+    {
+        return 3;
+    }
+    delay(100);
+
+    // Set End register 
+    if(setPresenceEnd(2500) != 0)
+    {
+        return 4;
+    }
+    delay(100);
+
+    // Apply configuration 
+    if(setPresenceCommand(SFE_XM125_PRESENCE_APPLY_CONFIGURATION) != 0)
+    {
+      // Check for errors
+      getPresenceDetectorErrorStatus(errorStatus);
+      if(errorStatus != 0)
+      {
+        return 5;
+      }
+  
+      return 6;
     }
 
-    // Apply configuration
-    if(setPresenceCommand(XM125_PRESENCE_APPLY_CONFIGURATION) != 0)
-    {
-      return -3;
-    }
-
-    // Wait for configuration to be done
+    // Poll detector status until busy bit is cleared
     if(presenceBusyWait() != 0)
     {
-        return -4;
+      return 7;
     }
 
+    // Check detector error status 
+    getPresenceDetectorErrorStatus(errorStatus);
+    if(errorStatus != 0)
+    {
+      return 8;
+    }
+
+    // If no errors, return 0
+    return 0;
+}
+
+int32_t QwDevXM125::getPresenceDistanceValuemm(uint32_t &presenceVal)
+{
+    // Check error bits 
+    uint32_t errorStatus = 0;
+    uint32_t presenceDetected = 0;
+    uint32_t presenceDetectedSticky = 0; 
+
+    getPresenceDetectorErrorStatus(errorStatus);
+    if(errorStatus != 0)
+    {
+        return 1;
+    }
+    
     // Start detector 
-    if(setPresenceCommand(XM125_PRESENCE_START_DETECTOR) != 0)
+    if(setPresenceCommand(SFE_XM125_PRESENCE_START_DETECTOR) != 0)
     {
-      return -5;
+        return 2;
     }
-
-    // Wait for configuration to be done
+    
+    // Poll detector status until busy bit is cleared - CHECK ON THIS!
     if(presenceBusyWait() != 0)
     {
-      return -6;
+        return 3;
+    }
+    
+    // Verify that no error bits are set in the detector status register 
+    getPresenceDetectorErrorStatus(errorStatus);
+    if(errorStatus != 0)
+    {
+        return 4;
     }
 
+
+    // Read detector result register and determine detection status
+    getPresenceDetectorPresenceDetected(presenceDetected);
+    getPresenceDetectorPresenceStickyDetected(presenceDetectedSticky);
+    
+    if((presenceDetected == 1) | (presenceDetectedSticky == 1))
+    {
+        getPresenceDistance(presenceVal);
+    }
     return 0;
 }
 
@@ -1137,6 +1326,36 @@ int32_t QwDevXM125::setPresenceCommand(uint32_t cmd)
     return _theBus->writeRegister16Region(SFE_XM125_PRESENCE_COMMAND, (uint8_t*)&cmd, 4);
 }
 
+int32_t QwDevXM125::presenceApplyConfiguration()
+{
+    return setPresenceCommand(SFE_XM125_PRESENCE_START_DETECTOR);
+}
+
+int32_t QwDevXM125::presenceStart()
+{
+    return setPresenceCommand(SFE_XM125_PRESENCE_START_DETECTOR);
+}
+
+int32_t QwDevXM125::presencestop()
+{
+    return setPresenceCommand(SFE_XM125_PRESENCE_STOP_DETECTOR);
+}
+
+int32_t QwDevXM125::presenceEnableUartLogs()
+{
+    return setPresenceCommand(SFE_XM125_PRESENCE_ENABLE_UART_LOGS);
+}
+
+int32_t QwDevXM125::presenceDisableUartLogs()
+{
+    return setPresenceCommand(SFE_XM125_PRESENCE_DISABLE_UART_LOGS);
+}
+
+int32_t QwDevXM125::presenceLogConfiguration()
+{
+    return setPresenceCommand(SFE_XM125_PRESENCE_LOG_CONFIGURATION);
+}
+
 int32_t QwDevXM125::getPresenceBusy(uint32_t &busy)
 {
     int32_t retVal;
@@ -1175,6 +1394,7 @@ int32_t QwDevXM125::presenceBusyWait()
     return 0; // 0 on success
 }
 
+// Add to toolkit ? 
 int32_t QwDevXM125::flipBytes(uint32_t &data)
 {
     uint32_t data1 = (data & 0x000000ff) << 24;
@@ -1188,10 +1408,10 @@ int32_t QwDevXM125::flipBytes(uint32_t &data)
 
 int32_t QwDevXM125::flipBytesInt(int32_t &data)
 {
-    uint32_t data1 = (data & 0x000000ff) << 24;
-    uint32_t data2 = (data & 0x0000ff00) << 8;
-    uint32_t data3 = (data & 0x00ff0000) >> 8;
-    uint32_t data4 = (data & 0xff000000) >> 24;
+    int32_t data1 = (data & 0x000000ff) << 24;
+    int32_t data2 = (data & 0x0000ff00) << 8;
+    int32_t data3 = (data & 0x00ff0000) >> 8;
+    int32_t data4 = (data & 0xff000000) >> 24;
     data = data1 | data2 | data3 | data4;
 
     return 0;

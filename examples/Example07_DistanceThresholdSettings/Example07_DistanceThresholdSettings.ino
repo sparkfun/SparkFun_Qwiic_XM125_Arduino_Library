@@ -1,5 +1,5 @@
 /*
-  Example 5: Distance Threshold Settings 
+  Example 7: Distance Threshold Settings 
   
   Using the Acconeer XM125 A121 60GHz Pulsed Coherent Radar Sensor.
 
@@ -49,7 +49,7 @@ void setup()
 {
     // Start serial
     Serial.begin(115200);
-    Serial.println("XM125 Example 5: Distance Threshold Settings");
+    Serial.println("XM125 Example 7: Distance Threshold Settings");
     Serial.println("");
 
     Wire.begin();

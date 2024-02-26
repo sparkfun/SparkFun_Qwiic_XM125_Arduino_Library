@@ -1,14 +1,10 @@
 /*
-  Example 6: Distance Subsweeps - Power Consumption Optimization
+  Example 8: Distance Serial Plotter
 
   Using the Acconeer XM125 A121 60GHz Pulsed Coherent Radar Sensor.
 
-  This example shows how operate the XM125 when the device is in Distance Reading Mode.
-  The sensor is initialized, then the measurement range is split into multiple subsweeeps to 
-  allow for optimization of power consumption and signal quality. A shorter/longer profile can
-  be change byt setting the max_profile parameter, and the step length can be limited using the 
-  max_step_length parameter. Setting the high signal quality can result in a better SNR, but 
-  setting it low in this application reduces power consumption and measurement time. 
+  This example prints out the distance values of the 0 and 1 distance 
+  channels to the serial plotter tool in Arduino. 
 
   By: Madison Chodikov
   SparkFun Electronics
@@ -49,7 +45,7 @@ void setup()
 {
     // Start serial
     Serial.begin(115200);
-    Serial.println("XM125 Example 6: Distance Serial Plotter");
+    Serial.println("XM125 Example 8: Distance Serial Plotter");
     Serial.println("");
 
     Wire.begin();
