@@ -68,21 +68,20 @@ int32_t QwDevXM125::distanceBegin()
     {
         return 2;
     }
-    delay(100);
   
     // Set Start register 
     if(setDistanceStart(300) != 0)
     {
         return 3;
     }
-    delay(100);
+    delay(100);  // give time for command to set 
 
     // Set End register 
     if(setDistanceEnd(2500) != 0)
     {
         return 4;
     }
-    delay(100);
+    delay(100);  // give time for command to set 
 
     // Apply configuration 
     if(setDistanceCommand(SFE_XM125_DISTANCE_APPLY_CONFIGURATION) != 0)
@@ -132,6 +131,7 @@ int32_t QwDevXM125::distanceDetectorReadingSetup()
     {
         return 2;
     }
+    delay(100); // give time for command to set 
     
     // Poll detector status until busy bit is cleared - CHECK ON THIS!
     if(distanceBusyWait() != 0)
@@ -769,37 +769,38 @@ int32_t QwDevXM125::distanceBusyWait()
 int32_t QwDevXM125::presenceDetectorStart()
 {
   // Presence Sensor Setup
-    uint32_t errorStatus;
+    uint32_t errorStatus = 0;
 
     // Reset sensor configuration to reapply configuration registers
     if(setPresenceCommand(SFE_XM125_PRESENCE_RESET_MODULE) != 0)
     {
         return 1;
     }
+    delay(100); // give time for command to set 
 
     // Check detector status error and busy bits 
-    getPresenceDetectorErrorStatus(errorStatus);
+    if(getPresenceDetectorErrorStatus(errorStatus) != 0)
+    {
+        return 2;
+    }
     if(errorStatus != 0)
     {
-        Serial.println("Error status errrrrr");
-        return errorStatus;
-        // return 2;
+        return 3;
     }
-    delay(100);
   
     // Set Presence Start register 
     if(setPresenceStart(300) != 0)
     {
-        return 3;
+        return 4;
     }
-    delay(100);
+    delay(100); // give time for command to set 
 
     // Set End register 
     if(setPresenceEnd(2500) != 0)
     {
-        return 4;
+        return 5;
     }
-    delay(100);
+    delay(100); // give time for command to set 
 
     // Apply configuration 
     if(setPresenceCommand(SFE_XM125_PRESENCE_APPLY_CONFIGURATION) != 0)
@@ -808,23 +809,24 @@ int32_t QwDevXM125::presenceDetectorStart()
       getPresenceDetectorErrorStatus(errorStatus);
       if(errorStatus != 0)
       {
-        return 5;
+        return 6;
       }
   
-      return 6;
+      return 7;
     }
+    delay(100); // give time for command to set 
 
     // Poll detector status until busy bit is cleared
     if(presenceBusyWait() != 0)
     {
-      return 7;
+      return 8;
     }
 
     // Check detector error status 
     getPresenceDetectorErrorStatus(errorStatus);
     if(errorStatus != 0)
     {
-      return 8;
+      return 9;
     }
 
     // If no errors, return 0
@@ -849,6 +851,7 @@ int32_t QwDevXM125::getPresenceDistanceValuemm(uint32_t &presenceVal)
     {
         return 2;
     }
+    delay(100);
     
     // Poll detector status until busy bit is cleared - CHECK ON THIS!
     if(presenceBusyWait() != 0)
@@ -862,7 +865,6 @@ int32_t QwDevXM125::getPresenceDistanceValuemm(uint32_t &presenceVal)
     {
         return 4;
     }
-
 
     // Read detector result register and determine detection status
     getPresenceDetectorPresenceDetected(presenceDetected);
@@ -908,7 +910,7 @@ int32_t QwDevXM125::getPresenceDetectorStatus(uint32_t &status)
 
 int32_t QwDevXM125::getPresenceDetectorErrorStatus(uint32_t &status)
 {
-    int32_t retVal;
+    int32_t retVal = 0;
     uint32_t regVal = 0;
     retVal = _theBus->readRegister16Region(SFE_XM125_PRESENCE_DETECTOR_STATUS, (uint8_t*)&regVal, 4);
     flipBytes(regVal);
