@@ -39,6 +39,7 @@
 // The following defines the bits and registers of the ENS160.
 
 #include <stdint.h>
+#include <byteswap.h>
 
 const uint16_t SFE_XM125_I2C_ADDRESS = 0x52;
 

@@ -875,13 +875,6 @@ class QwDevXM125
     /// @return Error code (0 no error)
     int32_t presenceBusyWait();
 
-    /// @brief This function flips the bytes to be in big-endian order,
-    ///  as the XM125 I2C functions require.
-    /// @param data Data to be flipped
-    /// @return Error code (0 no error)
-    int32_t flipBytes(uint32_t &data);
-    int32_t flipBytesInt(int32_t &data);
-
   protected:
     sfeTkII2C *_theBus;
 };

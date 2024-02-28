@@ -37,6 +37,7 @@ int32_t errorStatus = 0;
 int32_t busyError = 0;
 int32_t setupError = 0;
 int32_t presValError = 0;
+int32_t detectorError = 0;
 
 void setup()
 {
@@ -80,6 +81,7 @@ void loop()
 
     // Get the presence distance value and print out if no errors
     presValError = radarSensor.getPresenceDistanceValuemm(distance);
+
     if(presValError == 0)
     {
       Serial.print("Presence Detected: ");
@@ -88,9 +90,9 @@ void loop()
     }
     else
     {
-      Serial.print("Error returning presence distance value");
+      Serial.println("Error returning presence distance value");
     }
 
     // Delay 0.5 seconds between readings
-    delay(50);
+    delay(500);
 }
