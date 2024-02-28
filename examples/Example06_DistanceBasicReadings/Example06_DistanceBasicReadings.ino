@@ -82,17 +82,15 @@ void setup()
         while(1); // Runs forever
     }
 
-
-
-    // New-line and delay for easier reading
+    // New-line and 0.5 second delay for easier reading
     Serial.println();
-    delay(1000);
+    delay(500);
 
 }
 
 void loop()
 {
-    distanceSetupError = distanceDetectorReadingSetup();
+    distanceSetupError = radarSensor.distanceDetectorReadingSetup();
     if(distanceSetupError != 0)
     {
       Serial.println("Distance Reading Setup Error: ");
