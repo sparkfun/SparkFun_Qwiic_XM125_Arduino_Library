@@ -77,6 +77,7 @@ void setup()
 
 void loop()
 {
+    // Busy wait loop until data is ready
     radarSensor.presenceBusyWait();
 
     // Get the presence distance value and print out if no errors

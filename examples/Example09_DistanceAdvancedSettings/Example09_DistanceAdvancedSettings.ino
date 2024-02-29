@@ -35,6 +35,8 @@ uint32_t endVal = 0;
 uint32_t numDistances = 9;
 uint32_t calibrateNeeded = 0;
 uint32_t measDistErr = 0;
+uint32_t beginReading = 300;
+uint32_t endReading = 7000;
 
 // Error statuses 
 uint32_t errorStatus = 0;
@@ -98,7 +100,7 @@ void setup()
     delay(100);
   
     // Set Start register 
-    if(radarSensor.setDistanceStart(300) != 0)
+    if(radarSensor.setDistanceStart(beginReading) != 0)
     {
       Serial.println("Distance Start Error");
     }
@@ -108,7 +110,7 @@ void setup()
     
     delay(100);
     // Set End register 
-    if(radarSensor.setDistanceEnd(4000) != 0)
+    if(radarSensor.setDistanceEnd(endReading) != 0)
     {
       Serial.println("Distance End Error");
     }

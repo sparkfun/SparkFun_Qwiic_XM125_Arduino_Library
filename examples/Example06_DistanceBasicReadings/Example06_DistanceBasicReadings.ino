@@ -82,10 +82,16 @@ void setup()
         while(1); // Runs forever
     }
 
+    int32_t setupError = radarSensor.distanceBegin();
+    if(setupError != 0)
+    {
+      Serial.print("Distance Detection Start Setup Error: ");
+      Serial.println(setupError); 
+    }
+
     // New-line and 0.5 second delay for easier reading
     Serial.println();
     delay(500);
-
 }
 
 void loop()
@@ -93,7 +99,7 @@ void loop()
     distanceSetupError = radarSensor.distanceDetectorReadingSetup();
     if(distanceSetupError != 0)
     {
-      Serial.println("Distance Reading Setup Error: ");
+      Serial.print("Distance Reading Setup Error: ");
       Serial.println(distanceSetupError);
     }
 
@@ -119,6 +125,7 @@ void loop()
     radarSensor.getDistancePeak9Distance(distancePeak9);
     radarSensor.getDistancePeak9Strength(distancePeakStrength9);
 
+    // If a peak distance was detected, then read out the distance and strength
     if (distancePeak0 != 0) 
     {
       Serial.print("Peak0 Distance, Strength: ");

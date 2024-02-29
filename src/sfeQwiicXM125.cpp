@@ -55,6 +55,7 @@ int32_t QwDevXM125::distanceBegin()
     // *** Distance Sensor Setup ***
     // Reset sensor configuration to reapply configuration registers
     setDistanceCommand(SFE_XM125_DISTANCE_RESET_MODULE);
+    delay(100);
 
     distanceBusyWait();
 
@@ -70,14 +71,14 @@ int32_t QwDevXM125::distanceBegin()
     }
   
     // Set Start register 
-    if(setDistanceStart(300) != 0)
+    if(setDistanceStart(sfe_xm125_distance_start_default) != 0)
     {
         return 3;
     }
     delay(100);  // give time for command to set 
 
     // Set End register 
-    if(setDistanceEnd(2500) != 0)
+    if(setDistanceEnd(sfe_xm125_distance_end_default) != 0)
     {
         return 4;
     }
@@ -145,6 +146,7 @@ int32_t QwDevXM125::distanceDetectorReadingSetup()
     {
         return 4;
     }
+    delay(100);
 
     // Check MEASURE_DISTANCE_ERROR for measurement failed
     getDistanceMeasureDistanceError(measDistErr);
@@ -152,6 +154,7 @@ int32_t QwDevXM125::distanceDetectorReadingSetup()
     {
         return 5;
     }
+    delay(100);
 
     // Recalibrate device if calibration error is triggered 
     getDistanceCalibrationNeeded(calibrateNeeded);
@@ -160,6 +163,7 @@ int32_t QwDevXM125::distanceDetectorReadingSetup()
         setDistanceCommand(SFE_XM125_DISTANCE_RECALIBRATE);
         return 6;
     }
+    delay(100);
 
     return 0;
 }

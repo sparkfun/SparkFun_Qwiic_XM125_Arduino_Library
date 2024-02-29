@@ -106,7 +106,6 @@ void setup()
 
     // Set Fixed Amplitude Threshold 
     radarSensor.setDistanceFixedAmpThreshold(100);
-    
 
     // Apply configuration 
     if(radarSensor.setDistanceCommand(SFE_XM125_DISTANCE_APPLY_CONFIGURATION) != 0)
