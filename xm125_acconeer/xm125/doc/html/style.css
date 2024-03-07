@@ -1,0 +1,706 @@
+/* spinnaker-regular - latin */
+@font-face {
+  font-family: 'Spinnaker';
+  font-style: normal;
+  font-weight: 400;
+  src: url('spinnaker-v11-latin/spinnaker-v11-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local('Spinnaker'), local('Spinnaker-Regular'),
+       url('spinnaker-v11-latin/spinnaker-v11-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('spinnaker-v11-latin/spinnaker-v11-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('spinnaker-v11-latin/spinnaker-v11-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('spinnaker-v11-latin/spinnaker-v11-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('spinnaker-v11-latin/spinnaker-v11-latin-regular.svg#Spinnaker') format('svg'); /* Legacy iOS */
+}
+
+html, body {
+	min-height: 100%;
+	margin:0;
+}
+
+
+
+h1, h2, h3, h4, h5, h6, a, .directory .levels {
+	font-family: 'Spinnaker', Spinnaker, 'Roboto', sans-serif!important;
+}
+
+p, span, em, strong, ul li, ol li, dl, dt, dd{
+	font-family: 'Spinnaker', Spinnaker, 'Roboto', sans-serif!important;
+	font-size: 14px;
+	color: #4C585D;
+}
+
+
+/* Header */
+
+#titlearea #projectname{
+	background-image:url('AcconeerLogo.png');
+	background-position:left center;
+	background-size:contain;
+	background-repeat:no-repeat;
+	margin: 15px;
+    height: 45px;
+    width:240px;
+}
+
+.menu-header-main-menu-container,
+.menu-header-sub-menu-container {
+	overflow: auto;
+}
+
+#site-subnavigation {
+	padding-top: 1rem;
+	padding-bottom: 0.5rem;
+}
+
+#site-branding {
+	padding-top: 0.5rem;
+	padding-bottom: 1rem;
+}
+
+.sm-dox{
+	background-image:none!important;
+	background-color:transparent!important;
+}
+.sm-dox li{
+	border:0!important;
+}
+.sm-dox a {
+	font-family: 'Spinnaker', Spinnaker, 'Roboto', sans-serif!important;
+	font-size:16px;
+	border:0!important;
+	padding:8px 12px 10px;
+	color: #2888a9;
+	background-image:none!important;
+	background-color:transparent!important;
+}
+.sm-dox a.highlighted{
+		padding:8px 12px 10px;
+}
+
+.sm-dox ul li a.highlighted{
+		padding:4px 6px;
+}
+
+.sm-dox a:hover {
+	color: #446671;
+	font-size:16px;
+	border:0!important;
+	padding:8px 12px 10px;
+	text-shadow:none!important;
+}
+
+.sm-dox a:visited {
+	font-size:16px;
+	border:0!important;
+	padding:8px 12px 10px;
+	color: #446671;
+}
+.sm-dox a span.sub-arrow{
+	border-color: #283A5D #0000 #0000 #0000!important;
+}
+
+.sm-dox ul li a{
+	padding:4px 6px;
+	height:36px;
+	line-height:24px!important;
+}
+.sm-dox ul li a:hover{
+	padding:4px 6px;
+	height:36px;
+	color: #145269!important;
+	background-color:#eee!important;
+}
+.sm-dox ul li a{
+	padding:4px 6px!important;
+	height:36px;
+}
+
+.sm-dox ul > li > a:visited{
+	padding:4px 6px;
+}
+
+#MSearchBox{
+	height:36px;
+	width:210px;
+	border-radius:20px;
+	border:1px solid #aaa;
+}
+#MSearchBox .left, #MSearchBox .right{
+	background-image:none;
+}
+#MSearchBox .left #MSearchSelect{
+	height:24px;
+	width:24px;
+	top:4px;
+}
+.MSearchBoxActive .right{
+	margin-top:10px;
+}
+
+#MSearchField{
+	background-image:none;
+	font-family: 'Spinnaker', Spinnaker, 'Roboto', sans-serif!important;
+	margin-left:28px;
+	font-size:14px;
+	height:32px;
+	width:180px;
+}
+
+#SRResults .SRResults{
+	font-family: 'Spinnaker', Spinnaker, 'Roboto', sans-serif!important;
+	font-size:14px;
+	height:24px;
+}
+.SRSymbol, .SRScope. .SRStatus. #SRIndex *{
+	font-family: 'Spinnaker', Spinnaker, 'Roboto', sans-serif!important;
+	font-size:14px;
+}
+
+/* Page */
+.contents .textblock,
+.contents .textblock p,
+.contents .textblock ul li,
+.contents .textblock ol li{
+	font-family: 'Spinnaker', Spinnaker, sans-serif!important;
+}
+.contents .textblock{
+	padding-bottom:2em;
+}
+.contents h1, .contents h2{
+	color:#244e64;
+	padding-top:0.5em;
+}
+
+.contents h3, .contents h4{
+	color:#507E8E;
+	padding-top:0.5em;
+}
+
+.contents a{
+	color: #1C7595;
+}
+
+.contents a:hover{
+	color: #145269;
+}
+
+.contents a:visited{
+	color: #3B6878;
+}
+
+.contents .caption{
+	font-family: 'Spinnaker', Spinnaker, sans-serif!important;
+	color:#507E8E;
+	line-height:3em;
+}
+
+.contents table.directory{
+	font-family: 'Spinnaker', Spinnaker, sans-serif!important;
+}
+
+
+.contents table.directory td.entry{
+	padding: 5px 8px!important;
+}
+
+.contents table.directory td.desc{
+	padding: 5px 8px!important;
+}
+
+.fragment{
+	padding:8px!important;
+	font-family:monospace!important;
+	background-color:#e7e7e7;
+}
+.line, .line > *{
+	font-family:monospace!important;
+	line-height:1.666;
+	padding-bottom:4px;
+}
+#top{
+	border-bottom: 1px solid #A0ADB1;
+	background-color:white;
+	width:100%;
+	z-index:10;
+	position:fixed;
+}
+#side-nav, #doc-content{
+	padding-top:135px!important;
+}
+#side-nav, #nav-tree{
+	background-image:none!important;
+	background-color:#f7fbfb!important;
+}
+#side-nav{
+	padding-right:0!important;
+	position: fixed;
+}
+#side-nav a{
+	font-family: 'Spinnaker', Spinnaker, 'Roboto', sans-serif!important;
+	font-size:15px;
+	text-shadow:none!important;
+	color:#145269;
+}
+#nav-tree{
+	height:100%;
+}
+#nav-tree-contents{
+	margin-top:0;
+}
+#nav-tree-contents > ul > li{
+	height:24px;
+}
+#nav-tree-contents > ul > li:first-child{
+	background-image:none;
+}
+#nav-tree-contents > ul > li .selected{
+	background-image:none!important;
+}
+#nav-tree-contents > ul > li:first-child > a{
+	text-transform:uppercase;
+	font-size:16px;
+	color:white;
+	text-shadow:none!important;
+}
+#nav-tree > ul > li.item.selected{
+	background-image:none!important;
+	background-color:#2087ab;
+}
+#nav-tree > ul li.item.selected {
+	background-color:#669AAD;
+	color:white;
+}
+
+#nav-tree .item{
+	padding:2.5px 0;
+}
+
+#nav-tree #selected{
+	background-color: #2087AB;
+}
+
+.ui-resizable-e{
+	background-color: #A0ADB1;
+	background-image:none!important;
+	width:2px;
+}
+
+#doc-content {
+	padding:1em 1em 2em 1em;
+	overflow:visible;
+}
+
+
+.header{
+	background-color:transparent!important;
+	background-image:none!important;
+	border-bottom:none!important;
+}
+.header .title {
+	font-family: 'Spinnaker', Spinnaker, 'Roboto', sans-serif!important;
+	font-size: 40px;
+	line-height:48px;
+	text-transform: uppercase;
+	margin: 0 0 10px 0;
+	color:#244e64;
+}
+
+
+
+.table td,
+.table th {
+	padding: .5em;
+}
+
+#dl-list-header {
+	margin-top: 1rem;
+	margin-bottom: 0;
+}
+
+
+.page table tr.bg-primary,
+.page table th.bg-primary,
+.page td.bg-primary,
+button.btn-primary,
+a.btn-primary {
+	color: white;
+	font-family: 'Spinnaker', sans-serif;
+	text-transform: uppercase;
+}
+
+.page table tr.bg-primary,
+.page table th.bg-primary,
+.page td.bg-primary {
+	background-color: #2888a9!important;
+	font-size: 13px;
+}
+
+button.btn-primary,
+a.btn-primary {
+	background-color: #2888a9;
+	border: 0;
+	letter-spacing: 1px;
+	font-size: 14px;
+}
+
+button.btn-primary:hover,
+a.btn-primary:hover {
+	background-color: #3fa8cc;
+}
+
+.page tr.bg-primary-light,
+.page th.bg-primary-light,
+.page td.bg-primary-light,
+button.btn-primary-light,
+a.btn-primary-light {
+	background-color: #ebf7fb;
+	color: #2888a9;
+	font-family: 'Spinnaker', sans-serif;
+	text-transform: uppercase;
+}
+
+#v-pills-faqs>div {
+	padding-top: 0;
+}
+
+#v-pills-tab a {
+	color: #2888a9;
+}
+
+#v-pills-tab a.active,
+#v-pills-tab a.show {
+	color: white;
+	background-color: #2888a9;
+}
+
+.faq_entry {
+	padding-bottom: 15px;
+	margin-bottom: 10px;
+	border-bottom: 1px dotted #ccc;
+}
+
+#v-pills-faqs .tab-pane>.faq_entry:last-child {
+	border: 0;
+}
+
+tbody,
+thead {
+	width: 100%!important;
+}
+
+#terms-box {
+	height: 300px;
+	margin: 15px 3px;
+	overflow: scroll;
+	padding: 10px;
+	border: 1px solid #ccc;
+	background-color: white;
+}
+
+.popover-body ul,
+.popover-body ol {
+	margin: 0!important;
+	padding-left: 25px!important;
+}
+
+
+/* Accordions */
+
+.document-accordion .card {
+	font-family: 'Spinnaker', sans-serif;
+	border: 1px solid #eee;
+	margin-bottom: 5px;
+}
+
+.document-accordion .card-header {
+	border: 0;
+	background-color: #ebf7fb;
+}
+
+.document-accordion .card-header .btn {
+	font-family: 'Spinnaker', sans-serif;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	padding: 0;
+}
+
+.document-accordion .card-header .btn .pull-left {
+	color: #37bef0;
+}
+
+.document-accordion .card-header .btn:hover .pull-left {
+	color: #3fa8cc;
+}
+
+.document-accordion .card-header .btn .pull-right {
+	text-transform: uppercase;
+	line-height: 1.75
+}
+
+
+/* FAQ */
+
+.ufaq-faq-div {
+	border-radius: 4px;
+}
+
+.ufaq-faq-toggle {
+	background-color: #d5eef6;
+	padding: 5px 7px;
+}
+
+.ewd-ufaq-post-margin-symbol {
+	height: 100%;
+	vertical-align: middle;
+	color: #2888a9;
+	line-height: inherit;
+}
+
+.ewd-ufaq-post-margin-symbol span {
+	font-size: 21px;
+}
+
+.ufaq-faq-title-text h4 {
+	font-size: 18px;
+	color: #2888a9;
+}
+
+.ufaq-faq-body {
+	transition: 0.4s all ease-in;
+	border: 1px solid #d5eef6;
+}
+
+
+/* Sidebar */
+
+#menu-sidebar {
+	margin-top: 30px;
+	background-color: #f7f7f7;
+	border-radius: 4px;
+}
+
+#menu-sidebar aside {
+	margin-top: 15px;
+}
+
+#menu-sidebar h5#site-menu-title {
+	text-transform: uppercase;
+}
+
+#menu-sidebar ul.menu {
+	padding: 5px 0 0 0;
+	margin-left: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+}
+
+#menu-sidebar ul.menu>li {
+	margin-bottom: 5px;
+}
+
+#menu-sidebar li {
+	list-style-type: none;
+	line-height: 2em;
+	position: relative;
+}
+
+#menu-sidebar li.current-menu-item>a,
+#menu-sidebar li.current-page-parent>a {
+	color: #244e64;
+	font-weight: 600;
+}
+
+#menu-sidebar ul.menu>li li {
+	padding-left: 5px;
+}
+
+#menu-sidebar ul.menu>li.current_page>a {
+	background-color: white;
+	border-radius: 4px;
+	padding: 3px;
+}
+
+#menu-sidebar li a {
+	color: #244e64;
+	text-decoration: none;
+	font-size: 14px;
+	padding-left: 10px;
+}
+
+#menu-sidebar li>a:hover {
+	color: #2888a9;
+	text-decoration: none;
+}
+
+#menu-sidebar li>i {
+	margin-left: 7px;
+}
+
+#menu-sidebar ul.sub-menu {
+	padding: 0;
+	margin-left: 0;
+	background-color: #eee;
+	border-radius: 4px;
+}
+
+#menu-sidebar ul.sub-menu>li {
+	display: inline-block;
+	width: 100%;
+}
+
+#menu-sidebar ul.sub-menu>li>a {
+	padding-left: 20px;
+}
+
+#menu-sidebar li.current-menu-item {
+	background-color: #e2e2e2;
+	border-radius: 2px;
+}
+
+#menu-sidebar li:not(.current-menu-item):not(.current-page-parent) ul.sub-menu {
+	transition: flex 0.3s ease-out;
+	height: 0;
+	overflow: hidden;
+	flex: 0;
+}
+
+#menu-sidebar li:not(.current-menu-item):not(.current-page-parent) ul.sub-menu.open {
+	height: inherit;
+	overflow: auto;
+	flex: 1;
+}
+
+
+/* Functions etc. */
+
+.memberdecls{
+		font-family:'Spinnaker', sans-serif;
+}
+
+.memberdecls td.memSeparator{
+	background-color:#d4d4d4;
+}
+td.memItemLeft{
+	font-family:'Spinnaker', sans-serif;
+	color:#777;
+	background-color:#eee;
+}
+td.memItemRight{
+
+}
+.memberdecls a{
+	color:#2087AB;
+}
+.memberdecls a:visited{
+	color:#145269;
+}
+
+
+td.mdescRight{
+	font-family:'Spinnaker', sans-serif;
+	font-size:13px;
+}
+
+h2.groupheader{
+	border-bottom:1px solid #669AAD;
+}
+h2.memtitle{
+	color:#24424c;
+}
+h2.memtitle, .memproto{
+	background-image:none;
+	background-color:#D2E3E9;
+	border-color:#AFCDD8;
+	text-shadow:none;
+}
+
+.memproto .memname{
+	font-family:'Spinnaker', sans-serif;
+	font-size:13px;
+}
+div.memitem{
+	font-family:'Spinnaker', sans-serif;
+}
+.memdoc{
+	font-family:'Spinnaker', sans-serif;
+	background-image:none;
+}
+.memdoc p.definition{
+	font-family:'Spinnaker', sans-serif;
+}
+
+.memdoc p.definition a.el{
+	font-family:'Spinnaker', sans-serif;
+	color:#669AAD;
+}
+table.params {
+	font-family:'Spinnaker', sans-serif;
+}
+
+table.params .paramdir{
+	font-family:monospace;
+}
+
+dl.params dt, dl.section dt{
+	font-size:16px;
+	color:#698791;
+	border-bottom: 1px dotted #E4E9EB;
+	margin-bottom:4px;
+}
+
+/* Footer */
+#nav-path {
+	font-family: 'Spinnaker', sans-serif;
+		background-color: #2087ab;
+	color: white;
+}
+
+#nav-path ul{
+	margin-left:250px;
+	background-image:none;
+}
+#nav-path ul li{
+	background-image:none;
+	padding-right:0;
+}
+#nav-path ul li a{
+	color:white;
+	text-shadow:none!important;
+	display:inline-block;
+}
+#nav-path ul li:after{
+	content: " ";
+	border:6px solid transparent;
+	height:0;
+	width:0;
+	border-left:6px solid #cddde3;
+	display:inline;
+	position:relative;
+	margin:10px 8px;
+	float:right;
+}
+#nav-path ul li:last-child:after{
+	content:none;
+}
+
+@media screen and (max-width:767px){
+	#side-nav, #doc-content {
+	    padding-top: 360px!important;
+	}
+	#main-nav ul.sm-dox li:last-child{
+		width:100%;
+		float:none!important;
+
+	}
+	#MSearchBox{
+		margin:1em;
+	}
+	.contents .textblock{
+		padding-bottom:2em;
+	}
+	.contents img{
+		width:100%;height:auto;
+	}
+}
+
