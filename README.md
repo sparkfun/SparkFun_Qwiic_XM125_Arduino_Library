@@ -1,6 +1,9 @@
 SparkFun XM125 A121 Arduino Library
 ========================================
 
+[![SparkFun Pulsed Coherent Radar Sensor – Acconeer XM125 (Qwiic)](https://cdn.sparkfun.com/r/600-600/assets/parts/2/4/8/6/5/SEN-24540-Pulsed-Coherent-Radar-Sensor-Feature.jpg)](https://www.sparkfun.com/products/24540)
+
+[*SparkFun Pulsed Coherent Radar Sensor – Acconeer XM125 (Qwiic) (SEN-24540)*](https://www.sparkfun.com/products/24540)
 
 This is the SparkFun library for the Acconeer Entry+ Module XM125 with the A121 60GHz Pulsed Coherent Radar sensor and I<sup>2</sup>C interface. (insert link here). 
 
@@ -27,7 +30,7 @@ Documentation
 Products that use this Library 
 ---------------------------------
 
-* [*SEN-_____*](insert link here)
+* [*SEN-24540*](https://www.sparkfun.com/products/24540)
 
 
 License Information
