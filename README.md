@@ -23,7 +23,7 @@ Documentation
 --------------
 
 * **[Installing an Arduino Library Guide](https://learn.sparkfun.com/tutorials/installing-an-arduino-library)** - Basic information on how to install an Arduino library.
-* **[Hookup Guide](http://docs.sparkfun.com/TODO/)** - TODO: Update URL and description
+* **[Hookup Guide](https://docs.sparkfun.com/SparkFun_Qwiic_Pulsed_Radar_Sensor_XM125)** - Basic hookup guide for the SparkFUn Qwiic Pulsed Coherent Radar Sensor - XM125.
 * **[Product Repository](https://github.com/sparkfun/SparkFun_Qwiic_Pulsed_Radar_Sensor_XM125)** - Main repository for the SparkFun Qwiic XM125 (including hardware files)
 
 
