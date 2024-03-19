@@ -3,7 +3,7 @@
 
   Using the Acconeer XM125 A121 60GHz Pulsed Coherent Radar Sensor.
 
-  This example prints out the distance values of the 0 and 1 distance 
+  This example prints out the distance values of the 0 distance 
   channels to the serial plotter tool in Arduino. 
 
   By: Madison Chodikov
@@ -28,20 +28,11 @@ SfeXM125 radarSensor;
 // I2C default address
 uint8_t i2cAddress = SFE_XM125_I2C_ADDRESS;
 
-// Setup Variables 
-uint32_t startVal = 0;
-uint32_t endVal = 0;
-uint32_t numDistances = 9;
-uint32_t calibrateNeeded = 0;
-uint32_t measDistErr = 0;
-
 // Error statuses 
-uint32_t errorStatus = 0;
 uint32_t distanceSetupError = 0;
 
 // Distance Variables 
 uint32_t distancePeak0 = 0;
-uint32_t distancePeak1 = 0;
 
 void setup()
 {
@@ -86,16 +77,11 @@ void loop()
 
     // Read PeakX Distance and PeakX Strength registers for the number of distances detected 
     radarSensor.getDistancePeak0Distance(distancePeak0);
-    radarSensor.getDistancePeak1Distance(distancePeak1);
 
     // If a peak distance was detected, then read out the distance and strength
     if (distancePeak0 != 0) 
     {
-      Serial.println(distancePeak0);
-    }
-    if (distancePeak1 != 0) 
-    {
-      Serial.println(distancePeak1);
+      Serial.prinlnt(distancePeak0);
     }
 
     // Half a second delay for easier readings 

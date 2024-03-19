@@ -1,5 +1,5 @@
 /*
-  Example 4: Distance Basic Readings
+  Example 9: Distance Advanced Settings
 
   Using the Acconeer XM125 A121 60GHz Pulsed Coherent Radar Sensor.
 
@@ -67,7 +67,7 @@ void setup()
 {
     // Start serial
     Serial.begin(115200);
-    Serial.println("XM125 Example 4: Basic Distance Readings");
+    Serial.println("XM125 Example 9: Basic Advanced Settings");
     Serial.println("");
 
     Wire.begin();
