@@ -88,6 +88,14 @@ void loop()
       Serial.print("Presence Detected: ");
       Serial.print(distance);
       Serial.println("mm");
+      //Serial.print(distance * .01);
+      //Serial.println("cm");
+      //Serial.print(distance * .001);
+      //Serial.println("m");
+      //Serial.print(distance * .001);
+      //Serial.println("m");
+      //Serial.print(distance * .03937008);
+      //Serial.println("In");
     }
     else
     {

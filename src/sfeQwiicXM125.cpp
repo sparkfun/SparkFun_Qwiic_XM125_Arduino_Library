@@ -1093,7 +1093,6 @@ int32_t QwDevXM125::getPresenceDistance(uint32_t &distance)
     size_t readBytes = 0;
     int32_t retVal = _theBus->readRegister16Region(SFE_XM125_PRESENCE_DISTANCE, (uint8_t*)&distance, 4, readBytes);
     distance = __builtin_bswap32(distance);
-    distance = distance/10;
     return retVal;
 }
 
