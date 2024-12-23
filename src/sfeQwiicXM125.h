@@ -79,7 +79,7 @@ class QwDevXM125
     ///   only be used for relative temperature measurements.
     /// @param temperature Relative tempertaure of device
     /// @return Error code (0 no error)
-    int32_t getDistanceTemperature(uint32_t &temperature);
+    int32_t getDistanceTemperature(int32_t &temperature);
 
     /// @brief This function returns the distance to peak 0
     ///  Note: This value is a factor 1000 larger than the RSS value
@@ -134,52 +134,52 @@ class QwDevXM125
     /// @brief This function returns the strength of peak 0
     ///  Note: This value is a factor 1000 larger than the RSS value
     /// @return Error code (0 no error)
-    int32_t getDistancePeak0Strength(uint32_t &peak);
+    int32_t getDistancePeak0Strength(int32_t &peak);
 
     /// @brief This function returns the strength of peak 1
     ///  Note: This value is a factor 1000 larger than the RSS value
     /// @return Error code (0 no error)
-    int32_t getDistancePeak1Strength(uint32_t &peak);
+    int32_t getDistancePeak1Strength(int32_t &peak);
 
     /// @brief This function returns the strength of peak 2
     ///  Note: This value is a factor 1000 larger than the RSS value
     /// @return Error code (0 no error)
-    int32_t getDistancePeak2Strength(uint32_t &peak);
+    int32_t getDistancePeak2Strength(int32_t &peak);
 
     /// @brief This function returns the strength of peak 3
     ///  Note: This value is a factor 1000 larger than the RSS value
     /// @return Error code (0 no error)
-    int32_t getDistancePeak3Strength(uint32_t &peak);
+    int32_t getDistancePeak3Strength(int32_t &peak);
 
     /// @brief This function returns the strength of peak 4
     ///  Note: This value is a factor 1000 larger than the RSS value
     /// @return Error code (0 no error)
-    int32_t getDistancePeak4Strength(uint32_t &peak);
+    int32_t getDistancePeak4Strength(int32_t &peak);
 
     /// @brief This function returns the strength of peak 5
     ///  Note: This value is a factor 1000 larger than the RSS value
     /// @return Error code (0 no error)
-    int32_t getDistancePeak5Strength(uint32_t &peak);
+    int32_t getDistancePeak5Strength(int32_t &peak);
 
     /// @brief This function returns the strength of peak 6
     ///  Note: This value is a factor 1000 larger than the RSS value
     /// @return Error code (0 no error)
-    int32_t getDistancePeak6Strength(uint32_t &peak);
+    int32_t getDistancePeak6Strength(int32_t &peak);
 
     /// @brief This function returns the strength of peak 7
     ///  Note: This value is a factor 1000 larger than the RSS value
     /// @return Error code (0 no error)
-    int32_t getDistancePeak7Strength(uint32_t &peak);
+    int32_t getDistancePeak7Strength(int32_t &peak);
 
     /// @brief This function returns the strength of peak 8
     ///  Note: This value is a factor 1000 larger than the RSS value
     /// @return Error code (0 no error)
-    int32_t getDistancePeak8Strength(uint32_t &peak);
+    int32_t getDistancePeak8Strength(int32_t &peak);
 
     /// @brief This function returns the strength of peak 9
     ///  Note: This value is a factor 1000 larger than the RSS value
     /// @return Error code (0 no error)
-    int32_t getDistancePeak9Strength(uint32_t &peak);
+    int32_t getDistancePeak9Strength(int32_t &peak);
 
     /// @brief This function returns the start of measured interval
     ///  in millimeters.
