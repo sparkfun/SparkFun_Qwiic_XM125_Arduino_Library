@@ -17,7 +17,6 @@ sfe_xm125_presence_command_t KEYWORD1
 #########################################################
 
 begin KEYWORD2
-returnRegister KEYWORD2
 distanceBegin KEYWORD2
 distanceDetectorReadingSetup KEYWORD2
 getDistanceDetectorVersion KEYWORD2
