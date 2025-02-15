@@ -93,9 +93,9 @@ class sfDevXM125
     /// @brief This function returns the temperature in sensor during measurements
     ///   (in degree Celsius). Note that it has poor absolute accuracy and should
     ///   only be used for relative temperature measurements.
-    /// @param temperature Relative tempertaure of device
+    /// @param temperature Relative temperature of device
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistanceTemperature(uint32_t &temperature);
+    sfTkError_t getDistanceTemperature(int16_t &temperature);
 
     /// @brief This function returns the distance to peak 0
     ///  Note: This value is a factor 1000 larger than the RSS value
@@ -150,52 +150,52 @@ class sfDevXM125
     /// @brief This function returns the strength of peak 0
     ///  Note: This value is a factor 1000 larger than the RSS value
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistancePeak0Strength(uint32_t &peak);
+    sfTkError_t getDistancePeak0Strength(int32_t &peak);
 
     /// @brief This function returns the strength of peak 1
     ///  Note: This value is a factor 1000 larger than the RSS value
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistancePeak1Strength(uint32_t &peak);
+    sfTkError_t getDistancePeak1Strength(int32_t &peak);
 
     /// @brief This function returns the strength of peak 2
     ///  Note: This value is a factor 1000 larger than the RSS value
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistancePeak2Strength(uint32_t &peak);
+    sfTkError_t getDistancePeak2Strength(int32_t &peak);
 
     /// @brief This function returns the strength of peak 3
     ///  Note: This value is a factor 1000 larger than the RSS value
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistancePeak3Strength(uint32_t &peak);
+    sfTkError_t getDistancePeak3Strength(int32_t &peak);
 
     /// @brief This function returns the strength of peak 4
     ///  Note: This value is a factor 1000 larger than the RSS value
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistancePeak4Strength(uint32_t &peak);
+    sfTkError_t getDistancePeak4Strength(int32_t &peak);
 
     /// @brief This function returns the strength of peak 5
     ///  Note: This value is a factor 1000 larger than the RSS value
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistancePeak5Strength(uint32_t &peak);
+    sfTkError_t getDistancePeak5Strength(int32_t &peak);
 
     /// @brief This function returns the strength of peak 6
     ///  Note: This value is a factor 1000 larger than the RSS value
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistancePeak6Strength(uint32_t &peak);
+    sfTkError_t getDistancePeak6Strength(int32_t &peak);
 
     /// @brief This function returns the strength of peak 7
     ///  Note: This value is a factor 1000 larger than the RSS value
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistancePeak7Strength(uint32_t &peak);
+    sfTkError_t getDistancePeak7Strength(int32_t &peak);
 
     /// @brief This function returns the strength of peak 8
     ///  Note: This value is a factor 1000 larger than the RSS value
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistancePeak8Strength(uint32_t &peak);
+    sfTkError_t getDistancePeak8Strength(int32_t &peak);
 
     /// @brief This function returns the strength of peak 9
     ///  Note: This value is a factor 1000 larger than the RSS value
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistancePeak9Strength(uint32_t &peak);
+    sfTkError_t getDistancePeak9Strength(int32_t &peak);
 
     /// @brief This function returns the start of measured interval
     ///  in millimeters.
