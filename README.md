@@ -19,7 +19,7 @@ The XM125 boasts an impressive range of up to 20 meters, allowing you to create 
 
 Looking for the board that matches this library - pick up a [SparkFun Pulsed Coherent Radar Sensor - Acconeer XM125 (Qwiic)](https://www.sparkfun.com/sparkfun-pulsed-coherent-radar-sensor-acconeer-xm125-qwiic.html) at www.sparkfun.com.
 
-### Upgrading to Version 2.0 
+### *Upgrading to Version 2.\* from Version 1.\**
 
 Version 2.0+ of this library is not compatible with Version 1.* implementations/use. For Version 2.0, the single class defined by the library, `SparkFunXM125`, was divided into two distinct classes:
 
