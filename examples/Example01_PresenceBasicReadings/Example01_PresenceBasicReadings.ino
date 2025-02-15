@@ -4,14 +4,14 @@
   Using the Acconeer XM125 A121 60GHz Pulsed Coherent Radar Sensor.
 
   This example shows how operate the XM125 when the device is in Presence Reading Mode.
-  The sensor is initialized, then the presence distance values will print out 
+  The sensor is initialized, then the presence distance values will print out
   to the terminal.
 
   By: Madison Chodikov
   SparkFun Electronics
   Date: 2024/1/22
   SparkFun code, firmware, and software is released under the MIT License.
-	Please see LICENSE.md for further details.
+    Please see LICENSE.md for further details.
 
   Hardware Connections:
   QWIIC --> QWIIC
@@ -21,15 +21,15 @@
   Feel like supporting our work? Buy a board from SparkFun!
   https://www.sparkfun.com/products/ - Qwiic XM125 Breakout
 */
-#include <Arduino.h>
 #include "SparkFun_Qwiic_XM125_Arduino_Library.h"
+#include <Arduino.h>
 
-SparkFunXM125 radarSensor;
+SparkFunXM125Presence radarSensor;
 
 // I2C default address
 uint8_t i2cAddress = SFE_XM125_I2C_ADDRESS;
 
-// Presence distance values 
+// Presence distance values
 uint32_t distance = 0;
 
 // Error statuses
@@ -50,7 +50,7 @@ void setup()
 
     // If begin is successful (1), then start example
     int startErr = radarSensor.begin(i2cAddress, Wire);
-    if(startErr == 1)
+    if (startErr == 1)
     {
         Serial.println("Begin");
     }
@@ -59,15 +59,16 @@ void setup()
         Serial.print("Start Error Code: ");
         Serial.println(startErr);
         Serial.println("Device failed to setup - Freezing code.");
-        while(1); // Runs forever
+        while (1)
+            ; // Runs forever
     }
 
     // Start the sensor with default register values
     int32_t setupError = radarSensor.presenceDetectorStart();
-    if(setupError != 0)
+    if (setupError != 0)
     {
-      Serial.print("Presence Detection Start Setup Error: ");
-      Serial.println(setupError); 
+        Serial.print("Presence Detection Start Setup Error: ");
+        Serial.println(setupError);
     }
 
     // New line and delay for easier reading
@@ -83,23 +84,23 @@ void loop()
     // Get the presence distance value and print out if no errors
     presValError = radarSensor.getPresenceDistanceValuemm(distance);
 
-    if(presValError == 0)
+    if (presValError == 0)
     {
-      Serial.print("Presence Detected: ");
-      Serial.print(distance);
-      Serial.println("mm");
-      //Serial.print(distance * .1);
-      //Serial.println("cm");
-      //Serial.print(distance * .001);
-      //Serial.println("m");
-      //Serial.print(distance * .001);
-      //Serial.println("m");
-      //Serial.print(distance * .03937008);
-      //Serial.println("In");
+        Serial.print("Presence Detected: ");
+        Serial.print(distance);
+        Serial.println("mm");
+        // Serial.print(distance * .1);
+        // Serial.println("cm");
+        // Serial.print(distance * .001);
+        // Serial.println("m");
+        // Serial.print(distance * .001);
+        // Serial.println("m");
+        // Serial.print(distance * .03937008);
+        // Serial.println("In");
     }
     else
     {
-      Serial.println("Error returning presence distance value");
+        Serial.println("Error returning presence distance value");
     }
 
     // Delay 0.5 seconds between readings

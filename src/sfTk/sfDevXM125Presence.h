@@ -1,437 +1,249 @@
 /**
- * @file sfDevXM125.h
+ * @file sfDevXM125Presence.h
  * @brief Header of the SparkFun Qwiic XM125  Library.
  *
- * This file contains the header declares of the functions for interfacing with
- * the SparkFun Qwiic XM125 distance and presence detector using I2C communication.
- * 
+ * This file contains the header the Presence Application object
+ *
  * @author SparkFun Electronics
-  * @date 2024-2025
+ * @date 2024-2025
  * @copyright Copyright (c) 2024-2025, SparkFun Electronics Inc. This project is released under the MIT License.
  *
  * SPDX-License-Identifier: MIT
  */
 #pragma once
 
-#include <sfTk/sfToolkit.h>
-// Bus interfaces
-#include <sfTk/sfTkII2C.h>
+#include "sfDevXM125Core.h"
 
-#include "sfXM125Regs.h"
+// Defines
 
-class sfDevXM125
+// defines and data structs
+/* ****************************** Presence Values ****************************** */
+
+const uint32_t SFE_XM125_PRESENCE_DETECTOR_STATUS_MASK = 0b10010000111111110000000011111111;
+
+const uint32_t SFE_XM125_PRESENCE_DETECTED_MASK = 0x00000001;
+const uint32_t SFE_XM125_PRESENCE_DETECTED_STICKY_MASK = 0x00000002;
+const uint32_t SFE_XM125_PRESENCE_DETECTOR_ERROR_MASK = 0x00008000;
+const uint32_t SFE_XM125_PRESENCE_TEMPERATURE_MASK = 0xffff0000;
+const uint32_t SFE_XM125_PRESENCE_MAJOR_VERSION_MASK = 0xffff0000;
+const uint32_t SFE_XM125_PRESENCE_MINOR_VERSION_MASK = 0x0000ff00;
+const uint32_t SFE_XM125_PRESENCE_PATCH_VERSION_MASK = 0x000000ff;
+
+const uint32_t SFE_XM125_PRESENCE_RSS_REGISTER_OK_MASK = 0x00000001;
+const uint32_t SFE_XM125_PRESENCE_CONFIG_CREATE_OK_MASK = 0x00000002;
+const uint32_t SFE_XM125_PRESENCE_SENSOR_CREATE_OK_MASK = 0x00000004;
+const uint32_t SFE_XM125_PRESENCE_SENSOR_CALIBRATE_OK_MASK = 0x00000008;
+const uint32_t SFE_XM125_PRESENCE_DETECTOR_CREATE_OK_MASK = 0x00000010;
+const uint32_t SFE_XM125_PRESENCE_DETECTOR_BUFFER_OK_MASK = 0x00000020;
+const uint32_t SFE_XM125_PRESENCE_SENSOR_BUFFER_OK_MASK = 0x00000040;
+const uint32_t SFE_XM125_PRESENCE_CONFIG_APPLY_OK_MASK = 0x00000080;
+const uint32_t SFE_XM125_PRESENCE_RSS_REGISTER_ERROR_MASK = 0x00010000;
+const uint32_t SFE_XM125_PRESENCE_CONFIG_CREATE_ERROR_MASK = 0x00020000;
+const uint32_t SFE_XM125_PRESENCE_SENSOR_CREATE_ERROR_MASK = 0x00040000;
+const uint32_t SFE_XM125_PRESENCE_SENSOR_CALIBRATE_ERROR_MASK = 0x00080000;
+const uint32_t SFE_XM125_PRESENCE_DETECTOR_CREATE_ERROR_MASK = 0x00100000;
+const uint32_t SFE_XM125_PRESENCE_DETECTOR_BUFFER_ERROR_MASK = 0x00200000;
+const uint32_t SFE_XM125_PRESENCE_SENSOR_BUFFER_ERROR_MASK = 0x00400000;
+const uint32_t SFE_XM125_PRESENCE_CONFIG_APPLY_ERROR_MASK = 0x00800000;
+const uint32_t SFE_XM125_PRESENCE_DETECTOR_REG_ERROR_MASK = 0x10000000;
+const uint32_t SFE_XM125_PRESENCE_BUSY_MASK = 0x80000000;
+
+const uint32_t SFE_XM125_PRESENCE_ALL_ERROR_MASK =
+    (SFE_XM125_PRESENCE_RSS_REGISTER_ERROR_MASK | SFE_XM125_PRESENCE_CONFIG_CREATE_ERROR_MASK |
+     SFE_XM125_PRESENCE_SENSOR_CREATE_ERROR_MASK | SFE_XM125_PRESENCE_SENSOR_CALIBRATE_ERROR_MASK |
+     SFE_XM125_PRESENCE_DETECTOR_CREATE_ERROR_MASK | SFE_XM125_PRESENCE_DETECTOR_BUFFER_ERROR_MASK |
+     SFE_XM125_PRESENCE_SENSOR_BUFFER_ERROR_MASK | SFE_XM125_PRESENCE_CONFIG_APPLY_ERROR_MASK |
+     SFE_XM125_PRESENCE_DETECTOR_REG_ERROR_MASK | SFE_XM125_PRESENCE_DETECTOR_ERROR_MASK |
+     SFE_XM125_PRESENCE_BUSY_MASK);
+
+const uint32_t SFE_XM125_PRESENCE_MAJOR_VERSION_MASK_SHIFT = 16;
+const uint32_t SFE_XM125_PRESENCE_MINOR_VERSION_MASK_SHIFT = 8;
+const uint32_t SFE_XM125_PRESENCE_RSS_REGISTER_ERROR_MASK_SHIFT = 15;
+const uint32_t SFE_XM125_PRESENCE_CONFIG_CREATE_ERROR_MASK_SHIFT = 16;
+const uint32_t SFE_XM125_PRESENCE_SENSOR_CREATE_ERROR_MASK_SHIFT = 17;
+const uint32_t SFE_XM125_PRESENCE_SENSOR_CALIBRATE_ERROR_MASK_SHIFT = 18;
+const uint32_t SFE_XM125_PRESENCE_DETECTOR_CREATE_ERROR_MASK_SHIFT = 19;
+const uint32_t SFE_XM125_PRESENCE_DETECTOR_BUFFER_ERROR_MASK_SHIFT = 20;
+const uint32_t SFE_XM125_PRESENCE_SENSOR_BUFFER_ERROR_MASK_SHIFT = 21;
+const uint32_t SFE_XM125_PRESENCE_CONFIG_APPLY_ERROR_MASK_SHIFT = 22;
+const uint32_t SFE_XM125_PRESENCE_DETECTOR_REG_ERROR_MASK_SHIFT = 27;
+const uint32_t SFE_XM125_PRESENCE_DETECTOR_ERROR_MASK_SHIFT = 14;
+const uint32_t SFE_XM125_PRESENCE_TEMPERATURE_MASK_SHIFT = 16;
+const uint32_t SFE_XM125_PRESENCE_BUSY_MASK_SHIFT = 30;
+
+const uint16_t SFE_XM125_PRESENCE_VERSION = 0x00;
+typedef struct
+{
+    uint32_t presence_major : 16;
+    uint32_t presence_minor : 8;
+    uint32_t presence_patch : 8;
+} sfe_xm125_presence_version_t;
+
+const uint16_t SFE_XM125_PRESENCE_PROTOCOL_STATUS = 0x01;
+typedef struct
+{
+    uint32_t presence_protocol_state_error : 1;
+    uint32_t presence_packet_length_error : 1;
+    uint32_t presence_address_error : 1;
+    uint32_t presence_write_failed : 1;
+    uint32_t presence_write_to_read_only : 1;
+    uint32_t reserved1 : 27;
+} sfe_xm125_presence_protocol_status_t;
+
+const uint16_t SFE_XM125_PRESENCE_MEASURE_COUNTER = 0x02;
+
+const uint16_t SFE_XM125_PRESENCE_DETECTOR_STATUS = 0x03;
+typedef struct
+{
+    uint32_t presence_rss_register_ok : 1;
+    uint32_t presence_config_create_ok : 1;
+    uint32_t presence_sensor_create_ok : 1;
+    uint32_t presence_sensor_calibrate_ok : 1;
+    uint32_t presence_detector_create_ok : 1;
+    uint32_t presence_detector_buffer_ok : 1;
+    uint32_t presence_sensor_buffer_ok : 1;
+    uint32_t presence_config_apply_ok : 1;
+    uint32_t reserved1 : 8;
+    uint32_t presence_rss_register_error : 1;
+    uint32_t presence_config_create_error : 1;
+    uint32_t presence_sensor_create_error : 1;
+    uint32_t presence_sensor_calibrate_error : 1;
+    uint32_t presence_detector_create_error : 1;
+    uint32_t presence_detector_buffer_error : 1;
+    uint32_t presence_sensor_buffer_error : 1;
+    uint32_t presence_config_apply_error : 1;
+    uint32_t reserved2 : 4;
+    uint32_t presence_detector_error : 1;
+    uint32_t reserved3 : 2;
+    uint32_t presence_busy : 1;
+
+} sfe_xm125_presence_detector_status_t;
+
+const uint16_t SFE_XM125_PRESENCE_RESULT = 0x10;
+typedef struct
+{
+    uint32_t presence_detected : 1;
+    uint32_t presence_detected_sticky : 1;
+    uint32_t reserved1 : 13;
+    uint32_t presence_detector_error : 1;
+    uint32_t presence_temperature : 16;
+} sfe_xm125_presence_result_t;
+
+const uint16_t SFE_XM125_PRESENCE_DISTANCE = 0x11;
+const uint16_t SFE_XM125_INTRA_PRESENCE_SCORE = 0x12;
+const uint16_t SFE_XM125_INTER_PRESENCE = 0x13;
+
+const uint16_t SFE_XM125_PRESENCE_SWEEPS_PER_FRAME = 0x40;
+const uint16_t sfe_xm125_presence_sweeps_per_frame_default = 16;
+
+const uint16_t SFE_XM125_PRESENCE_INTER_FRAME_TIMEOUT = 0x41;
+const uint16_t sfe_xm125_presence_inter_frame_timeout_default = 3;
+
+const uint16_t SFE_XM125_PRESENCE_INTER_PHASE_BOOST_ENABLED = 0x42;
+const bool sfe_xm125_presence_inter_phase_boost_enabled_default = false;
+
+const uint16_t SFE_XM125_PRESENCE_INTRA_DETECTION_ENABLED = 0x43;
+const bool sfe_xm125_presence_intra_detection_enabled_default = true;
+
+const uint16_t SFE_XM125_PRESENCE_INTER_DETECTION_ENABLED = 0x44;
+const bool sfe_xm125_presence_inter_detection_enabled_default = true;
+
+const uint16_t SFE_XM125_PRESENCE_FRAME_RATE = 0x45;
+const uint16_t sfe_xm125_presence_frame_rate_default = 12000;
+
+const uint16_t SFE_XM125_PRESENCE_INTRA_DETECTION_THRESHOLD = 0x46;
+const uint16_t sfe_xm125_presence_intra_detection_threshold_default = 1300;
+
+const uint16_t SFE_XM125_PRESENCE_INTER_DETECTION_THRESHOLD = 0x47;
+const uint16_t sfe_xm125_presence_inter_detection_threshold_default = 1000;
+
+const uint16_t SFE_XM125_PRESENCE_INTER_FRAME_DEVIATION = 0x48;
+const uint16_t sfe_xm125_presence_inter_frame_deviation_default = 500;
+
+const uint16_t SFE_XM125_PRESENCE_INTER_FRAME_FAST_CUTOFF = 0x49;
+const uint16_t sfe_xm125_presence_inter_frame_fast_cutoff_default = 6000;
+
+const uint16_t SFE_XM125_PRESENCE_INTER_FRAME_SLOW_CUTOFF = 0x4a;
+const uint16_t sfe_xm125_presence_inter_frame_slow_cutoff_default = 200;
+
+const uint16_t SFE_XM125_PRESENCE_INTRA_FRAME_TIME_CONST = 0x4b;
+const uint16_t sfe_xm125_presence_intra_frame_time_const_default = 150;
+
+const uint16_t SFE_XM125_PRESENCE_INTRA_OUTPUT_TIME_CONST = 0x4c;
+const uint16_t sfe_xm125_presence_intra_output_time_const_default = 300;
+
+const uint16_t SFE_XM125_PRESENCE_INTER_OUTPUT_TIME_CONST = 0x4d;
+const uint16_t sfe_xm125_presence_inter_output_time_const_default = 2000;
+
+const uint16_t SFE_XM125_PRESENCE_AUTO_PROFILE_ENABLED = 0x4e;
+const bool sfe_xm125_presence_auto_profile_enabled_default = true;
+
+const uint16_t SFE_XM125_PRESENCE_AUTO_STEP_LENGTH_ENABLED = 0x4f;
+const bool sfe_xm125_presence_auto_step_length_enabled_default = true;
+
+const uint16_t SFE_XM125_PRESENCE_MANUAL_PROFILE = 0x50;
+typedef enum
+{
+    XM125_PRESENCE_PROFILE1 = 1,
+    XM125_PRESENCE_PROFILE2 = 2,
+    XM125_PRESENCE_PROFILE3 = 3,
+    XM125_PRESENCE_PROFILE4 = 4,
+    XM125_PRESENCE_PROFILE5 = 5,
+} sfe_xm125_presence_manual_profile_t;
+
+const uint16_t SFE_XM125_PRESENCE_MANUAL_STEP_LENGTH = 0x51;
+const uint16_t sfe_xm125_presence_manual_step_length_default = 72;
+
+const uint16_t SFE_XM125_PRESENCE_START = 0x52;
+const uint16_t sfe_xm125_presence_start_default = 250;
+
+const uint16_t SFE_XM125_PRESENCE_END = 0x53;
+const uint16_t sfe_xm125_presence_end_default = 2500;
+
+const uint16_t SFE_XM125_PRESENCE_RESET_FILTERS_ON_PREPARE = 0x54;
+const bool sfe_xm125_presence_reset_filters_on_prepare_default = true;
+
+const uint16_t SFE_XM125_PRESENCE_HWAAS = 0x55;
+const uint16_t sfe_xm125_presence_hwaas_default = 32;
+
+const uint16_t SFE_XM125_PRESENCE_DETECTION_ON_GPIO = 0x80;
+const bool sfe_xm125_presence_detection_on_gpio_default = false;
+
+const uint16_t SFE_XM125_PRESENCE_COMMAND = 0x100;
+typedef enum
+{
+    XM125_PRESENCE_APPLY_CONFIGURATION = 1,
+    XM125_PRESENCE_START_DETECTOR = 2,
+    XM125_PRESENCE_STOP_DETECTOR = 3,
+    XM125_PRESENCE_ENABLE_UART_LOGS = 32,
+    XM125_PRESENCE_DISABLE_UART_LOGS = 33,
+    XM125_PRESENCE_LOG_CONFIGURATION = 34,
+    XM125_PRESENCE_RESET_MODULE = 138119737,
+} sfe_xm125_presence_command_t;
+
+const uint32_t SFE_XM125_PRESENCE_APPLY_CONFIGURATION = 1;
+const uint32_t SFE_XM125_PRESENCE_START_DETECTOR = 2;
+const uint32_t SFE_XM125_PRESENCE_STOP_DETECTOR = 3;
+const uint32_t SFE_XM125_PRESENCE_ENABLE_UART_LOGS = 32;
+const uint32_t SFE_XM125_PRESENCE_DISABLE_UART_LOGS = 33;
+const uint32_t SFE_XM125_PRESENCE_LOG_CONFIGURATION = 34;
+const uint32_t SFE_XM125_PRESENCE_RESET_MODULE = 1381192737;
+
+// Presence class definition
+
+class sfDevXM125Presence : public sfDevXM125Core
 {
   public:
-    /// @brief Initializer
-    sfDevXM125() : _theBus{nullptr} {};
-
-    /// @brief This function begins the examples/communication.
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    bool begin(sfTkII2C *theBus = nullptr);
-
-    // sfTkError_t returnRegister(uint32_t &regVal);
-
-    // --------------------- I2C Disance Detector Functions ---------------------
-
-    /// @brief This function sets all the beginning values for a basic I2C
-    ///  example to be run on the device for presence sensing.
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t distanceBegin();
-
-    /// @brief This function does all the required checks and busy waits to
-    ///  make sure the device is ready for distance readings.
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t distanceDetectorReadingSetup();
-
-    /// @brief This function returns the version number of the device
-    ///  structure: major.minor.patch
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistanceDetectorVersion(uint32_t &major, uint32_t &minor, uint32_t &patch);
-
-    /// @brief This function returns if there was an error from the
-    ///  protocol status register
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistanceDetectorError(uint32_t &error);
-
-    /// @brief This function returns the error status according to the bit
-    ///  mask value for the distance devices errors and busy bit
-    /// @param status Error status of device (see function for exact error)
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistanceDetectorErrorStatus(uint32_t &status);
-
-    /// @brief This function returns the measure counter, the number of measurements
-    ///   performed since restart.
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistanceMeasureCounter(uint32_t &counter);
-
-    /// @brief This function returns the status of the device if there are any issues
-    ///  with any of the status's listed defined.
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistanceDetectorStatus(uint32_t &status);
-
-    /// @brief This function returns the number of detected distances.
-    /// @param distance Number of detected distances
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistanceNumberDistances(uint32_t &distance);
-
-    /// @brief This function returns the indication that there might be an object
-    ///   near the start point of the measured range.
-    /// @param edge Flag to determine object in range
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistanceNearStartEdge(uint32_t &edge);
-
-    /// @brief This function returns the indication of a sensor calibration needed.
-    /// @param calibrate Flag to indicate calibration required
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistanceCalibrationNeeded(uint32_t &calibrate);
-
-    /// @brief This function returns if the measure command failed.
-    /// @param error Flag to indicate measure command error
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistanceMeasureDistanceError(uint32_t &error);
-
-    /// @brief This function returns the temperature in sensor during measurements
-    ///   (in degree Celsius). Note that it has poor absolute accuracy and should
-    ///   only be used for relative temperature measurements.
-    /// @param temperature Relative temperature of device
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistanceTemperature(int16_t &temperature);
-
-    /// @brief This function returns the distance to peak 0
-    ///  Note: This value is a factor 1000 larger than the RSS value
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistancePeak0Distance(uint32_t &peak);
-
-    /// @brief This function returns the distance to peak 1
-    ///  Note: This value is a factor 1000 larger than the RSS value
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistancePeak1Distance(uint32_t &peak);
-
-    /// @brief This function returns the distance to peak 2
-    ///  Note: This value is a factor 1000 larger than the RSS value
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistancePeak2Distance(uint32_t &peak);
-
-    /// @brief This function returns the distance to peak 3
-    ///  Note: This value is a factor 1000 larger than the RSS value
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistancePeak3Distance(uint32_t &peak);
-
-    /// @brief This function returns the distance to peak 4
-    ///  Note: This value is a factor 1000 larger than the RSS value
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistancePeak4Distance(uint32_t &peak);
-
-    /// @brief This function returns the distance to peak 5
-    ///  Note: This value is a factor 1000 larger than the RSS value
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistancePeak5Distance(uint32_t &peak);
-
-    /// @brief This function returns the distance to peak 6
-    ///  Note: This value is a factor 1000 larger than the RSS value
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistancePeak6Distance(uint32_t &peak);
-
-    /// @brief This function returns the distance to peak 7
-    ///  Note: This value is a factor 1000 larger than the RSS value
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistancePeak7Distance(uint32_t &peak);
-
-    /// @brief This function returns the distance to peak 8
-    ///  Note: This value is a factor 1000 larger than the RSS value
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistancePeak8Distance(uint32_t &peak);
-
-    /// @brief This function returns the distance to peak 9
-    ///  Note: This value is a factor 1000 larger than the RSS value
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistancePeak9Distance(uint32_t &peak);
-
-    /// @brief This function returns the strength of peak 0
-    ///  Note: This value is a factor 1000 larger than the RSS value
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistancePeak0Strength(int32_t &peak);
-
-    /// @brief This function returns the strength of peak 1
-    ///  Note: This value is a factor 1000 larger than the RSS value
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistancePeak1Strength(int32_t &peak);
-
-    /// @brief This function returns the strength of peak 2
-    ///  Note: This value is a factor 1000 larger than the RSS value
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistancePeak2Strength(int32_t &peak);
-
-    /// @brief This function returns the strength of peak 3
-    ///  Note: This value is a factor 1000 larger than the RSS value
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistancePeak3Strength(int32_t &peak);
-
-    /// @brief This function returns the strength of peak 4
-    ///  Note: This value is a factor 1000 larger than the RSS value
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistancePeak4Strength(int32_t &peak);
-
-    /// @brief This function returns the strength of peak 5
-    ///  Note: This value is a factor 1000 larger than the RSS value
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistancePeak5Strength(int32_t &peak);
-
-    /// @brief This function returns the strength of peak 6
-    ///  Note: This value is a factor 1000 larger than the RSS value
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistancePeak6Strength(int32_t &peak);
-
-    /// @brief This function returns the strength of peak 7
-    ///  Note: This value is a factor 1000 larger than the RSS value
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistancePeak7Strength(int32_t &peak);
-
-    /// @brief This function returns the strength of peak 8
-    ///  Note: This value is a factor 1000 larger than the RSS value
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistancePeak8Strength(int32_t &peak);
-
-    /// @brief This function returns the strength of peak 9
-    ///  Note: This value is a factor 1000 larger than the RSS value
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistancePeak9Strength(int32_t &peak);
-
-    /// @brief This function returns the start of measured interval
-    ///  in millimeters.
-    ///  Note: This value is a factor 1000 larger than the RSS value
-    ///  Default Value: 250
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistanceStart(uint32_t &startVal);
-
-    /// @brief This function sets the start of measured interval in
-    ///  millimeters.
-    ///  Note: This value is a factor 1000 larger than the RSS value
-    ///  Default Value: 250
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setDistanceStart(uint32_t start);
-
-    /// @brief This function returns the end of measured interval
-    ///  in millimeters.
-    ///  Note: This value is a factor 1000 larger than the RSS value
-    ///  Default Value: 3000
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistanceEnd(uint32_t &end);
-
-    /// @brief This function sets the end of measured interval
-    ///  in millimeters.
-    ///  Note: This value is a factor 1000 larger than the RSS value
-    ///  Default Value: 3000
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setDistanceEnd(uint32_t end);
-
-    /// @brief This function returns the used to limit step length.
-    ///  If set to 0 (default), the step length is calculated
-    ///  based on profile.
-    ///  Default Value: 0
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistanceMaxStepLength(uint32_t &length);
-
-    /// @brief This function sets the used to limit step length.
-    ///  If set to 0 (default), the step length is calculated
-    ///  based on profile.
-    ///  Default Value: 0
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setDistanceMaxStepLength(uint32_t length);
-
-    /// @brief This function reads if the close range leakage
-    ///  cancellation logic is enabled.
-    ///  Default Value: true
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistanceCloseRangeLeakageCancellation(bool &range);
-
-    /// @brief This function sets the close range leakage
-    ///  cancellation logic.
-    ///  Default Value: true
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setDistanceCloseRangeLeakageCancellation(bool range);
-
-    /// @brief This function returns the high signal quality in a
-    ///  better SNR (because of higher HWAAS) and higher power consumption.
-    ///  Note: This value is a factor 1000 larger than the RSS value
-    ///  Default Value: 15000
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistanceSignalQuality(uint32_t &signal);
-
-    /// @brief This function sets the high signal quality in a
-    ///  better SNR (because of higher HWAAS) and higher power consumption.
-    ///  Note: This value is a factor 1000 larger than the RSS value
-    ///  Default Value: 15000
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setDistanceSignalQuality(uint32_t signal);
-
-    /// @brief This function returns the max profile of the device.
-    ///  Default value = PROFILE5
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistanceMaxProfile(uint32_t &profile);
-
-    /// @brief This function sets the max profile of the device
-    ///  Default value = PROFILE5
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setDistanceMaxProfile(uint32_t profile);
-
-    /// @brief This function returns the threshold method
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistanceThresholdMethod(uint32_t &method);
-
-    /// @brief This function sets the threshold method
-    /// @param method Threshold method (enum)
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setDistanceThresholdMethod(uint32_t method);
-
-    /// @brief This function returns the peak sorting method
-    /// @param peak Peak sorting method
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistancePeakSorting(uint32_t &peak);
-
-    /// @brief This function sets the peak sorting method
-    /// @param peak Peak sorting method
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setDistancePeakSorting(uint32_t peak);
-
-    /// @brief This function returns the number frames to use for recorded threshold.
-    ///  Default Value: 100
-    /// @param thresh Number of frames
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistanceNumFramesRecordedThreshold(uint32_t &thresh);
-
-    /// @brief This function sets the number frames to use for recorded threshold.
-    ///  Default Value: 100
-    /// @param thresh Number of frames
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setDistanceNumFramesRecordedThreshold(uint32_t thresh);
-
-    /// @brief This function returns the fixed amplitude threshold value.
-    ///  Note: This value is a factor 1000 larger than the RSS value
-    ///  Default Value: 100000
-    /// @param thresh Fixed amplitude threshold value
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistanceFixedAmpThreshold(uint32_t &thresh);
-
-    /// @brief This function sets the fixed amplitude threshold value.
-    ///  Note: This value is a factor 1000 larger than the RSS value
-    ///  Default Value: 100000
-    /// @param thresh Fixed amplitude threshold value
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setDistanceFixedAmpThreshold(uint32_t thresh);
-
-    /// @brief This function returns the threshold sensitivity
-    ///  (0 <= sensitivity <= 1000)
-    ///  Note: This value is a factor 1000 larger than the RSS value
-    ///  Default Value: 500
-    /// @param thresh& Threshold sensitivity
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistanceThresholdSensitivity(uint32_t &thresh);
-
-    /// @brief This function sets the threshold sensitivity
-    ///  (0 <= sensitivity <= 1000)
-    ///  Note: This value is a factor 1000 larger than the RSS value
-    ///  Default Value: 500
-    /// @param thresh Threshold sensitivity
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setDistanceThresholdSensitivity(uint32_t thresh);
-
-    /// @brief This function returns the reflector shape
-    ///   Default Value: GENERIC
-    /// @param shape Generic or planar reflection
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistanceReflectorShape(uint32_t &shape);
-
-    /// @brief This function sets the reflector shape
-    ///   Default Value: GENERIC
-    /// @param shape Generic or planar reflection
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setDistanceReflectorShape(uint32_t shape);
-
-    /// @brief This function returns the fixed strength threshold value.
-    ///  Default Value: 0
-    ///  Note: This value is a factor 1000 larger than the RSS value
-    /// @param thresh fixed threshold strength value
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistanceFixedStrengthThresholdValue(int32_t &thresh);
-
-    /// @brief This function sets the fixed strength threshold value.
-    ///  Default Value: 0
-    ///  Note: This value is a factor 1000 larger than the RSS value
-    /// @param thresh fixed threshold strength value
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setDistanceFixedStrengthThresholdValue(int32_t thresh);
-
-    /// @brief This function returns the measure on wakeup status.
-    ///   Default Value: false
-    /// @param measure Measure on wakeup occurrence
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getDistanceMeasureOneWakeup(bool &measure);
-
-    /// @brief This function sets the measure on wakeup status.
-    ///   Default Value: false
-    /// @param measure Measure on wakeup occurrence
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setDistanceMeasureOneWakeup(bool measure);
-
-    /// @brief This function sets the specific execute command as defined in the
-    ///   datasheet on Page 25, Section 6.2.40 Command.
-    /// @param apply Enable configuration and calibrate
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setDistanceCommand(uint32_t command);
-
-    /// @brief This function applies the configuration to the device by
-    ///  writing the defined value to the distance command register
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t distanceApplyConfiguration();
-
-    /// @brief This function starts the device by writing the defined
-    ///  start value to the distance command register
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t distanceStart();
-
-    /// @brief This function stops the device by writing the defined
-    ///  stop value to the distance command register
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t distanceStop();
-
-    /// @brief This function calibrates the device by writing the defined
-    ///  calibration value to the distance command register
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t distanceCalibrate();
-
-    /// @brief This function recalibrates the device by writing the defined
-    ///  recalibrate value to the distance command register
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t distanceRecalibrate();
-
-    /// @brief This function enables the uart logs of the device by
-    ///  writing the defined value to the distance command register
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t distanceEnableUartLogs();
-
-    /// @brief This function disables the uart logs of the device by
-    ///  writing the defined value to the distance command register
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t distanceDisableUartLogs();
-
-    /// @brief This function enables the configuration log of the device
-    ///  by writing the defined value to the distance command register
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t distanceLogConfiguration();
-
-    /// @brief This function resets the distance detector settings
-    ///  of the device
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t distanceReset();
-
-    /// @brief Completes a busy wait loop while the device is uploading
-    ///  information by waiting for the status
-    /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t distanceBusyWait();
-
-    // --------------------- I2C Presence Detector Functions ---------------------
-
+    /**
+     * @brief Initializes the Presence detector device.
+     *
+     * This function sets up the I2C communication and performs initial checks
+     * to ensure the device is ready for operation.
+     *
+     * @param theBus Pointer to the I2C bus object. If nullptr, the default bus is used.
+     * @return ksfTkErrOk on success, or error code (value < -1) on failure.
+     */
+    sfTkError_t begin(sfTkII2C *theBus = nullptr);
     /// @brief This function sets all the beginning values for a basic I2C
     ///  example to be run on the device for presence sensing.
     /// @return ksfTkErrOk on success, or error code (value < -1)
@@ -890,7 +702,4 @@ class sfDevXM125
     ///  to wait until errors are completed/gone
     /// @return ksfTkErrOk on success, or error code (value < -1)
     sfTkError_t presenceBusyWait();
-
-  protected:
-    sfTkII2C *_theBus;
 };
