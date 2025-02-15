@@ -114,7 +114,7 @@ void loop()
     radarSensor.getPresenceDetectorPresenceDetected(presenceDetected);
     radarSensor.getPresenceDetectorPresenceStickyDetected(presenceDetectedSticky);
     
-    if((presenceDetected == 1) | (presenceDetectedSticky == 1))
+    if((presenceDetected == 1) || (presenceDetectedSticky == 1))
     {
       radarSensor.getPresenceDistance(distance);
       Serial.print("Presence Detected: ");
