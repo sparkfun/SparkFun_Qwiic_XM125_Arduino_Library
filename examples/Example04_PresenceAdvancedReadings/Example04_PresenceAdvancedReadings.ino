@@ -24,7 +24,7 @@
 #include <Arduino.h>
 #include "SparkFun_Qwiic_XM125_Arduino_Library.h"
 
-SfeXM125 radarSensor;
+SparkFunXM125 radarSensor;
 
 // I2C default address
 uint8_t i2cAddress = SFE_XM125_I2C_ADDRESS;
@@ -114,7 +114,7 @@ void loop()
     radarSensor.getPresenceDetectorPresenceDetected(presenceDetected);
     radarSensor.getPresenceDetectorPresenceStickyDetected(presenceDetectedSticky);
     
-    if((presenceDetected == 1) | (presenceDetectedSticky == 1))
+    if((presenceDetected == 1) || (presenceDetectedSticky == 1))
     {
       radarSensor.getPresenceDistance(distance);
       Serial.print("Presence Detected: ");
