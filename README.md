@@ -46,9 +46,18 @@ This library provides a extensive interface that enables the following functiona
 
 The following examples are provided with the library
 
-- [Basic Readings](examples/Example_01_BasicReadings/Example_01_BasicReadings.ino) - Setup and read the soil moisture from the sensor
-- [Readings and LED](examples/Example_02_ReadingsAndLED/Example_02_ReadingsAndLED.ino) - Flash the sensor LED when reading the moisture value
-- [LED Flash Based on Moisture Percentage](examples/Example_03_LEDFlashMoisture/Example_03_LEDFlashMoisture.ino) - Vary the sensor LED flash rate based on the moisture percent sensed. The flash rate increases the drier the sensed value
+| Example | Description |
+|---|---|
+|[Presence Basic Readings](examples/Example01_PresenceBasicReadings/Example01_PresenceBasicReadings.ino)| The sensor is initialized, then the presence distance values will print out to the terminal.|
+| [Presence GPIO 0 Usage](examples/Example02_PresenceGPIO0Usage/Example02_PresenceGPIO0Usage.ino)|The sensor is initialized, then the presence values will print out to the terminal and trigger the GPIO0 pin high when there is a presence detected. |
+|[Presence Serial Plotter](examples/Example03_PresenceSerialPlotter/Example03_PresenceSerialPlotter.ino)|The sensor is initialized, then the presence values will print out to the terminal and the serial monitor.|
+|[Presence Advanced Readings](examples/Example04_PresenceAdvancedReadings/Example04_PresenceAdvancedReadings.ino)|The sensor is initialized, then the presence distance, intra-presence, and inter-presence values will be printed to the terminal.|
+|[Presence Advanced Settings](examples/Example05_PresenceAdvancedSettings/Example05_PresenceAdvancedSettings.ino)|The sensor is initialized, then the presence distance values will print out to the terminal just as they do in example one. If you wish to change the settings of the device, do so before applying the configuration.|
+|[Distance Basic Readings](examples/Example06_DistanceBasicReadings/Example06_DistanceBasicReadings.ino)|The sensor is initialized, then the distance values will print out to the terminal in mm. |
+|[Distance Threshold Settings](examples/Example07_DistanceThresholdSettings/Example07_DistanceThresholdSettings.ino)|The sensor is initialized, then the distance amplitude, and strength , fixed amplitude, and sensitivity thresholds are set. |
+|[Distance Serial Plotter](examples/Example08_DistanceSerialPlotter/Example08_DistanceSerialPlotter.ino)|This example prints out the distance values of the 0 distance channels to the serial plotter tool in Arduino.|
+|[Distance Advanced Settings](examples/Example09_DistanceAdvancedSettings/Example09_DistanceAdvancedSettings.ino)|The sensor is initialized, then the distance (mm) and advanced values are output to the terminal. |
+  
 
 ## Documentation
 
