@@ -14,6 +14,10 @@
 
 #include <stdint.h>
 
+// Handy helper - check if a bit(s) is set...
+
+#define SF_CHECK_BITS_SET(__value__, __bitmask__) (((__value__) & (__bitmask__)) == __bitmask__)
+
 const uint16_t SFE_XM125_I2C_ADDRESS = 0x52;
 
 /* ****************************** Distance Values ****************************** */
