@@ -88,7 +88,7 @@ void loop()
       Serial.print("Presence Detected: ");
       Serial.print(distance);
       Serial.println("mm");
-      //Serial.print(distance * .01);
+      //Serial.print(distance * .1);
       //Serial.println("cm");
       //Serial.print(distance * .001);
       //Serial.println("m");
