@@ -13,7 +13,7 @@ Repository Contents
 
 * **/examples** - Example sketches for the library (.ino). Run these from the Arduino IDE.
 * **/src** - Source files for the library (.cpp, .h).
-* **/Documentation** - Datasheet and application note for the XM125 and A121.
+* **/docs** - Datasheet and application note for the XM125 and A121.
 * **keywords.txt** - Keywords from this library that will be highlighted in the Arduino IDE.
 * **library.properties** - General library properties for the Arduino package manager.
 * **[CONTRIBUTING.md](./CONTRIBUTING.md)** - guidance on how to contribute to this library.
