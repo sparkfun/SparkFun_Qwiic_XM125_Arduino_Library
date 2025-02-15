@@ -61,7 +61,7 @@ The following examples are provided with the library
 
 ## Documentation
 
-The full API and use documentation for this library is provided [here](docs.sparkfun.com/SparkFun_Qwiic_XM125_Arduino_Library/). For a quick reference, the main methods available in the library are listed [here](https://docs.sparkfun.com/SparkFun_Qwiic_XM125_Arduino_Library/functions.html).
+The full API and use documentation for this library is provided [here](https://docs.sparkfun.com/SparkFun_Qwiic_XM125_Arduino_Library/). For a quick reference, the main methods available in the library are listed [here](https://docs.sparkfun.com/SparkFun_Qwiic_XM125_Arduino_Library/class_qw_dev_x_m125.html).
 
 Curious about the hardware this board works with - visit the SparkFun Pulsed Coherent Radar Sensor [hardware repository](https://github.com/sparkfun/SparkFun_Qwiic_Pulsed_Radar_Sensor_XM125).
 
