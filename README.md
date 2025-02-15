@@ -1,3 +1,30 @@
+
+![SparkFun Pulsed Coherent Radar Sensor – Acconeer XM125 (Qwiic)](docs/images/gh-banner-2025-xm125.png "SparkFun Pulsed Coherent Radar Sensor")
+
+# SparkFun Pulsed Coherent Radar Sensor – Acconeer XM125
+
+Arduino Library for the SparkFun Pulsed Coherent Radar Sensor 
+
+https://github.com/sparkfun/SparkFun_Qwiic_XM125_Arduino_Library
+![License](https://img.shields.io/github/license/sparkfun/SparkFun_Qwiic_XM125_Arduino_Library)
+![Release](https://img.shields.io/github/v/release/sparkfun/SparkFun_Qwiic_XM125_Arduino_Library)
+![Release Date](https://img.shields.io/github/release-date/sparkfun/SparkFun_Qwiic_XM125_Arduino_Library)
+![Documentation - build](https://img.shields.io/github/actions/workflow/status/sparkfun/SparkFun_Qwiic_XM125_Arduino_Library/build-deploy-ghpages.yml?label=doc%20build)
+![Compile - Test](https://img.shields.io/github/actions/workflow/status/sparkfun/SparkFun_Qwiic_XM125_Arduino_Library/test-compile-sketch.yml?label=compile%20test)
+![GitHub issues](https://img.shields.io/github/issues/sparkfun/SparkFun_Qwiic_XM125_Arduino_Library)
+
+
+The [SparkFun Qwiic Soil Moisture Sensor (SEN-17731)](https://www.sparkfun.com/sparkfun-qwiic-soil-moisture-sensor.html) is a simple breakout for measuring the moisture in soil and similar materials. The soil moisture sensor is pretty straightforward to use. The two large, exposed pads function as probes for the sensor, together acting as a variable resistor. The more water that is in the soil means the better the conductivity between the pads will be, resulting in a lower resistance and a higher SIG out. 
+
+Looking for the board that matches this library - pick up a [SparkFun Qwiic Soil Moisture Sensor (SEN-17731)](https://www.sparkfun.com/sparkfun-qwiic-soil-moisture-sensor.html) at www.sparkfun.com.
+
+
+
+
+
+
+
+
 SparkFun XM125 A121 Arduino Library
 ========================================
 
