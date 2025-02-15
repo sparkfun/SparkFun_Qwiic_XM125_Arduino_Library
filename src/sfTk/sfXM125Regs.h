@@ -1,42 +1,16 @@
-// sfe_xm125_regs.h
-//
-// This is a library written for SparkFun Pulsed Coherent Radar Sensor - XM125
-//
-// SparkFun sells these boards at its website: www.sparkfun.com
-//
-// Do you like this library? Help support SparkFun. Buy a board!
-//
-// SparkFun Indoor Air Quality Sensor - XM125 (Qwiic)    https://www.sparkfun.com/products/
-//
-// Written by Madison Chodikov @ SparkFun Electronics, January 2023
-//
-// Repository:
-//		https://github.com/sparkfun/SparkFun_Qwiic_XM125_Arduino_Library/
-//
-// SparkFun code, firmware, and software is released under the MIT
-// License(http://opensource.org/licenses/MIT).
-//
-// SPDX-License-Identifier: MIT
-//
-//    The MIT License (MIT)
-//
-//    Copyright (c) 2022 SparkFun Electronics
-//    Permission is hereby granted, free of charge, to any person obtaining a
-//    copy of this software and associated documentation files (the "Software"),
-//    to deal in the Software without restriction, including without limitation
-//    the rights to use, copy, modify, merge, publish, distribute, sublicense,
-//    and/or sell copies of the Software, and to permit persons to whom the
-//    Software is furnished to do so, subject to the following conditions: The
-//    above copyright notice and this permission notice shall be included in all
-//    copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED
-//    "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
-//    NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
-//    PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-//    HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-//    ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-//    CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-// The following defines the bits and registers of the ENS160.
+/**
+ * @file sfXM125Regs.h
+ * @brief Header with register defines for the SparkFun Qwiic XM125  Library.
+ *
+ * This file contains the definitions and masks used for operating the 
+ * SparkFun Qwiic XM125 distance and presence detector using I2C communication.
+ * 
+ * @author SparkFun Electronics
+  * @date 2024-2025
+ * @copyright Copyright (c) 2024-2025, SparkFun Electronics Inc. This project is released under the MIT License.
+ *
+ * SPDX-License-Identifier: MIT
+ */
 
 #include <stdint.h>
 

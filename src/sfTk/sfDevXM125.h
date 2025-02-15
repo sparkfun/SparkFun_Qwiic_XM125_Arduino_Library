@@ -1,6 +1,17 @@
+/**
+ * @file sfDevXM125.h
+ * @brief Header of the SparkFun Qwiic XM125  Library.
+ *
+ * This file contains the header declares of the functions for interfacing with
+ * the SparkFun Qwiic XM125 distance and presence detector using I2C communication.
+ * 
+ * @author SparkFun Electronics
+  * @date 2024-2025
+ * @copyright Copyright (c) 2024-2025, SparkFun Electronics Inc. This project is released under the MIT License.
+ *
+ * SPDX-License-Identifier: MIT
+ */
 #pragma once
-
-
 
 #include <sfTk/sfToolkit.h>
 // Bus interfaces
@@ -847,7 +858,7 @@ class sfDevXM125
     /// @brief This function stops the device by writing the defined
     ///  stop value to the presence command register
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t presencestop();
+    sfTkError_t presenceStop();
 
     /// @brief This function enables the uart logs of the device by
     ///  writing the defined value to the presence command register
