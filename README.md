@@ -19,13 +19,14 @@ The XM125 boasts an impressive range of up to 20 meters, allowing you to create 
 
 Looking for the board that matches this library - pick up a [SparkFun Pulsed Coherent Radar Sensor - Acconeer XM125 (Qwiic)](https://www.sparkfun.com/sparkfun-pulsed-coherent-radar-sensor-acconeer-xm125-qwiic.html) at www.sparkfun.com.
 
-> [!NOTE]
-> Version 2.0+ of this library is not compatible with Version 1.0 implementations/use. For Version 2.0, the single class defined by the library, `SparkFunXM125`, was divided into two distinct classes:
->
-> *  SparkFunXM125Distance - Used when the XM125 is running the ***Distance*** application
-> *  SparkFunXM125Presence - Used when the XM125 is running the ***Presence*** application
->
-> Moving to use Version 2.0 of the library just requires changing the class name used in your sketch - from `SparkFunXM125` to either `SparkFunXM125Distance` or `SparkFunXM125Presence`
+### Upgrading to Version 2.0 
+
+Version 2.0+ of this library is not compatible with Version 1.* implementations/use. For Version 2.0, the single class defined by the library, `SparkFunXM125`, was divided into two distinct classes:
+
+*  SparkFunXM125Distance - Used when the XM125 is running the ***Distance*** application
+*  SparkFunXM125Presence - Used when the XM125 is running the ***Presence*** application
+
+Moving to use Version 2.0 of the library just requires changing the class name used in your sketch - from `SparkFunXM125` to either `SparkFunXM125Distance` or `SparkFunXM125Presence`
 
 ## Functionality
 
