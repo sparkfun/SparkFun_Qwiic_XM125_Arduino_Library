@@ -1,10 +1,10 @@
 // sfe_xm125_regs.h
 //
-// This is a library written for SparkFun Pulsed Coherent Radar Sensor - XM125 
+// This is a library written for SparkFun Pulsed Coherent Radar Sensor - XM125
 //
 // SparkFun sells these boards at its website: www.sparkfun.com
 //
-// Do you like this library? Help support SparkFun. Buy a board! 
+// Do you like this library? Help support SparkFun. Buy a board!
 //
 // SparkFun Indoor Air Quality Sensor - XM125 (Qwiic)    https://www.sparkfun.com/products/
 //
@@ -75,6 +75,14 @@ const uint32_t SFE_XM125_DISTANCE_DETECTOR_ERROR_MASK = 0x10000000;
 const uint32_t SFE_XM125_DISTANCE_BUSY_MASK = 0x80000000;
 const uint32_t SFE_XM125_DISTANCE_CALIBRATION_NEEDED_MASK = 0x00000200;
 
+const uint32_t SFE_XM125_DISTANCE_ALL_ERROR_MASK =
+    (SFE_XM125_DISTANCE_RSS_REGISTER_ERROR_MASK | SFE_XM125_DISTANCE_CONFIG_CREATE_ERROR_MASK |
+     SFE_XM125_DISTANCE_SENSOR_CREATE_ERROR_MASK | SFE_XM125_DISTANCE_DETECTOR_CREATE_ERROR_MASK |
+     SFE_XM125_DISTANCE_DETECTOR_BUFFER_ERROR_MASK | SFE_XM125_DISTANCE_SENSOR_BUFFER_ERROR_MASK |
+     SFE_XM125_DISTANCE_CALIBRATION_BUFFER_ERROR_MASK | SFE_XM125_DISTANCE_CONFIG_APPLY_ERROR_MASK |
+     SFE_XM125_DISTANCE_SENSOR_CALIBRATE_ERROR_MASK | SFE_XM125_DISTANCE_DETECTOR_CALIBRATE_ERROR_MASK |
+     SFE_XM125_DISTANCE_DETECTOR_ERROR_MASK | SFE_XM125_DISTANCE_BUSY_MASK);
+
 const uint32_t SFE_XM125_DISTANCE_MAJOR_VERSION_MASK_SHIFT = 16;
 const uint32_t SFE_XM125_DISTANCE_MINOR_VERSION_MASK_SHIFT = 8;
 const uint32_t SFE_XM125_DISTANCE_RSS_REGISTER_ERROR_MASK_SHIFT = 15;
@@ -91,14 +99,14 @@ const uint32_t SFE_XM125_DISTANCE_DETECTOR_ERROR_MASK_SHIFT = 27;
 const uint32_t SFE_XM125_DISTANCE_BUSY_MASK_SHIFT = 30;
 const uint32_t SFE_XM125_DISTANCE_NEAR_START_EDGE_MASK_SHIFT = 8;
 const uint32_t SFE_XM125_DISTANCE_CALIBRATION_NEEDED_MASK_SHIFT = 9;
-const uint32_t SFE_XM125_DISTANCE_MEASURE_DISTANCE_ERROR_MASK_SHIFT = 10; 
+const uint32_t SFE_XM125_DISTANCE_MEASURE_DISTANCE_ERROR_MASK_SHIFT = 10;
 const uint32_t SFE_XM125_DISTANCE_TEMPERATURE_MASK_SHIFT = 16;
 const uint32_t SFE_XM125_DISTANCE_DETECTOR_STATUS_MASK_SHIFT = 30;
 
 const uint32_t SFE_XM125_DISTANCE_DETECTOR_STATUS_MASK = 0b10010000111111110000000011111111;
 
 const uint16_t SFE_XM125_DISTANCE_VERSION = 0x00;
-typedef struct 
+typedef struct
 {
     uint32_t distance_major : 16;
     uint32_t distance_minor : 8;
@@ -106,7 +114,7 @@ typedef struct
 } sfe_xm125_distance_version_t;
 
 const uint16_t SFE_XM125_DISTANCE_PROTOCOL_STATUS = 0x01;
-typedef struct 
+typedef struct
 {
     uint32_t distance_protocol_state_error : 1;
     uint32_t distance_packet_length_error : 1;
@@ -119,7 +127,7 @@ typedef struct
 const uint16_t SFE_XM125_DISTANCE_MEASURE_COUNTER = 0x02;
 
 const uint16_t SFE_XM125_DISTANCE_DETECTOR_STATUS = 0x03;
-typedef struct 
+typedef struct
 {
     uint32_t distance_rss_register_ok : 1;
     uint32_t distance_config_create_ok : 1;
@@ -149,7 +157,7 @@ typedef struct
 } sfe_xm125_distance_detector_status_t;
 
 const uint16_t SFE_XM125_DISTANCE_RESULT = 0x10;
-typedef struct 
+typedef struct
 {
     uint32_t distance_num_distances : 4;
     uint32_t rsvd1 : 4; // skips "reserved" bits
@@ -203,7 +211,7 @@ const uint16_t sfe_xm125_distance_signal_quality_default = 15000;
 
 // Default: PROFILE5 (enum)
 const uint16_t SFE_XM125_DISTANCE_MAX_PROFILE = 0x45;
-typedef enum 
+typedef enum
 {
     XM125_DISTANCE_PROFILE1 = 1,
     XM125_DISTANCE_PROFILE2 = 2,
@@ -214,7 +222,7 @@ typedef enum
 
 // Default Value: CFAR (enum)
 const uint16_t SFE_XM125_DISTANCE_THRESHOLD_METHOD = 0x46;
-typedef enum 
+typedef enum
 {
     XM125_DISTANCE_FIXED_AMPLITUDE = 1,
     XM125_DISTANCE_RECORDED = 2,
@@ -242,7 +250,7 @@ const uint32_t sfe_xm125_distance_fixed_amp_thresh_val_default = 100000;
 const uint16_t SFE_XM125_DISTANCE_THREHSOLD_SENSITIVITY = 0x4a;
 const uint16_t sfe_xm125_distance_threshold_sensitivity_default = 500;
 
-// Default Value: GENERIC 
+// Default Value: GENERIC
 const uint16_t SFE_XM125_DISTANCE_REFLECTOR_SHAPE = 0x4b;
 typedef enum
 {
@@ -284,11 +292,10 @@ const uint32_t SFE_XM125_DISTANCE_RESET_MODULE = 1381192737;
 
 /* ****************************** Presence Values ****************************** */
 
-
 const uint32_t SFE_XM125_PRESENCE_DETECTOR_STATUS_MASK = 0b10010000111111110000000011111111;
 
 const uint32_t SFE_XM125_PRESENCE_DETECTED_MASK = 0x00000001;
-const uint32_t SFE_XM125_PRESENCE_DETECTED_STICKY_MASK =  0x00000002;
+const uint32_t SFE_XM125_PRESENCE_DETECTED_STICKY_MASK = 0x00000002;
 const uint32_t SFE_XM125_PRESENCE_DETECTOR_ERROR_MASK = 0x00008000;
 const uint32_t SFE_XM125_PRESENCE_TEMPERATURE_MASK = 0xffff0000;
 const uint32_t SFE_XM125_PRESENCE_MAJOR_VERSION_MASK = 0xffff0000;
@@ -306,13 +313,21 @@ const uint32_t SFE_XM125_PRESENCE_CONFIG_APPLY_OK_MASK = 0x00000080;
 const uint32_t SFE_XM125_PRESENCE_RSS_REGISTER_ERROR_MASK = 0x00010000;
 const uint32_t SFE_XM125_PRESENCE_CONFIG_CREATE_ERROR_MASK = 0x00020000;
 const uint32_t SFE_XM125_PRESENCE_SENSOR_CREATE_ERROR_MASK = 0x00040000;
-const uint32_t SFE_XM125_PRESENCE_SENSOR_CALIBRATE_ERROR_MASK  = 0x00080000;
+const uint32_t SFE_XM125_PRESENCE_SENSOR_CALIBRATE_ERROR_MASK = 0x00080000;
 const uint32_t SFE_XM125_PRESENCE_DETECTOR_CREATE_ERROR_MASK = 0x00100000;
 const uint32_t SFE_XM125_PRESENCE_DETECTOR_BUFFER_ERROR_MASK = 0x00200000;
 const uint32_t SFE_XM125_PRESENCE_SENSOR_BUFFER_ERROR_MASK = 0x00400000;
 const uint32_t SFE_XM125_PRESENCE_CONFIG_APPLY_ERROR_MASK = 0x00800000;
 const uint32_t SFE_XM125_PRESENCE_DETECTOR_REG_ERROR_MASK = 0x10000000;
 const uint32_t SFE_XM125_PRESENCE_BUSY_MASK = 0x80000000;
+
+const uint32_t SFE_XM125_PRESENCE_ALL_ERROR_MASK =
+    (SFE_XM125_PRESENCE_RSS_REGISTER_ERROR_MASK | SFE_XM125_PRESENCE_CONFIG_CREATE_ERROR_MASK |
+     SFE_XM125_PRESENCE_SENSOR_CREATE_ERROR_MASK | SFE_XM125_PRESENCE_SENSOR_CALIBRATE_ERROR_MASK |
+     SFE_XM125_PRESENCE_DETECTOR_CREATE_ERROR_MASK | SFE_XM125_PRESENCE_DETECTOR_BUFFER_ERROR_MASK |
+     SFE_XM125_PRESENCE_SENSOR_BUFFER_ERROR_MASK | SFE_XM125_PRESENCE_CONFIG_APPLY_ERROR_MASK |
+     SFE_XM125_PRESENCE_DETECTOR_REG_ERROR_MASK | SFE_XM125_PRESENCE_DETECTOR_ERROR_MASK |
+     SFE_XM125_PRESENCE_BUSY_MASK);
 
 const uint32_t SFE_XM125_PRESENCE_MAJOR_VERSION_MASK_SHIFT = 16;
 const uint32_t SFE_XM125_PRESENCE_MINOR_VERSION_MASK_SHIFT = 8;
@@ -330,7 +345,7 @@ const uint32_t SFE_XM125_PRESENCE_TEMPERATURE_MASK_SHIFT = 16;
 const uint32_t SFE_XM125_PRESENCE_BUSY_MASK_SHIFT = 30;
 
 const uint16_t SFE_XM125_PRESENCE_VERSION = 0x00;
-typedef struct 
+typedef struct
 {
     uint32_t presence_major : 16;
     uint32_t presence_minor : 8;
@@ -338,7 +353,7 @@ typedef struct
 } sfe_xm125_presence_version_t;
 
 const uint16_t SFE_XM125_PRESENCE_PROTOCOL_STATUS = 0x01;
-typedef struct 
+typedef struct
 {
     uint32_t presence_protocol_state_error : 1;
     uint32_t presence_packet_length_error : 1;
@@ -351,7 +366,7 @@ typedef struct
 const uint16_t SFE_XM125_PRESENCE_MEASURE_COUNTER = 0x02;
 
 const uint16_t SFE_XM125_PRESENCE_DETECTOR_STATUS = 0x03;
-typedef struct 
+typedef struct
 {
     uint32_t presence_rss_register_ok : 1;
     uint32_t presence_config_create_ok : 1;
@@ -404,7 +419,7 @@ const uint16_t SFE_XM125_PRESENCE_INTRA_DETECTION_ENABLED = 0x43;
 const bool sfe_xm125_presence_intra_detection_enabled_default = true;
 
 const uint16_t SFE_XM125_PRESENCE_INTER_DETECTION_ENABLED = 0x44;
-const bool sfe_xm125_presence_inter_detection_enabled_default = true; 
+const bool sfe_xm125_presence_inter_detection_enabled_default = true;
 
 const uint16_t SFE_XM125_PRESENCE_FRAME_RATE = 0x45;
 const uint16_t sfe_xm125_presence_frame_rate_default = 12000;
@@ -450,7 +465,7 @@ typedef enum
 } sfe_xm125_presence_manual_profile_t;
 
 const uint16_t SFE_XM125_PRESENCE_MANUAL_STEP_LENGTH = 0x51;
-const uint16_t sfe_xm125_presence_manual_step_length_default = 72; 
+const uint16_t sfe_xm125_presence_manual_step_length_default = 72;
 
 const uint16_t SFE_XM125_PRESENCE_START = 0x52;
 const uint16_t sfe_xm125_presence_start_default = 250;
@@ -465,7 +480,7 @@ const uint16_t SFE_XM125_PRESENCE_HWAAS = 0x55;
 const uint16_t sfe_xm125_presence_hwaas_default = 32;
 
 const uint16_t SFE_XM125_PRESENCE_DETECTION_ON_GPIO = 0x80;
-const bool sfe_xm125_presence_detection_on_gpio_default = false; 
+const bool sfe_xm125_presence_detection_on_gpio_default = false;
 
 const uint16_t SFE_XM125_PRESENCE_COMMAND = 0x100;
 typedef enum
