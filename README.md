@@ -5,7 +5,6 @@
 
 Arduino Library for the SparkFun Pulsed Coherent Radar Sensor 
 
-https://github.com/sparkfun/SparkFun_Qwiic_XM125_Arduino_Library
 ![License](https://img.shields.io/github/license/sparkfun/SparkFun_Qwiic_XM125_Arduino_Library)
 ![Release](https://img.shields.io/github/v/release/sparkfun/SparkFun_Qwiic_XM125_Arduino_Library)
 ![Release Date](https://img.shields.io/github/release-date/sparkfun/SparkFun_Qwiic_XM125_Arduino_Library)
@@ -14,63 +13,55 @@ https://github.com/sparkfun/SparkFun_Qwiic_XM125_Arduino_Library
 ![GitHub issues](https://img.shields.io/github/issues/sparkfun/SparkFun_Qwiic_XM125_Arduino_Library)
 
 
-The [SparkFun Qwiic Soil Moisture Sensor (SEN-17731)](https://www.sparkfun.com/sparkfun-qwiic-soil-moisture-sensor.html) is a simple breakout for measuring the moisture in soil and similar materials. The soil moisture sensor is pretty straightforward to use. The two large, exposed pads function as probes for the sensor, together acting as a variable resistor. The more water that is in the soil means the better the conductivity between the pads will be, resulting in a lower resistance and a higher SIG out. 
+The [SparkFun Pulsed Coherent Radar Sensor - Acconeer XM125 (SEN-24540)](https://www.sparkfun.com/sparkfun-pulsed-coherent-radar-sensor-acconeer-xm125-qwiic.html) brings powerful 60 GHz radar technology to your projects. This sensor isn't limited to surface detection; it can see through walls, cabinets, and even pockets (depending on the material), making it perfect for unique applications. Measure distances with millimeter precision, detect motion, the speed of an object, or even gestures!
 
-Looking for the board that matches this library - pick up a [SparkFun Qwiic Soil Moisture Sensor (SEN-17731)](https://www.sparkfun.com/sparkfun-qwiic-soil-moisture-sensor.html) at www.sparkfun.com.
+The XM125 boasts an impressive range of up to 20 meters, allowing you to create long-range sensing projects. The actual measurable distance is dependent on the object size, shape, dielectric properties, and lens (e.g. water level measurements up to 20 meters with lens utilization, human presence detection up to 7 meters with lens-free utilization). Despite its power, the sensor has remarkably low in power consumption, which is ideal for battery-powered applications. The real magic lies in the sensor's ability to do more than measure distance; the XM125 can differentiate between stationary objects and moving targets using pulsed coherent radar. This means you can sense an object's presence and how fast something is moving!
 
+Looking for the board that matches this library - pick up a [SparkFun Pulsed Coherent Radar Sensor - Acconeer XM125 (Qwiic)](https://www.sparkfun.com/sparkfun-pulsed-coherent-radar-sensor-acconeer-xm125-qwiic.html) at www.sparkfun.com.
 
+## Functionality
 
+The SparkFun Pulsed Coherent Radar sensor can run as an I2C client device, or as a standalone development board. This library is used when the sensor is operating as a standalone I2C device. 
 
+When running as a I2C client device, the Acconeer XM125 is loaded with a specific firmware application from Acconeer. 
 
+The *SparkFun Pulsed Coherent Radar Sensor - Acconeer XM125* comes with the ***Presence Detector*** firmware loaded, which is accessible using the ***Presence*** focused methods in this library. 
 
-
-
-SparkFun XM125 A121 Arduino Library
-========================================
-
-[![SparkFun Pulsed Coherent Radar Sensor – Acconeer XM125 (Qwiic)](https://cdn.sparkfun.com/r/600-600/assets/parts/2/4/8/6/5/SEN-24540-Pulsed-Coherent-Radar-Sensor-Feature.jpg)](https://www.sparkfun.com/products/24540)
-
-[*SparkFun Pulsed Coherent Radar Sensor – Acconeer XM125 (Qwiic) (SEN-24540)*](https://www.sparkfun.com/products/24540)
-
-This is the SparkFun library for the Acconeer Entry+ Module XM125 with the A121 60GHz Pulsed Coherent Radar sensor and I<sup>2</sup>C interface.
+This library also supports the ***Distance Detection*** application firmware from Acconeer. To enable this functionally, the ***Distance Detection*** firmware must be loaded onto the *SparkFun Pulsed Coherent Radar Sensor - Acconeer XM125* board. The firmware is available from [Acconeer](https://developer.acconeer.com/home/a121-docs-software/xm125-xe125/) as part of the XM125/A121 SDK. The files are located in the `out/` folder - with naming patter of `i2c_*_detector.bin`. Install instructions are noted in our [Hook Up Guide](https://docs.sparkfun.com/SparkFun_Qwiic_Pulsed_Radar_Sensor_XM125/introduction/) for the product.
 
 
-Repository Contents
--------------------
+This library provides a extensive interface that enables the following functionality/interaction with the SparkFun Pulsed Coherent Radar Sensor when the sensor is operating as an I2C sensor device:
 
-* **/examples** - Example sketches for the library (.ino). Run these from the Arduino IDE.
-* **/src** - Source files for the library (.cpp, .h).
-* **/Documentation** - Datasheet and application note for the XM125 and A121.
-* **keywords.txt** - Keywords from this library that will be highlighted in the Arduino IDE.
-* **library.properties** - General library properties for the Arduino package manager.
-* **[CONTRIBUTING.md](./CONTRIBUTING.md)** - guidance on how to contribute to this library.
+|Function|Firmware|
+|---|---|
+|Distance Detection | `i2c_distance_detector` |
+|Presence Detection | `i2c_presence_detector` |
 
+## General Use
 
-Documentation
---------------
-
-* **[Installing an Arduino Library Guide](https://learn.sparkfun.com/tutorials/installing-an-arduino-library)** - Basic information on how to install an Arduino library.
-* **[Hookup Guide](https://docs.sparkfun.com/SparkFun_Qwiic_Pulsed_Radar_Sensor_XM125)** - Basic hookup guide for the SparkFUn Qwiic Pulsed Coherent Radar Sensor - XM125.
-* **[Product Repository](https://github.com/sparkfun/SparkFun_Qwiic_Pulsed_Radar_Sensor_XM125)** - Main repository for the SparkFun Qwiic XM125 (including hardware files)
+### TO DO
 
 
-Products that use this Library 
----------------------------------
+## Examples
 
-* [*SEN-24540*](https://www.sparkfun.com/products/24540)
+The following examples are provided with the library
+
+- [Basic Readings](examples/Example_01_BasicReadings/Example_01_BasicReadings.ino) - Setup and read the soil moisture from the sensor
+- [Readings and LED](examples/Example_02_ReadingsAndLED/Example_02_ReadingsAndLED.ino) - Flash the sensor LED when reading the moisture value
+- [LED Flash Based on Moisture Percentage](examples/Example_03_LEDFlashMoisture/Example_03_LEDFlashMoisture.ino) - Vary the sensor LED flash rate based on the moisture percent sensed. The flash rate increases the drier the sensed value
+
+## Documentation
+
+The full API and use documentation for this library is provided [here](docs.sparkfun.com/SparkFun_Qwiic_XM125_Arduino_Library/). For a quick reference, the main methods available in the library are listed [here](https://docs.sparkfun.com/SparkFun_Qwiic_XM125_Arduino_Library/functions.html).
+
+Curious about the hardware this board works with - visit the SparkFun Pulsed Coherent Radar Sensor [hardware repository](https://github.com/sparkfun/SparkFun_Qwiic_Pulsed_Radar_Sensor_XM125).
+
+The Hookup Guide for the SparkFun Qwiic Soil Moisture Sensor is available [here](https://docs.sparkfun.com/SparkFun_Qwiic_Pulsed_Radar_Sensor_XM125/introduction/).
+
+## License Information
+
+This product is ***open source***!
+
+This product is licensed using the [MIT Open Source License](https://opensource.org/license/mit). 
 
 
-License Information
--------------------
-
-This product is _**open source**_! 
-
-Please review the LICENSE.md file for license information. 
-
-If you have any questions or concerns on licensing, please contact technical support on our [SparkFun forums](https://forum.sparkfun.com/viewforum.php?f=152).
-
-Distributed as-is; no warranty is given.
-
-- Your friends at SparkFun.
-
-_<COLLABORATION CREDIT>_
