@@ -51,6 +51,17 @@ This library provides a extensive interface that enables the following functiona
 ### TO DO
 
 
+## Documentation
+
+|Reference | Description |
+|---|---|
+|[QwDevXM125 Quick Reference](https://docs.sparkfun.com/SparkFun_Qwiic_XM125_Arduino_Library/class_qw_dev_x_m125.html)| A quick reference API for the the main library object ```QwDevXM125```|
+|[SparkFun Qwiic XM125 Arduino Library is located here](https://docs.sparkfun.com/SparkFun_Qwiic_XM125_Arduino_Library/)| The full documentation and API for this library|
+|[SparkFun Pulsed Coherent Radar Sensor](https://github.com/sparkfun/SparkFun_Qwiic_Pulsed_Radar_Sensor_XM125)| Hardware GitHub Repository|
+|[Hook Up Guide](https://docs.sparkfun.com/SparkFun_Qwiic_Pulsed_Radar_Sensor_XM125/introduction/) | Hardware Overview and Quick Start for the XM125 Qwiic Development Board |
+
+
+
 ## Examples
 
 The following examples are provided with the library
@@ -68,13 +79,6 @@ The following examples are provided with the library
 |[Distance Advanced Settings](examples/Example09_DistanceAdvancedSettings/Example09_DistanceAdvancedSettings.ino)|The sensor is initialized, then the distance (mm) and advanced values are output to the terminal. |
   
 
-## Documentation
-
-The full API and use documentation for this library is provided [here](https://docs.sparkfun.com/SparkFun_Qwiic_XM125_Arduino_Library/). For a quick reference, the main methods available in the library are listed [here](https://docs.sparkfun.com/SparkFun_Qwiic_XM125_Arduino_Library/class_qw_dev_x_m125.html).
-
-Curious about the hardware this board works with - visit the SparkFun Pulsed Coherent Radar Sensor [hardware repository](https://github.com/sparkfun/SparkFun_Qwiic_Pulsed_Radar_Sensor_XM125).
-
-The Hookup Guide for the SparkFun Qwiic Soil Moisture Sensor is available [here](https://docs.sparkfun.com/SparkFun_Qwiic_Pulsed_Radar_Sensor_XM125/introduction/).
 
 ## License Information
 
