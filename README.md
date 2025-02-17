@@ -55,8 +55,8 @@ This library provides a extensive interface that enables the following functiona
 
 |Reference | Description |
 |---|---|
-|[QwDevXM125 Quick Reference](https://docs.sparkfun.com/SparkFun_Qwiic_XM125_Arduino_Library/class_qw_dev_x_m125.html)| A quick reference API for the the main library object ```QwDevXM125```|
-|[SparkFun Qwiic XM125 Arduino Library is located here](https://docs.sparkfun.com/SparkFun_Qwiic_XM125_Arduino_Library/)| The full documentation and API for this library|
+|[Quick Reference](https://docs.sparkfun.com/SparkFun_Qwiic_XM125_Arduino_Library/class_qw_dev_x_m125.html)| A quick reference API for the the main library object ```QwDevXM125```|
+|[Full Documentation](https://docs.sparkfun.com/SparkFun_Qwiic_XM125_Arduino_Library/)| The full documentation and API for this Arduino library|
 |[SparkFun Pulsed Coherent Radar Sensor](https://github.com/sparkfun/SparkFun_Qwiic_Pulsed_Radar_Sensor_XM125)| Hardware GitHub Repository|
 |[Hook Up Guide](https://docs.sparkfun.com/SparkFun_Qwiic_Pulsed_Radar_Sensor_XM125/introduction/) | Hardware Overview and Quick Start for the XM125 Qwiic Development Board |
 
