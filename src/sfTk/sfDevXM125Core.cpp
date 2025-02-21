@@ -31,6 +31,9 @@ sfTkError_t sfDevXM125Core::begin(sfTkII2C *theBus)
     // Sets communication bus
     _theBus = theBus;
 
+    // set the byte order to BIG Endian - the sensor works with Big E
+    _theBus->setByteOrder(sfTkByteOrder::BigEndian);
+
     // return the value of ping
     return theBus->ping();
 }

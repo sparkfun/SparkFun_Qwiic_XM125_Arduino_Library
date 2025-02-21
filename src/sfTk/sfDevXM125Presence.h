@@ -243,7 +243,7 @@ class sfDevXM125Presence : public sfDevXM125Core
      * @param theBus Pointer to the I2C bus object. If nullptr, the default bus is used.
      * @return ksfTkErrOk on success, or error code (value < -1) on failure.
      */
-    sfTkError_t begin(sfTkII2C *theBus = nullptr);
+    sfTkError_t begin(sfTkII2C *theBus = nullptr) override;
     /// @brief This function sets all the beginning values for a basic I2C
     ///  example to be run on the device for presence sensing.
     /// @return ksfTkErrOk on success, or error code (value < -1)
