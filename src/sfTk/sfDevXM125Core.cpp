@@ -19,7 +19,7 @@
 #include "sfDevXM125Core.h"
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Core::begin(sfTkII2C *theBus)
+sfTkError_t sfDevXM125Core::init(sfTkII2C *theBus)
 {
     if (theBus == nullptr)
         return ksfTkErrBusNotInit;

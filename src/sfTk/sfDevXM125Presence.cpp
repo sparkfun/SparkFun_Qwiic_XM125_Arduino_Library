@@ -15,7 +15,7 @@
 sfTkError_t sfDevXM125Presence::begin(sfTkII2C *theBus)
 {
     // call super to get the device connection working
-    sfTkError_t retVal = sfDevXM125Core::begin(theBus);
+    sfTkError_t retVal = sfDevXM125Core::init(theBus);
     if (retVal != ksfTkErrOk)
         return retVal;
 
@@ -316,7 +316,6 @@ sfTkError_t sfDevXM125Presence::setPresenceInterPhaseBoostEnabled(bool en)
 //--------------------------------------------------------------------------------
 sfTkError_t sfDevXM125Presence::getPresenceIntraDetectionEnabled(bool &en)
 {
-    size_t readBytes = 0;
     uint8_t value;
     sfTkError_t retVal = _theBus->readRegisterUInt8(SFE_XM125_PRESENCE_INTRA_DETECTION_ENABLED, value);
 

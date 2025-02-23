@@ -30,9 +30,7 @@ class sfDevXM125Core
 
     /// @brief This function begins the examples/communication.
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    virtual sfTkError_t begin(sfTkII2C *theBus = nullptr);
-
-    virtual ~sfDevXM125Core() {};
+    sfTkError_t init(sfTkII2C *theBus = nullptr);
 
   protected:
     // our toolkit bus
