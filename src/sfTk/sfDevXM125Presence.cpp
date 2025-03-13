@@ -32,7 +32,7 @@ sfTkError_t sfDevXM125Presence::begin(sfTkII2C *theBus)
     return ksfTkErrOk;
 }
 //-------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::presenceDetectorStart()
+sfTkError_t sfDevXM125Presence::presenceDetectorStart(uint32_t startValue, uint32_t endValue)
 {
     // *** Presence Sensor Setup ***
     uint32_t errorStatus = 0;
@@ -51,13 +51,13 @@ sfTkError_t sfDevXM125Presence::presenceDetectorStart()
         return 3;
 
     // Set Presence Start register
-    if (setPresenceStart(300) != ksfTkErrOk)
+    if (setPresenceStart(startValue) != ksfTkErrOk)
         return 4;
 
     sftk_delay_ms(100); // give time for command to set
 
     // Set End register
-    if (setPresenceEnd(2500) != ksfTkErrOk)
+    if (setPresenceEnd(endValue) != ksfTkErrOk)
         return 5;
 
     sftk_delay_ms(100); // give time for command to set
