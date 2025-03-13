@@ -90,8 +90,7 @@ sfTkError_t sfDevXM125Presence::getPresenceDistanceValuemm(uint32_t &presenceVal
 {
     // Check error bits
     uint32_t errorStatus = 0;
-    uint32_t presenceDetected = 0;
-    uint32_t presenceDetectedSticky = 0;
+    uint32_t presenceStatus = 0;
 
     sfTkError_t retVal = getPresenceDetectorErrorStatus(errorStatus);
     if (retVal != ksfTkErrOk || errorStatus != 0)
@@ -112,14 +111,16 @@ sfTkError_t sfDevXM125Presence::getPresenceDistanceValuemm(uint32_t &presenceVal
     if (retVal != ksfTkErrOk || errorStatus != 0)
         return 4;
 
-    // Read detector result register and determine detection status
-    if (getPresenceDetectorPresenceDetected(presenceDetected) != ksfTkErrOk)
+    // Read from 16-Bit Register to get the presence detection status
+    if (_theBus->readRegister(SFE_XM125_PRESENCE_RESULT, presenceStatus) != ksfTkErrOk)
         return 5;
 
-    if (getPresenceDetectorPresenceStickyDetected(presenceDetectedSticky) != ksfTkErrOk)
-        return 6;
+    // Presence detected NOW or since last check (sticky)
+    bool bPresenceDetected = ((presenceStatus & SFE_XM125_PRESENCE_DETECTED_MASK) != 0) ||
+                             ((presenceStatus & SFE_XM125_PRESENCE_DETECTED_STICKY_MASK) != 0);
 
-    if (presenceDetected == 1 || presenceDetectedSticky == 1)
+    // If presence or a sticky presence is detected, get the distance and return
+    if (bPresenceDetected)
         return getPresenceDistance(presenceVal);
 
     return ksfTkErrOk;
