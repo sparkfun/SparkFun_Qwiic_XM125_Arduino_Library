@@ -94,26 +94,26 @@ sfTkError_t sfDevXM125Presence::getPresenceDistanceValuemm(uint32_t &presenceVal
 
     sfTkError_t retVal = getPresenceDetectorErrorStatus(errorStatus);
     if (retVal != ksfTkErrOk || errorStatus != 0)
-        return sfTkErrFail;
+        return ksfTkErrFail;
 
     // Start detector
     if (setPresenceCommand(SFE_XM125_PRESENCE_START_DETECTOR) != ksfTkErrOk)
-        return sfTkErrFail;
+        return ksfTkErrFail;
 
     sftk_delay_ms(100);
 
     // Poll detector status until busy bit is cleared
     if (presenceBusyWait() != ksfTkErrOk)
-        return sfTkErrFail;
+        return ksfTkErrFail;
 
     // Verify that no error bits are set in the detector status register
     retVal = getPresenceDetectorErrorStatus(errorStatus);
     if (retVal != ksfTkErrOk || errorStatus != 0)
-        return sfTkErrFail;
+        return ksfTkErrFail;
 
     // Read from 16-Bit Register to get the presence detection status
     if (_theBus->readRegister(SFE_XM125_PRESENCE_RESULT, presenceStatus) != ksfTkErrOk)
-        return sfTkErrFail;
+        return ksfTkErrFail;
 
     // Presence detected NOW or since last check (sticky)
     bool bPresenceDetected = ((presenceStatus & SFE_XM125_PRESENCE_DETECTED_MASK) != 0) ||
@@ -319,7 +319,6 @@ sfTkError_t sfDevXM125Presence::setPresenceInterPhaseBoostEnabled(bool en)
 //--------------------------------------------------------------------------------
 sfTkError_t sfDevXM125Presence::getPresenceIntraDetectionEnabled(bool &en)
 {
-    size_t readBytes = 0;
     uint8_t value;
     sfTkError_t retVal = _theBus->readRegisterUInt8(SFE_XM125_PRESENCE_INTRA_DETECTION_ENABLED, value);
 
