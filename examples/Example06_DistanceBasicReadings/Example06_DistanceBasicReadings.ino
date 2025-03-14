@@ -88,13 +88,13 @@ void loop()
     radarSensor.getDistanceNumberDistances(numDistances);
 
     if (numDistances == 0)
-        Serial.println("No distance values detected.");
+        Serial.print(".");
     else
     {
-        Serial.print("Number of Distances Values Detected: ");
+        Serial.println();
+        Serial.print("Number of Values Detected: ");
         Serial.println(numDistances);
     }
-    Serial.println();
 
     uint32_t distance = 0;
     int32_t distanceStrength = 0;
@@ -107,22 +107,24 @@ void loop()
             Serial.println();
             continue;
         }
-        Serial.print("Distance Peak ");
+        Serial.print("   Distance Peak ");
         Serial.print(i);
         Serial.print(": ");
         if (distance < 100)
         {
             Serial.print(distance);
-            Serial.println("mm");
+            Serial.print("mm");
         }
         else if (distance < 1000)
         {
             Serial.print(distance * 0.1);
-            Serial.println("cm");
+            Serial.print("cm");
         }
         else
+        {
             Serial.print(distance * 0.001);
-        Serial.println("m");
+            Serial.print("m");
+        }
 
         if (radarSensor.getDistancePeakStrength(i, distanceStrength) != ksfTkErrOk)
         {
@@ -131,13 +133,12 @@ void loop()
             Serial.println();
             continue;
         }
-        Serial.print("Distance Peak Strength");
+        Serial.print("     Distance Peak Strength ");
         Serial.print(i);
         Serial.print(": ");
         Serial.println(distanceStrength);
-        Serial.println();
     }
 
-    // Half a second delay for easier readings
-    delay(500);
+    // delay before next reading
+    delay(2500);
 }
