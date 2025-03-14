@@ -41,7 +41,7 @@ sfTkError_t sfDevXM125Distance::begin(sfTkII2C *theBus)
     return ksfTkErrOk;
 }
 //------------------------------------------------------------------
-int32_t sfDevXM125Distance::distanceBegin()
+int32_t sfDevXM125Distance::distanceBegin(uint32_t startRange, uint32_t endRange)
 {
     uint32_t errorStatus = 0;
 
@@ -64,20 +64,20 @@ int32_t sfDevXM125Distance::distanceBegin()
     }
 
     // Set Start register
-    if (setDistanceStart(sfe_xm125_distance_start_default) != 0)
+    if (setDistanceStart(startRange) != 0)
     {
         return 3;
     }
     sftk_delay_ms(100); // give time for command to set
 
     // Set End register
-    if (setDistanceEnd(sfe_xm125_distance_end_default) != 0)
+    if (setDistanceEnd(endRange) != 0)
     {
         return 4;
     }
     sftk_delay_ms(100); // give time for command to set
 
-    // Apply configuration
+    // Apply configuration and calibrate.
     if (setDistanceCommand(SFE_XM125_DISTANCE_APPLY_CONFIGURATION) != 0)
     {
         // Check for errors
@@ -364,6 +364,49 @@ sfTkError_t sfDevXM125Distance::getDistanceTemperature(int16_t &temperature)
 }
 
 //--------------------------------------------------------------------------------
+// Generic distance peak distance method
+sfTkError_t sfDevXM125Distance::getDistancePeakDistance(uint8_t num, uint32_t &peak)
+{
+
+    switch (num)
+    {
+    case 0:
+        return getDistancePeak0Distance(peak);
+        break;
+
+    case 1:
+        return getDistancePeak1Distance(peak);
+        break;
+    case 2:
+        return getDistancePeak2Distance(peak);
+        break;
+    case 3:
+        return getDistancePeak3Distance(peak);
+        break;
+    case 4:
+        return getDistancePeak4Distance(peak);
+        break;
+    case 5:
+        return getDistancePeak5Distance(peak);
+        break;
+    case 6:
+        return getDistancePeak6Distance(peak);
+        break;
+    case 7:
+        return getDistancePeak7Distance(peak);
+        break;
+    case 8:
+        return getDistancePeak8Distance(peak);
+        break;
+    case 9:
+        return getDistancePeak9Distance(peak);
+        break;
+    default:
+        return ksfTkErrFail;
+        break;
+    }
+}
+//--------------------------------------------------------------------------------
 sfTkError_t sfDevXM125Distance::getDistancePeak0Distance(uint32_t &peak)
 {
     size_t readBytes = 0;
@@ -462,7 +505,49 @@ sfTkError_t sfDevXM125Distance::getDistancePeak9Distance(uint32_t &peak)
     peak = sftk_byte_swap(peak);
     return retVal;
 }
+//--------------------------------------------------------------------------------
+// Generic distance peak strength method
+sfTkError_t sfDevXM125Distance::getDistancePeakStrength(uint8_t num, int32_t &peak)
+{
 
+    switch (num)
+    {
+    case 0:
+        return getDistancePeak0Strength(peak);
+        break;
+
+    case 1:
+        return getDistancePeak1Strength(peak);
+        break;
+    case 2:
+        return getDistancePeak2Strength(peak);
+        break;
+    case 3:
+        return getDistancePeak3Strength(peak);
+        break;
+    case 4:
+        return getDistancePeak4Strength(peak);
+        break;
+    case 5:
+        return getDistancePeak5Strength(peak);
+        break;
+    case 6:
+        return getDistancePeak6Strength(peak);
+        break;
+    case 7:
+        return getDistancePeak7Strength(peak);
+        break;
+    case 8:
+        return getDistancePeak8Strength(peak);
+        break;
+    case 9:
+        return getDistancePeak9Strength(peak);
+        break;
+    default:
+        return ksfTkErrFail;
+        break;
+    }
+}
 //--------------------------------------------------------------------------------
 sfTkError_t sfDevXM125Distance::getDistancePeak0Strength(int32_t &peak)
 {
