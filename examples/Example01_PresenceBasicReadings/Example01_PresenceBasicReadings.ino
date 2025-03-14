@@ -86,7 +86,8 @@ void loop()
     // Busy wait loop until data is ready
     radarSensor.presenceBusyWait();
 
-    // Get the presence distance value and print out if no errors
+    // Get the presence distance value and print out if no errors.
+    // Note - this returns if Presense is detected now, or since last check (sticky)
     presValError = radarSensor.getPresenceDistanceValuemm(distance);
 
     if (presValError == 0)
