@@ -39,40 +39,45 @@ int32_t setupError = 0;
 int32_t presValError = 0;
 int32_t detectorError = 0;
 
+// Presence range in mm used
+#define MY_XM125_RANGE_START 200
+#define MY_XM125_RANGE_END 1000
 void setup()
 {
     // Start serial
     Serial.begin(115200);
+
+    Serial.println("");
+    Serial.println("-------------------------------------------------------");
     Serial.println("XM125 Example 1: Basic Presence Readings");
+    Serial.println("-------------------------------------------------------");
     Serial.println("");
 
     Wire.begin();
 
     // If begin is successful (1), then start example
-    int startErr = radarSensor.begin(i2cAddress, Wire);
-    if (startErr == 1)
+    bool success = radarSensor.begin(i2cAddress, Wire);
+    if (success == false)
     {
-        Serial.println("Begin");
-    }
-    else // Otherwise, infinite loop
-    {
-        Serial.print("Start Error Code: ");
-        Serial.println(startErr);
         Serial.println("Device failed to setup - Freezing code.");
         while (1)
             ; // Runs forever
     }
 
     // Start the sensor with default register values
-    int32_t setupError = radarSensor.presenceDetectorStart();
+    int32_t setupError = radarSensor.presenceDetectorStart(MY_XM125_RANGE_START, MY_XM125_RANGE_END);
     if (setupError != 0)
     {
         Serial.print("Presence Detection Start Setup Error: ");
         Serial.println(setupError);
     }
-
-    // New line and delay for easier reading
+    Serial.print("Presense Detection Started - range: ");
+    Serial.print(MY_XM125_RANGE_START);
+    Serial.print("mm to ");
+    Serial.print(MY_XM125_RANGE_END);
+    Serial.println("mm");
     Serial.println();
+
     delay(500);
 }
 
@@ -81,28 +86,32 @@ void loop()
     // Busy wait loop until data is ready
     radarSensor.presenceBusyWait();
 
-    // Get the presence distance value and print out if no errors
+    // Get the presence distance value and print out if no errors.
+    // Note - this returns if Presense is detected now, or since last check (sticky)
     presValError = radarSensor.getPresenceDistanceValuemm(distance);
 
     if (presValError == 0)
     {
         Serial.print("Presence Detected: ");
-        Serial.print(distance);
-        Serial.println("mm");
-        // Serial.print(distance * .1);
-        // Serial.println("cm");
-        // Serial.print(distance * .001);
-        // Serial.println("m");
-        // Serial.print(distance * .001);
-        // Serial.println("m");
-        // Serial.print(distance * .03937008);
-        // Serial.println("In");
+        // if distance is > 0, presence is detected, else it is not
+        if (distance > 0)
+        {
+            Serial.print("YES  -  Distance: ");
+            Serial.print(distance);
+            Serial.print("mm, ");
+            Serial.print(distance * .1);
+            Serial.print("cm, ");
+            Serial.print(distance * .001);
+            Serial.print("m, ");
+            Serial.print(distance * .03937008);
+            Serial.println("In");
+        }
+        else
+            Serial.println("NO");
     }
     else
-    {
         Serial.println("Error returning presence distance value");
-    }
 
-    // Delay 0.5 seconds between readings
-    delay(500);
+    // Delay 2.5 seconds between readings
+    delay(2500);
 }

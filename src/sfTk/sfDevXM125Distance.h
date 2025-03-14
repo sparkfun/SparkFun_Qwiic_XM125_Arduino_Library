@@ -163,11 +163,11 @@ const uint16_t SFE_XM125_DISTANCE_PEAK7_STRENGTH = 0x22;
 const uint16_t SFE_XM125_DISTANCE_PEAK8_STRENGTH = 0x23;
 const uint16_t SFE_XM125_DISTANCE_PEAK9_STRENGTH = 0x24;
 
-// Default Value: 250
+// Default Value: 250mm
 const uint16_t SFE_XM125_DISTANCE_START = 0x40;
 const uint16_t sfe_xm125_distance_start_default = 250;
 
-// Default Value: 3000
+// Default Value: 3000mm
 const uint16_t SFE_XM125_DISTANCE_END = 0x41;
 const uint16_t sfe_xm125_distance_end_default = 3000;
 
@@ -283,7 +283,8 @@ class sfDevXM125Distance : public sfDevXM125Core
     /// @brief This function sets all the beginning values for a basic I2C
     ///  example to be run on the device for presence sensing.
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t distanceBegin();
+    sfTkError_t distanceBegin(uint32_t start = sfe_xm125_distance_start_default,
+                              uint32_t end = sfe_xm125_distance_end_default);
 
     /// @brief This function does all the required checks and busy waits to
     ///  make sure the device is ready for distance readings.
@@ -344,6 +345,15 @@ class sfDevXM125Distance : public sfDevXM125Core
     /// @return ksfTkErrOk on success, or error code (value < -1)
     sfTkError_t getDistanceTemperature(int16_t &temperature);
 
+    //--------------------------------------------------------------------------------
+    // Generic distance peak distance method
+    /// @brief This function returns the distance to peak num
+    ///  Note: This value is a factor 1000 larger than the RSS value
+    /// @param num Peak number to get distance (0-9)
+    /// @param peak Distance to peak num
+    /// @return ksfTkErrOk on success, or error code (value < -1)
+    sfTkError_t getDistancePeakDistance(uint8_t num, uint32_t &peak);
+
     /// @brief This function returns the distance to peak 0
     ///  Note: This value is a factor 1000 larger than the RSS value
     /// @return ksfTkErrOk on success, or error code (value < -1)
@@ -393,6 +403,15 @@ class sfDevXM125Distance : public sfDevXM125Core
     ///  Note: This value is a factor 1000 larger than the RSS value
     /// @return ksfTkErrOk on success, or error code (value < -1)
     sfTkError_t getDistancePeak9Distance(uint32_t &peak);
+
+    //--------------------------------------------------------------------------------
+    // Generic distance peak strength method
+    /// @brief This function returns the strength to peak num
+    ///  Note: This value is a factor 1000 larger than the RSS value
+    /// @param num Peak number to get strength (0-9)
+    /// @param peak strength to peak num
+    /// @return ksfTkErrOk on success, or error code (value < -1)
+    sfTkError_t getDistancePeakStrength(uint8_t num, int32_t &peak);
 
     /// @brief This function returns the strength of peak 0
     ///  Note: This value is a factor 1000 larger than the RSS value

@@ -247,8 +247,10 @@ class sfDevXM125Presence : public sfDevXM125Core
 
     /// @brief This function sets all the beginning values for a basic I2C
     ///  example to be run on the device for presence sensing.
+    /// @param start Start value for presence sensing in mm  - default value is 1000
+    /// @param end End value for presence sensing in mm - default value is 5000
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t presenceDetectorStart();
+    sfTkError_t presenceDetectorStart(uint32_t start = 1000, uint32_t end = 5000);
 
     /// @brief This function returns the presence value of the register
     ///  with all the checks in place as per the I2C Datasheet.
