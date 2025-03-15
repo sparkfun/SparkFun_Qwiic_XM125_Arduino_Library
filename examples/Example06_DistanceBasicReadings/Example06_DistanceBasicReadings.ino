@@ -29,9 +29,9 @@ SparkFunXM125Distance radarSensor;
 // I2C default address
 uint8_t i2cAddress = SFE_XM125_I2C_ADDRESS;
 
-// Presence range in mm used - 300mm to 4000mm (0.3 M to 4 M)
-#define MY_XM125_RANGE_START 300
-#define MY_XM125_RANGE_END 4000
+// Presence range in mm used - 500mm to 5000mm (0.5 M to 5 M)
+#define MY_XM125_RANGE_START 500
+#define MY_XM125_RANGE_END 5000
 
 void setup()
 {
@@ -67,9 +67,12 @@ void setup()
     Serial.print(MY_XM125_RANGE_START);
     Serial.print("mm to ");
     Serial.print(MY_XM125_RANGE_END);
-    Serial.println("mm");
-    Serial.println();
-    // New-line and 0.5 second delay for easier reading
+    Serial.print("mm (");
+    Serial.print(MY_XM125_RANGE_START * 0.001);
+    Serial.print("m to ");
+    Serial.print(MY_XM125_RANGE_END * 0.001);
+    Serial.println("m )");
+
     Serial.println();
     delay(500);
 }
