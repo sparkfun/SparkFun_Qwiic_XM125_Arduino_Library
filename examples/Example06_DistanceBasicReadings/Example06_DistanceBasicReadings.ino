@@ -56,7 +56,7 @@ void setup()
     Serial.println("Starting Sensor...");
     Serial.println();
     // Start the sensor with the specified range values
-    int32_t setupError = radarSensor.distanceBegin(MY_XM125_RANGE_START, MY_XM125_RANGE_END);
+    int32_t setupError = radarSensor.distanceSetup(MY_XM125_RANGE_START, MY_XM125_RANGE_END);
     if (setupError != 0)
     {
         Serial.print("Distance Detection Start Setup Error: ");
@@ -79,7 +79,7 @@ void setup()
 
 void loop()
 {
-    uint32_t retCode = radarSensor.distanceDetectorReadingSetup();
+    uint32_t retCode = radarSensor.detectorReadingSetup();
     if (retCode != 0)
     {
         Serial.print("Distance Reading Setup Error: ");
@@ -88,7 +88,7 @@ void loop()
 
     // How many distance values were detected? (0-9)
     uint32_t numDistances = 0;
-    radarSensor.getDistanceNumberDistances(numDistances);
+    radarSensor.getNumberDistances(numDistances);
 
     if (numDistances == 0)
         Serial.print(".");
@@ -103,7 +103,7 @@ void loop()
     int32_t distanceStrength = 0;
     for (uint32_t i = 0; i < numDistances; i++)
     {
-        if (radarSensor.getDistancePeakDistance(i, distance) != ksfTkErrOk)
+        if (radarSensor.getPeakDistance(i, distance) != ksfTkErrOk)
         {
             Serial.print("Error retrieving Distance Peak ");
             Serial.print(i);
@@ -129,7 +129,7 @@ void loop()
             Serial.print("m");
         }
 
-        if (radarSensor.getDistancePeakStrength(i, distanceStrength) != ksfTkErrOk)
+        if (radarSensor.getPeakStrength(i, distanceStrength) != ksfTkErrOk)
         {
             Serial.print("Error retrieving Distance Peak Strength");
             Serial.print(i);
