@@ -18,38 +18,9 @@ The XM125 boasts an impressive range of up to 20 meters, allowing you to create 
 
 Looking for the board that matches this library - pick up a [SparkFun Pulsed Coherent Radar Sensor - Acconeer XM125 (Qwiic)](https://www.sparkfun.com/sparkfun-pulsed-coherent-radar-sensor-acconeer-xm125-qwiic.html) at <www.sparkfun.com>.
 
-## Upgrading to Version 2.\* from Version 1.\*
-
-Version 2.0+ of this library is not compatible with Version 1.* implementations/use. For Version 2.0, the single class defined by the library, `SfeXM125`, was divided into two distinct classes for schemantic clarity and code simplification.
-
-### Version 2.0 Changes
-
-#### Classes
-
-The device single class was devided into two classes - one for each specific I2C application that the Acconeer XM125 can run. These classes are:
-
-* SparkFunXM125Distance - Used when the XM125 is running the ***Distance*** application
-* SparkFunXM125Presence - Used when the XM125 is running the ***Presence*** application
-
-#### Method Names
-
-Additionally, the method naming pattern for each application was simplified - removing *Distance* and *Presence* from method names.  
-
-### Supporting Version 1.* Implementations
-
-To simplify the transition from an application written using the Version 1.* library, two compatiblity classes are provided:
-
-* SparkFunXM125DistanceV1 - Used when the XM125 is running the ***Distance*** application
-* SparkFunXM125PresenceV1 - Used when the XM125 is running the ***Presence*** application
-
-These classes implement the version 1.*method names for the library, to minimize the porting requirements when upgrading to Version 2.*.
-
-To upgrade to Version 2.0 of the library, perform one of the following:
-
-* If the Acconeer XM125 is running the I2C Distance Application: Rename the device class from `SfeXM125` to `SparkFunXM125DistanceV1`
-* If the Acconeer XM125 is running the I2C Presence Application: Rename the device class from `SfeXM125` to `SparkFunXM125PresenceV1`
-
-Once the class name is changed, your application is ready to use version 2.* of this library.
+> [!NOTE]
+>
+> If upgrading from using Version 1.* of this library, some changes are required before moving to Version 2.0+. The detals of this are outlined in the section titled [Upgrading to Version 2 from Version 1](#upgrading-to-version-2-from-version-1) later in this document.
 
 ## Functionality
 
@@ -97,3 +68,36 @@ The Hookup Guide for the SparkFun Qwiic Soil Moisture Sensor is available [here]
 This product is ***open source***!
 
 This product is licensed using the [MIT Open Source License](https://opensource.org/license/mit).
+
+## Upgrading to Version 2 from Version 1
+
+Version 2.0+ of this library is not compatible with Version 1.* implementations/use. For Version 2.0, the single class defined by the library, `SfeXM125`, was divided into two distinct classes for schemantic clarity and code simplification.
+
+### Version 2.0 Changes
+
+#### Classes
+
+The device single class was devided into two classes - one for each specific I2C application that the Acconeer XM125 can run. These classes are:
+
+* SparkFunXM125Distance - Used when the XM125 is running the ***Distance*** application
+* SparkFunXM125Presence - Used when the XM125 is running the ***Presence*** application
+
+#### Method Names
+
+Additionally, the method naming pattern for each application was simplified - removing *Distance* and *Presence* from method names.  
+
+### Supporting Version 1.* Implementations
+
+To simplify the transition from an application written using the Version 1.* library, two compatiblity classes are provided:
+
+* SparkFunXM125DistanceV1 - Used when the XM125 is running the ***Distance*** application
+* SparkFunXM125PresenceV1 - Used when the XM125 is running the ***Presence*** application
+
+These classes implement the version 1.*method names for the library, to minimize the porting requirements when upgrading to Version 2.*.
+
+To upgrade to Version 2.0 of the library, perform one of the following:
+
+* If the Acconeer XM125 is running the I2C Distance Application: Rename the device class from `SfeXM125` to `SparkFunXM125DistanceV1`
+* If the Acconeer XM125 is running the I2C Presence Application: Rename the device class from `SfeXM125` to `SparkFunXM125PresenceV1`
+
+Once the class name is changed, your application is ready to use version 2.* of this library.
