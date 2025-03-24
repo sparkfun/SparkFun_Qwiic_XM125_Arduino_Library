@@ -20,7 +20,7 @@ Looking for the board that matches this library - pick up a [SparkFun Pulsed Coh
 
 > [!NOTE]
 >
-> If upgrading from using Version 1.* of this library, some changes are required before moving to Version 2.0+. The detals of this are outlined in the section titled [Upgrading to Version 2 from Version 1](#upgrading-to-version-2-from-version-1) later in this document.
+> If upgrading from **Version 1** of this library, some changes are required before moving to **Version 2.0+**. The detals of this are outlined in the section titled [Upgrading to Version 2 from Version 1](#upgrading-to-version-2-from-version-1) later in this document.
 
 ## Functionality
 
