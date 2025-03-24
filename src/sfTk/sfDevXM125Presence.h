@@ -249,18 +249,18 @@ class sfDevXM125Presence : public sfDevXM125Core
     /// @param start Start value for presence sensing in mm  - default value is 1000
     /// @param end End value for presence sensing in mm - default value is 5000
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t presenceDetectorStart(uint32_t start = 1000, uint32_t end = 5000);
+    sfTkError_t detectorStart(uint32_t start = 1000, uint32_t end = 5000);
 
     /// @brief This function returns the presence value of the register
     ///  with all the checks in place as per the I2C Datasheet.
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getPresenceDistanceValuemm(uint32_t &presenceVal);
+    sfTkError_t getDistanceValuemm(uint32_t &presenceVal);
 
     /// @brief This function returns the RSS version number
     /// @param version Version number
     /// @param patch Patch version number
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getPresenceDetectorVersion(uint32_t &major, uint32_t &minor, uint32_t &patch);
+    sfTkError_t getDetectorVersion(uint32_t &major, uint32_t &minor, uint32_t &patch);
 
     /// @brief This function returns the protocol state erorr
     /// @param state Error code for device
@@ -270,79 +270,79 @@ class sfDevXM125Presence : public sfDevXM125Core
     ///   3 = Write failed
     ///   4 = Write to read only
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getPresenceDetectorError(uint32_t &error);
+    sfTkError_t getDetectorError(uint32_t &error);
 
     /// @brief This function returns the measure counter; the number of
     ///  measurements performed since restart.
     /// @param counter number of measurements
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getPresenceMeasureCounter(uint32_t &counter);
+    sfTkError_t getMeasureCounter(uint32_t &counter);
 
     /// @brief This function returns the detector status flags. See page 17, section
     ///   6.2.4 Detector Status
     /// @param status Status detector flag
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getPresenceDetectorStatus(uint32_t &status);
+    sfTkError_t getDetectorStatus(uint32_t &status);
 
     /// @brief This function returns the error status according to the bit
     ///  mask value for the presence devices errors and busy bit
     /// @param status Error status of device (see function for exact error)
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getPresenceDetectorErrorStatus(uint32_t &status);
+    sfTkError_t getDetectorErrorStatus(uint32_t &status);
 
     /// @brief This function returns if there was presence detected
     /// @param detected Presence Detected
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getPresenceDetectorPresenceDetected(uint32_t &detected);
+    sfTkError_t getDetectorPresenceDetected(uint32_t &detected);
 
     /// @brief This function returns if there was presence detected, sticky bit with
     ///  clear on read.
     /// @param sticky Sticky Presence Detected
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getPresenceDetectorPresenceStickyDetected(uint32_t &sticky);
+    sfTkError_t getDetectorPresenceStickyDetected(uint32_t &sticky);
 
     /// @brief This function returns the indication that the presence detector
     ///  failed.
     /// @param calibrate Indication of sensor calibration
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getPresenceDetectorRegError(uint32_t &error);
+    sfTkError_t getDetectorRegError(uint32_t &error);
 
     /// @brief This function returns the temperature in sensor during measurement (in
     ///   degree Celsius). Note that it has poor absolute accuracy and should only
     ///   be used for relative temperature measurements.
     /// @param temp Relative temperature
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getPresenceTemperature(uint32_t &temp);
+    sfTkError_t getTemperature(uint32_t &temp);
 
     /// @brief This function returns the distance, in millimeters, for the detected
     ///  presence.
     /// @param distance distance in mm
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getPresenceDistance(uint32_t &distance);
+    sfTkError_t getDistance(uint32_t &distance);
 
     /// @brief This function returns the measure of amount of fast motion detected.
     /// @param intra Measure of fast motion
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getPresenceIntraPresenceScore(uint32_t &intra);
+    sfTkError_t getIntraPresenceScore(uint32_t &intra);
 
     /// @brief This function returns the measure of amount of slow motion detected.
     /// @param inter Measure of slow motion
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getPresenceInterPresenceScore(uint32_t &inter);
+    sfTkError_t getInterPresenceScore(uint32_t &inter);
 
     /// @brief This function returns the number of sweeps that will be
     ///   captured in each frame (measurement).
     ///   Default Value: 16 seconds
     /// @param sweeps Number of sweeps
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getPresenceSweepsPerFrame(uint32_t &sweeps);
+    sfTkError_t getSweepsPerFrame(uint32_t &sweeps);
 
     /// @brief This function sets the number of sweeps that will be
     ///   captured in each frame (measurement).
     ///   Default Value: 16 seconds
     /// @param sweeps Number of sweeps
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setPresenceSweepsPerFrame(uint32_t sweeps);
+    sfTkError_t setSweepsPerFrame(uint32_t sweeps);
 
     /// @brief Returns the number of seconds the inter-frame presence score needs to decrease before
     ///  exponential scaling starts for faster decline. Should be between 0 and 30 where 0
@@ -350,7 +350,7 @@ class sfDevXM125Presence : public sfDevXM125Core
     ///   Default Value: 3 seconds
     /// @param time Number of seconds
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getPresenceInterFramePresenceTimeout(uint32_t &time);
+    sfTkError_t getInterFramePresenceTimeout(uint32_t &time);
 
     /// @brief Sets the number of seconds the inter-frame presence score needs to decrease before
     ///  exponential scaling starts for faster decline. Should be between 0 and 30 where 0
@@ -358,49 +358,49 @@ class sfDevXM125Presence : public sfDevXM125Core
     ///   Default Value: 3 seconds
     /// @param time Number of seconds
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setPresenceInterFramePresenceTimeout(uint32_t time);
+    sfTkError_t setInterFramePresenceTimeout(uint32_t time);
 
     /// @brief This function returns the enable to increase detection of slow
     ///  motions by utilizing the phase information in the Sparse IQ data
     /// @param en Enables increased detection
     ///   Default Value: false
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getPresenceInterPhaseBoostEnabled(bool &en);
+    sfTkError_t getInterPhaseBoostEnabled(bool &en);
 
     /// @brief This function sets the enable to increase detection of slow
     ///  motions by utilizing the phase information in the Sparse IQ data
     /// @param en Enables increased detection
     ///   Default Value: false
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setPresenceInterPhaseBoostEnabled(bool en);
+    sfTkError_t setInterPhaseBoostEnabled(bool en);
 
     /// @brief This function returns the bit to enable to detect faster
     ///  movements inside frames.
     ///   Default Value: true
     /// @param en Enables faster detection
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getPresenceIntraDetectionEnabled(bool &en);
+    sfTkError_t getIntraDetectionEnabled(bool &en);
 
     /// @brief This function returns the bit to enable to detect slower
     ///  movements between frames.
     ///   Default Value: true
     /// @param en Enables faster detection
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setPresenceInterDetectionEnabled(bool en);
+    sfTkError_t setInterDetectionEnabled(bool en);
 
     /// @brief This function returns the presence detector frame rate.
     ///  Note: This value is a factor 1000 larger than the RSS value
     ///   Default Value: 12000 mHz
     /// @param rate Frame rate, in mHz
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getPresenceFrameRate(uint32_t &rate);
+    sfTkError_t getFrameRate(uint32_t &rate);
 
     /// @brief This function sets the presence detector frame rate.
     ///  Note: This value is a factor 1000 larger than the RSS value
     ///   Default Value: 12000 mHz
     /// @param rate Frame rate, in mHz
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setPresenceFrameRate(uint32_t rate);
+    sfTkError_t setFrameRate(uint32_t rate);
 
     /// @brief This function returns the threshold for detecting faster
     ///  movements inside frames.
@@ -408,7 +408,7 @@ class sfDevXM125Presence : public sfDevXM125Core
     ///   Default Value: 1300
     /// @param thresh threshold for faster movements
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getPresenceIntraDetectionThreshold(uint32_t &thresh);
+    sfTkError_t getIntraDetectionThreshold(uint32_t &thresh);
 
     /// @brief This function sets the threshold for detecting faster
     ///  movements inside frames.
@@ -416,7 +416,7 @@ class sfDevXM125Presence : public sfDevXM125Core
     ///   Default Value: 1300
     /// @param thresh threshold for faster movements
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setPresenceIntraDetectionThreshold(uint32_t thresh);
+    sfTkError_t setIntraDetectionThreshold(uint32_t thresh);
 
     /// @brief This function returns the threshold for detecting slower
     ///  movements inside frames.
@@ -424,7 +424,7 @@ class sfDevXM125Presence : public sfDevXM125Core
     ///   Default Value: 1000
     /// @param thresh threshold for faster movements
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getPresenceInterDetectionThreshold(uint32_t &thresh);
+    sfTkError_t getInterDetectionThreshold(uint32_t &thresh);
 
     /// @brief This function sets the threshold for detecting slower
     ///  movements inside frames.
@@ -432,7 +432,7 @@ class sfDevXM125Presence : public sfDevXM125Core
     ///   Default Value: 1000
     /// @param thresh threshold for faster movements
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setPresenceInterDetectionThreshold(uint32_t thresh);
+    sfTkError_t setInterDetectionThreshold(uint32_t thresh);
 
     /// @brief This function returns the time constant of the low pass
     ///  filter for the inter-frame deviation between fast and slow.
@@ -440,7 +440,7 @@ class sfDevXM125Presence : public sfDevXM125Core
     ///   Default Value: 500 ms
     /// @param time time in ms
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getPresenceInterFrameDeviationTime(uint32_t &time);
+    sfTkError_t getInterFrameDeviationTime(uint32_t &time);
 
     /// @brief This function sets the time constant of the low pass
     ///  filter for the inter-frame deviation between fast and slow.
@@ -448,7 +448,7 @@ class sfDevXM125Presence : public sfDevXM125Core
     ///   Default Value: 500 ms
     /// @param time time in ms
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setPresenceInterFrameDeviationTime(uint32_t time);
+    sfTkError_t setInterFrameDeviationTime(uint32_t time);
 
     /// @brief This function returns the cutoff frequency of the low pass
     ///  filter for the fast filtered absolute sweep mean.
@@ -456,7 +456,7 @@ class sfDevXM125Presence : public sfDevXM125Core
     ///   Default Value: 6000 mHz
     /// @param cut cutoff frequency in mHz
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getPresenceInterFrameFastCutoff(uint32_t &cut);
+    sfTkError_t getInterFrameFastCutoff(uint32_t &cut);
 
     /// @brief This function sets the cutoff frequency of the low pass
     ///  filter for the fast filtered absolute sweep mean.
@@ -464,7 +464,7 @@ class sfDevXM125Presence : public sfDevXM125Core
     ///   Default Value: 6000 mHz
     /// @param cut cutoff frequency in mHz
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setPresenceInterFrameFastCutoff(uint32_t cut);
+    sfTkError_t setInterFrameFastCutoff(uint32_t cut);
 
     /// @brief This function returns the cutoff frequency of the low pass
     ///  filter for the slow filtered absolute sweep mean.
@@ -472,7 +472,7 @@ class sfDevXM125Presence : public sfDevXM125Core
     ///   Default Value: 200 mHz
     /// @param cut cutoff frequency in mHz
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getPresenceInterFrameSlowCutoff(uint32_t &cut);
+    sfTkError_t getInterFrameSlowCutoff(uint32_t &cut);
 
     /// @brief This function sets the cutoff frequency of the low pass
     ///  filter for the slow filtered absolute sweep mean.
@@ -480,7 +480,7 @@ class sfDevXM125Presence : public sfDevXM125Core
     ///   Default Value: 200 mHz
     /// @param cut cutoff frequency in mHz
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setPresenceInterFrameSlowCutoff(uint32_t cut);
+    sfTkError_t setInterFrameSlowCutoff(uint32_t cut);
 
     /// @brief This functions returns time constant for the depthwise
     ///  filtering in the intra-frame part
@@ -488,7 +488,7 @@ class sfDevXM125Presence : public sfDevXM125Core
     ///   Default Value: 150ms
     /// @param time time const in ms
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getPresenceIntraFrameTimeConst(uint32_t &time);
+    sfTkError_t getIntraFrameTimeConst(uint32_t &time);
 
     /// @brief This functions sets time constant for the depthwise
     ///  filtering in the intra-frame part
@@ -496,7 +496,7 @@ class sfDevXM125Presence : public sfDevXM125Core
     ///   Default Value: 150ms
     /// @param time time const in ms
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setPresenceIntraFrameTimeConst(uint32_t time);
+    sfTkError_t setIntraFrameTimeConst(uint32_t time);
 
     /// @brief This function returns time constant for the output in
     ///  the intra-frame part
@@ -504,7 +504,7 @@ class sfDevXM125Presence : public sfDevXM125Core
     ///   Default Value: 300ms
     /// @param time time const in ms
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getPresenceIntraOutputTimeConst(uint32_t &time);
+    sfTkError_t getIntraOutputTimeConst(uint32_t &time);
 
     /// @brief This function sets the time constant for the output in
     ///  the intra-frame part
@@ -512,7 +512,7 @@ class sfDevXM125Presence : public sfDevXM125Core
     ///   Default Value: 300ms
     /// @param time time const in ms
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setPresenceIntraOutputTimeConst(uint32_t time);
+    sfTkError_t setIntraOutputTimeConst(uint32_t time);
 
     /// @brief This function returns time constant for the output in
     ///  the inter-frame part
@@ -520,7 +520,7 @@ class sfDevXM125Presence : public sfDevXM125Core
     ///   Default Value: 2000ms
     /// @param time time const in ms
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getPresenceInterOutputTimeConst(uint32_t &time);
+    sfTkError_t getInterOutputTimeConst(uint32_t &time);
 
     /// @brief This function sets the time constant for the output in
     ///  the inter-frame part
@@ -528,45 +528,45 @@ class sfDevXM125Presence : public sfDevXM125Core
     ///   Default Value: 2000ms
     /// @param time time const in ms
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setPresenceInterOutputTimeConst(uint32_t time);
+    sfTkError_t setInterOutputTimeConst(uint32_t time);
 
     /// @brief This function returns if enable/disable for the automatic
     ///  selection of profile based on start point of measurement.
     ///   Default Value: true
     /// @param en enable/disable selection
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getPresenceAutoProfileEn(bool &en);
+    sfTkError_t getAutoProfileEn(bool &en);
 
     /// @brief This function enables/disables the automatic selection
     ///  of profile based on start point of measurement.
     ///   Default Value: true
     /// @param en enable/disable selection
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setPresenceAutoProfileEn(bool en);
+    sfTkError_t setAutoProfileEn(bool en);
 
     /// @brief This function returns the Enable/Disable
     ///  automatic selection of step length based on the profile.
     /// @param en Enable/disable selection
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getPresenceAutoStepLengthEn(bool &en);
+    sfTkError_t getAutoStepLengthEn(bool &en);
 
     /// @brief This function Enables/Disables automatic selection
     ///  of step length based on the profile.
     /// @param en Enable/disable selection
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setPresenceAutoStepLengthEn(bool en);
+    sfTkError_t setAutoStepLengthEn(bool en);
 
     /// @brief This function returns the profile in use. The profile will only
     ///  be used if profile auto selection was disabled.
     /// @param prof Profile to use (enum)
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getPresenceManualProfile(uint32_t &prof);
+    sfTkError_t getManualProfile(uint32_t &prof);
 
     /// @brief This function sets the profile to use. The profile will only
     ///  be used if profile auto selection was disabled.
     /// @param prof Profile to use (enum)
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setPresenceManualProfile(uint32_t prof);
+    sfTkError_t setManualProfile(uint32_t prof);
 
     /// @brief THis function returns the number of steps between each data point.
     ///  NOTE: The manual step length will only be used if step length auto selection
@@ -574,7 +574,7 @@ class sfDevXM125Presence : public sfDevXM125Core
     ///   Default Value: 72
     /// @param length number of steps
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getPresenceManualStepLength(uint32_t &length);
+    sfTkError_t getManualStepLength(uint32_t &length);
 
     /// @brief THis function returns the number of steps between each data point.
     ///  NOTE: The manual step length will only be used if step length auto selection
@@ -582,21 +582,21 @@ class sfDevXM125Presence : public sfDevXM125Core
     ///   Default Value: 72
     /// @param length number of steps
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setPresenceManualStepLength(uint32_t length);
+    sfTkError_t setManualStepLength(uint32_t length);
 
     /// @brief This function returns the start of measured interval in mm.
     ///  Note: This value is a factor 1000 larger than the RSS value
     ///  Default Value: 300mm
     /// @param start measured start interval in mm
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getPresenceStart(uint32_t &start);
+    sfTkError_t getStart(uint32_t &start);
 
     /// @brief This function sets the start of measured interval in mm.
     ///  Note: This value is a factor 1000 larger than the RSS value
     ///  Default Value: 300mm
     /// @param start measured start interval in mm
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setPresenceStart(uint32_t start);
+    sfTkError_t setStart(uint32_t start);
 
     /// @brief This function returns the end point of measurement
     ///  interval in millimeters.
@@ -604,7 +604,7 @@ class sfDevXM125Presence : public sfDevXM125Core
     ///   Default Value: 2500
     /// @param end End point of measurement in mm
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getPresenceEnd(uint32_t &end);
+    sfTkError_t getEnd(uint32_t &end);
 
     /// @brief This function returns the end point of measurement
     ///  interval in millimeters.
@@ -612,96 +612,96 @@ class sfDevXM125Presence : public sfDevXM125Core
     ///   Default Value: 2500
     /// @param end End point of measurement in mm
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setPresenceEnd(uint32_t end);
+    sfTkError_t setEnd(uint32_t end);
 
     /// @brief This function returns if the device is enabled/disabled
     ///  for the reset of the presence filters during start/restart.
     ///   Default Value: true
     /// @param reset enabled/disabled
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getPresenceResetFilters(bool &reset);
+    sfTkError_t getResetFilters(bool &reset);
 
     /// @brief This function sets if the device is enabled/disabled
     ///  for the reset of the presence filters during start/restart .
     ///   Default Value: true
     /// @param reset enabled/disabled
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setPresenceResetFilters(bool reset);
+    sfTkError_t setResetFilters(bool reset);
 
     /// @brief This function returns the hardware accelerated average
     ///  sampled (HWAAS).
     ///   Default Value: 32
     /// @param avg average samples
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getPresenceHWAAS(uint32_t &avg);
+    sfTkError_t getHWAAS(uint32_t &avg);
 
     /// @brief This function sets the hardware accelerated average
     ///  sampled (HWAAS).
     ///   Default Value: 32
     /// @param avg average samples
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setPresenceHWAAS(uint32_t avg);
+    sfTkError_t setHWAAS(uint32_t avg);
 
     /// @brief This function returns the output presence detection on
     ///  generic GPIO.
     /// @param detected Output presence detected
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getPresenceDetectionOnGPIO(uint32_t &detected);
+    sfTkError_t getDetectionOnGPIO(uint32_t &detected);
 
     /// @brief This function returns the output presence detection on
     ///  generic GPIO.
     /// @param detected Output presence detected
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setPresenceDetectionOnGPIO(uint32_t detected);
+    sfTkError_t setDetectionOnGPIO(uint32_t detected);
 
     /// @brief This function sets the execute command
     /// @param cmd command to send to device
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t setPresenceCommand(uint32_t cmd);
+    sfTkError_t setCommand(uint32_t cmd);
 
     /// @brief This function applies the configuration to the device by
     ///  writing the defined value to the presence command register
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t presenceApplyConfiguration();
+    sfTkError_t applyConfiguration();
 
     /// @brief This function starts the device by writing the defined
     ///  start value to the presence command register
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t presenceStart();
+    sfTkError_t start();
 
     /// @brief This function stops the device by writing the defined
     ///  stop value to the presence command register
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t presenceStop();
+    sfTkError_t stop();
 
     /// @brief This function enables the uart logs of the device by
     ///  writing the defined value to the presence command register
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t presenceEnableUartLogs();
+    sfTkError_t enableUartLogs();
 
     /// @brief This function disables the uart logs of the device by
     ///  writing the defined value to the presence command register
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t presenceDisableUartLogs();
+    sfTkError_t disableUartLogs();
 
     /// @brief This function enables the configuration log of the device
     ///  by writing the defined value to the presence command register
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t presenceLogConfiguration();
+    sfTkError_t logConfiguration();
 
     /// @brief This function resets the presence detector settings
     ///  of the device
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t presenceReset();
+    sfTkError_t reset();
 
     /// @brief This function returns the busy bit of the presence status register
     /// @param busy Device busy or not
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t getPresenceBusy(uint32_t &busy);
+    sfTkError_t getBusy(uint32_t &busy);
 
     /// @brief Completes a busy wait loop while the device is uploading
     ///  information by waiting for the status. Checks the error status register
     ///  to wait until errors are completed/gone
     /// @return ksfTkErrOk on success, or error code (value < -1)
-    sfTkError_t presenceBusyWait();
+    sfTkError_t busyWait();
 };
