@@ -30,7 +30,7 @@ sfTkError_t sfDevXM125Distance::begin(sfTkII2C *theBus)
 
     // Check errors from device application
     uint32_t distanceError = 0;
-    retVal = getDistanceDetectorError(distanceError);
+    retVal = getDetectorError(distanceError);
     if (retVal != ksfTkErrOk)
         return retVal;
 
@@ -41,19 +41,19 @@ sfTkError_t sfDevXM125Distance::begin(sfTkII2C *theBus)
     return ksfTkErrOk;
 }
 //------------------------------------------------------------------
-int32_t sfDevXM125Distance::distanceBegin(uint32_t startRange, uint32_t endRange)
+int32_t sfDevXM125Distance::distanceSetup(uint32_t startRange, uint32_t endRange)
 {
     uint32_t errorStatus = 0;
 
     // *** Distance Sensor Setup ***
     // Reset sensor configuration to reapply configuration registers
-    setDistanceCommand(SFE_XM125_DISTANCE_RESET_MODULE);
+    setCommand(SFE_XM125_DISTANCE_RESET_MODULE);
     sftk_delay_ms(100);
 
-    distanceBusyWait();
+    busyWait();
 
     // Check error and busy bits
-    if (getDistanceDetectorErrorStatus(errorStatus) != 0)
+    if (getDetectorErrorStatus(errorStatus) != 0)
     {
         return 1;
     }
@@ -64,24 +64,24 @@ int32_t sfDevXM125Distance::distanceBegin(uint32_t startRange, uint32_t endRange
     }
 
     // Set Start register
-    if (setDistanceStart(startRange) != 0)
+    if (setStart(startRange) != 0)
     {
         return 3;
     }
     sftk_delay_ms(100); // give time for command to set
 
     // Set End register
-    if (setDistanceEnd(endRange) != 0)
+    if (setEnd(endRange) != 0)
     {
         return 4;
     }
     sftk_delay_ms(100); // give time for command to set
 
     // Apply configuration and calibrate.
-    if (setDistanceCommand(SFE_XM125_DISTANCE_APPLY_CONFIGURATION) != 0)
+    if (setCommand(SFE_XM125_DISTANCE_APPLY_CONFIGURATION) != 0)
     {
         // Check for errors
-        getDistanceDetectorErrorStatus(errorStatus);
+        getDetectorErrorStatus(errorStatus);
         if (errorStatus != 0)
         {
             return 5;
@@ -91,13 +91,13 @@ int32_t sfDevXM125Distance::distanceBegin(uint32_t startRange, uint32_t endRange
     }
 
     // Poll detector status until busy bit is cleared
-    if (distanceBusyWait() != 0)
+    if (busyWait() != 0)
     {
         return 7;
     }
 
     // Check detector status
-    getDistanceDetectorErrorStatus(errorStatus);
+    getDetectorErrorStatus(errorStatus);
     if (errorStatus != 0)
     {
         return 7;
@@ -108,34 +108,34 @@ int32_t sfDevXM125Distance::distanceBegin(uint32_t startRange, uint32_t endRange
 }
 
 //--------------------------------------------------------------------------------
-int32_t sfDevXM125Distance::distanceDetectorReadingSetup()
+int32_t sfDevXM125Distance::detectorReadingSetup()
 {
     uint32_t errorStatus = 0;
     uint32_t calibrateNeeded = 0;
     uint32_t measDistErr = 0;
 
     // Check error bits
-    getDistanceDetectorErrorStatus(errorStatus);
+    getDetectorErrorStatus(errorStatus);
     if (errorStatus != 0)
     {
         return 1;
     }
 
     // Start detector
-    if (setDistanceCommand(SFE_XM125_DISTANCE_START_DETECTOR) != 0)
+    if (setCommand(SFE_XM125_DISTANCE_START_DETECTOR) != 0)
     {
         return 2;
     }
     sftk_delay_ms(100); // give time for command to set
 
     // Poll detector status until busy bit is cleared - CHECK ON THIS!
-    if (distanceBusyWait() != 0)
+    if (busyWait() != 0)
     {
         return 3;
     }
 
     // Verify that no error bits are set in the detector status register
-    getDistanceDetectorErrorStatus(errorStatus);
+    getDetectorErrorStatus(errorStatus);
     if (errorStatus != 0)
     {
         return 4;
@@ -143,7 +143,7 @@ int32_t sfDevXM125Distance::distanceDetectorReadingSetup()
     sftk_delay_ms(100);
 
     // Check MEASURE_DISTANCE_ERROR for measurement failed
-    getDistanceMeasureDistanceError(measDistErr);
+    getMeasureDistanceError(measDistErr);
     if (measDistErr == 1)
     {
         return 5;
@@ -151,10 +151,10 @@ int32_t sfDevXM125Distance::distanceDetectorReadingSetup()
     sftk_delay_ms(100);
 
     // Recalibrate device if calibration error is triggered
-    getDistanceCalibrationNeeded(calibrateNeeded);
+    getCalibrationNeeded(calibrateNeeded);
     if (calibrateNeeded == 1)
     {
-        setDistanceCommand(SFE_XM125_DISTANCE_RECALIBRATE);
+        setCommand(SFE_XM125_DISTANCE_RECALIBRATE);
         return 6;
     }
     sftk_delay_ms(100);
@@ -163,7 +163,7 @@ int32_t sfDevXM125Distance::distanceDetectorReadingSetup()
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistanceDetectorVersion(uint32_t &major, uint32_t &minor, uint32_t &patch)
+sfTkError_t sfDevXM125Distance::getDetectorVersion(uint32_t &major, uint32_t &minor, uint32_t &patch)
 {
     sfTkError_t retVal;
     uint32_t regVal = 0;
@@ -180,13 +180,13 @@ sfTkError_t sfDevXM125Distance::getDistanceDetectorVersion(uint32_t &major, uint
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistanceDetectorError(uint32_t &error)
+sfTkError_t sfDevXM125Distance::getDetectorError(uint32_t &error)
 {
     return _theBus->readRegister(SFE_XM125_DISTANCE_PROTOCOL_STATUS, error);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistanceDetectorErrorStatus(uint32_t &status)
+sfTkError_t sfDevXM125Distance::getDetectorErrorStatus(uint32_t &status)
 {
     sfTkError_t retVal;
     uint32_t regVal = 0;
@@ -243,19 +243,19 @@ sfTkError_t sfDevXM125Distance::getDistanceDetectorErrorStatus(uint32_t &status)
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistanceMeasureCounter(uint32_t &counter)
+sfTkError_t sfDevXM125Distance::getMeasureCounter(uint32_t &counter)
 {
     return _theBus->readRegister(SFE_XM125_DISTANCE_MEASURE_COUNTER, counter);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistanceDetectorStatus(uint32_t &status)
+sfTkError_t sfDevXM125Distance::getDetectorStatus(uint32_t &status)
 {
     return _theBus->readRegister(SFE_XM125_DISTANCE_DETECTOR_STATUS, status);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistanceNumberDistances(uint32_t &distance)
+sfTkError_t sfDevXM125Distance::getNumberDistances(uint32_t &distance)
 {
     sfTkError_t retVal;
     uint32_t regVal = 0;
@@ -270,7 +270,7 @@ sfTkError_t sfDevXM125Distance::getDistanceNumberDistances(uint32_t &distance)
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistanceNearStartEdge(uint32_t &edge)
+sfTkError_t sfDevXM125Distance::getNearStartEdge(uint32_t &edge)
 {
     sfTkError_t retVal;
     uint32_t regVal = 0;
@@ -287,7 +287,7 @@ sfTkError_t sfDevXM125Distance::getDistanceNearStartEdge(uint32_t &edge)
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistanceCalibrationNeeded(uint32_t &calibrate)
+sfTkError_t sfDevXM125Distance::getCalibrationNeeded(uint32_t &calibrate)
 {
     sfTkError_t retVal;
     uint32_t regVal = 0;
@@ -305,7 +305,7 @@ sfTkError_t sfDevXM125Distance::getDistanceCalibrationNeeded(uint32_t &calibrate
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistanceMeasureDistanceError(uint32_t &error)
+sfTkError_t sfDevXM125Distance::getMeasureDistanceError(uint32_t &error)
 {
     sfTkError_t retVal;
     uint32_t regVal = 0;
@@ -323,7 +323,7 @@ sfTkError_t sfDevXM125Distance::getDistanceMeasureDistanceError(uint32_t &error)
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistanceTemperature(int16_t &temperature)
+sfTkError_t sfDevXM125Distance::getTemperature(int16_t &temperature)
 {
     sfTkError_t retVal;
     uint32_t regVal = 0;
@@ -342,41 +342,41 @@ sfTkError_t sfDevXM125Distance::getDistanceTemperature(int16_t &temperature)
 
 //--------------------------------------------------------------------------------
 // Generic distance peak distance method
-sfTkError_t sfDevXM125Distance::getDistancePeakDistance(uint8_t num, uint32_t &peak)
+sfTkError_t sfDevXM125Distance::getPeakDistance(uint8_t num, uint32_t &peak)
 {
 
     switch (num)
     {
     case 0:
-        return getDistancePeak0Distance(peak);
+        return getPeak0Distance(peak);
         break;
 
     case 1:
-        return getDistancePeak1Distance(peak);
+        return getPeak1Distance(peak);
         break;
     case 2:
-        return getDistancePeak2Distance(peak);
+        return getPeak2Distance(peak);
         break;
     case 3:
-        return getDistancePeak3Distance(peak);
+        return getPeak3Distance(peak);
         break;
     case 4:
-        return getDistancePeak4Distance(peak);
+        return getPeak4Distance(peak);
         break;
     case 5:
-        return getDistancePeak5Distance(peak);
+        return getPeak5Distance(peak);
         break;
     case 6:
-        return getDistancePeak6Distance(peak);
+        return getPeak6Distance(peak);
         break;
     case 7:
-        return getDistancePeak7Distance(peak);
+        return getPeak7Distance(peak);
         break;
     case 8:
-        return getDistancePeak8Distance(peak);
+        return getPeak8Distance(peak);
         break;
     case 9:
-        return getDistancePeak9Distance(peak);
+        return getPeak9Distance(peak);
         break;
     default:
         return ksfTkErrFail;
@@ -384,101 +384,101 @@ sfTkError_t sfDevXM125Distance::getDistancePeakDistance(uint8_t num, uint32_t &p
     }
 }
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistancePeak0Distance(uint32_t &peak)
+sfTkError_t sfDevXM125Distance::getPeak0Distance(uint32_t &peak)
 {
     return _theBus->readRegister(SFE_XM125_DISTANCE_PEAK0_DISTANCE, peak);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistancePeak1Distance(uint32_t &peak)
+sfTkError_t sfDevXM125Distance::getPeak1Distance(uint32_t &peak)
 {
     return _theBus->readRegister(SFE_XM125_DISTANCE_PEAK1_DISTANCE, peak);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistancePeak2Distance(uint32_t &peak)
+sfTkError_t sfDevXM125Distance::getPeak2Distance(uint32_t &peak)
 {
     return _theBus->readRegister(SFE_XM125_DISTANCE_PEAK2_DISTANCE, peak);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistancePeak3Distance(uint32_t &peak)
+sfTkError_t sfDevXM125Distance::getPeak3Distance(uint32_t &peak)
 {
     return _theBus->readRegister(SFE_XM125_DISTANCE_PEAK3_DISTANCE, peak);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistancePeak4Distance(uint32_t &peak)
+sfTkError_t sfDevXM125Distance::getPeak4Distance(uint32_t &peak)
 {
     return _theBus->readRegister(SFE_XM125_DISTANCE_PEAK4_DISTANCE, peak);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistancePeak5Distance(uint32_t &peak)
+sfTkError_t sfDevXM125Distance::getPeak5Distance(uint32_t &peak)
 {
     return _theBus->readRegister(SFE_XM125_DISTANCE_PEAK5_DISTANCE, peak);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistancePeak6Distance(uint32_t &peak)
+sfTkError_t sfDevXM125Distance::getPeak6Distance(uint32_t &peak)
 {
     return _theBus->readRegister(SFE_XM125_DISTANCE_PEAK6_DISTANCE, peak);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistancePeak7Distance(uint32_t &peak)
+sfTkError_t sfDevXM125Distance::getPeak7Distance(uint32_t &peak)
 {
     return _theBus->readRegister(SFE_XM125_DISTANCE_PEAK7_DISTANCE, peak);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistancePeak8Distance(uint32_t &peak)
+sfTkError_t sfDevXM125Distance::getPeak8Distance(uint32_t &peak)
 {
     return _theBus->readRegister(SFE_XM125_DISTANCE_PEAK8_DISTANCE, peak);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistancePeak9Distance(uint32_t &peak)
+sfTkError_t sfDevXM125Distance::getPeak9Distance(uint32_t &peak)
 {
     return _theBus->readRegister(SFE_XM125_DISTANCE_PEAK9_DISTANCE, peak);
 }
 //--------------------------------------------------------------------------------
 // Generic distance peak strength method
-sfTkError_t sfDevXM125Distance::getDistancePeakStrength(uint8_t num, int32_t &peak)
+sfTkError_t sfDevXM125Distance::getPeakStrength(uint8_t num, int32_t &peak)
 {
 
     switch (num)
     {
     case 0:
-        return getDistancePeak0Strength(peak);
+        return getPeak0Strength(peak);
         break;
 
     case 1:
-        return getDistancePeak1Strength(peak);
+        return getPeak1Strength(peak);
         break;
     case 2:
-        return getDistancePeak2Strength(peak);
+        return getPeak2Strength(peak);
         break;
     case 3:
-        return getDistancePeak3Strength(peak);
+        return getPeak3Strength(peak);
         break;
     case 4:
-        return getDistancePeak4Strength(peak);
+        return getPeak4Strength(peak);
         break;
     case 5:
-        return getDistancePeak5Strength(peak);
+        return getPeak5Strength(peak);
         break;
     case 6:
-        return getDistancePeak6Strength(peak);
+        return getPeak6Strength(peak);
         break;
     case 7:
-        return getDistancePeak7Strength(peak);
+        return getPeak7Strength(peak);
         break;
     case 8:
-        return getDistancePeak8Strength(peak);
+        return getPeak8Strength(peak);
         break;
     case 9:
-        return getDistancePeak9Strength(peak);
+        return getPeak9Strength(peak);
         break;
     default:
         return ksfTkErrFail;
@@ -486,103 +486,103 @@ sfTkError_t sfDevXM125Distance::getDistancePeakStrength(uint8_t num, int32_t &pe
     }
 }
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistancePeak0Strength(int32_t &peak)
+sfTkError_t sfDevXM125Distance::getPeak0Strength(int32_t &peak)
 {
     return _theBus->readRegister(SFE_XM125_DISTANCE_PEAK0_STRENGTH, *((uint32_t *)&peak));
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistancePeak1Strength(int32_t &peak)
+sfTkError_t sfDevXM125Distance::getPeak1Strength(int32_t &peak)
 {
     return _theBus->readRegister(SFE_XM125_DISTANCE_PEAK1_STRENGTH, *((uint32_t *)&peak));
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistancePeak2Strength(int32_t &peak)
+sfTkError_t sfDevXM125Distance::getPeak2Strength(int32_t &peak)
 {
     return _theBus->readRegister(SFE_XM125_DISTANCE_PEAK2_STRENGTH, *((uint32_t *)&peak));
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistancePeak3Strength(int32_t &peak)
+sfTkError_t sfDevXM125Distance::getPeak3Strength(int32_t &peak)
 {
     return _theBus->readRegister(SFE_XM125_DISTANCE_PEAK3_STRENGTH, *((uint32_t *)&peak));
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistancePeak4Strength(int32_t &peak)
+sfTkError_t sfDevXM125Distance::getPeak4Strength(int32_t &peak)
 {
     return _theBus->readRegister(SFE_XM125_DISTANCE_PEAK4_STRENGTH, *((uint32_t *)&peak));
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistancePeak5Strength(int32_t &peak)
+sfTkError_t sfDevXM125Distance::getPeak5Strength(int32_t &peak)
 {
     return _theBus->readRegister(SFE_XM125_DISTANCE_PEAK5_STRENGTH, *((uint32_t *)&peak));
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistancePeak6Strength(int32_t &peak)
+sfTkError_t sfDevXM125Distance::getPeak6Strength(int32_t &peak)
 {
     return _theBus->readRegister(SFE_XM125_DISTANCE_PEAK6_STRENGTH, *((uint32_t *)&peak));
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistancePeak7Strength(int32_t &peak)
+sfTkError_t sfDevXM125Distance::getPeak7Strength(int32_t &peak)
 {
     return _theBus->readRegister(SFE_XM125_DISTANCE_PEAK7_STRENGTH, *((uint32_t *)&peak));
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistancePeak8Strength(int32_t &peak)
+sfTkError_t sfDevXM125Distance::getPeak8Strength(int32_t &peak)
 {
     return _theBus->readRegister(SFE_XM125_DISTANCE_PEAK8_STRENGTH, *((uint32_t *)&peak));
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistancePeak9Strength(int32_t &peak)
+sfTkError_t sfDevXM125Distance::getPeak9Strength(int32_t &peak)
 {
     return _theBus->readRegister(SFE_XM125_DISTANCE_PEAK9_STRENGTH, *((uint32_t *)&peak));
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistanceStart(uint32_t &startVal)
+sfTkError_t sfDevXM125Distance::getStart(uint32_t &startVal)
 {
     return _theBus->readRegister(SFE_XM125_DISTANCE_START, startVal);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::setDistanceStart(uint32_t start)
+sfTkError_t sfDevXM125Distance::setStart(uint32_t start)
 {
     return _theBus->writeRegister(SFE_XM125_DISTANCE_START, start);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistanceEnd(uint32_t &end)
+sfTkError_t sfDevXM125Distance::getEnd(uint32_t &end)
 {
     return _theBus->readRegister(SFE_XM125_DISTANCE_END, end);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::setDistanceEnd(uint32_t end)
+sfTkError_t sfDevXM125Distance::setEnd(uint32_t end)
 {
     return _theBus->writeRegister(SFE_XM125_DISTANCE_END, end);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistanceMaxStepLength(uint32_t &length)
+sfTkError_t sfDevXM125Distance::getMaxStepLength(uint32_t &length)
 {
     return _theBus->readRegister(SFE_XM125_DISTANCE_MAX_STEP_LENGTH, length);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::setDistanceMaxStepLength(uint32_t length)
+sfTkError_t sfDevXM125Distance::setMaxStepLength(uint32_t length)
 {
     return _theBus->writeRegister(SFE_XM125_DISTANCE_MAX_STEP_LENGTH, length);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistanceCloseRangeLeakageCancellation(bool &range)
+sfTkError_t sfDevXM125Distance::getCloseRangeLeakageCancellation(bool &range)
 {
     uint8_t readVal = 0;
     sfTkError_t retVal = _theBus->readRegister(SFE_XM125_DISTANCE_CLOSE_RANGE_LEAKAGE, readVal);
@@ -594,122 +594,122 @@ sfTkError_t sfDevXM125Distance::getDistanceCloseRangeLeakageCancellation(bool &r
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::setDistanceCloseRangeLeakageCancellation(bool range)
+sfTkError_t sfDevXM125Distance::setCloseRangeLeakageCancellation(bool range)
 {
     uint8_t value = range ? 1 : 0;
     return _theBus->writeRegister(SFE_XM125_DISTANCE_CLOSE_RANGE_LEAKAGE, value);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistanceSignalQuality(uint32_t &signal)
+sfTkError_t sfDevXM125Distance::getSignalQuality(uint32_t &signal)
 {
     return _theBus->readRegister(SFE_XM125_DISTANCE_SIGNAL_QUALITY, signal);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::setDistanceSignalQuality(uint32_t signal)
+sfTkError_t sfDevXM125Distance::setSignalQuality(uint32_t signal)
 {
     return _theBus->writeRegister(SFE_XM125_DISTANCE_SIGNAL_QUALITY, signal);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistanceMaxProfile(uint32_t &profile)
+sfTkError_t sfDevXM125Distance::getMaxProfile(uint32_t &profile)
 {
     return _theBus->readRegister(SFE_XM125_DISTANCE_MAX_PROFILE, profile);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::setDistanceMaxProfile(uint32_t profile)
+sfTkError_t sfDevXM125Distance::setMaxProfile(uint32_t profile)
 {
     return _theBus->writeRegister(SFE_XM125_DISTANCE_MAX_PROFILE, profile);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistanceThresholdMethod(uint32_t &method)
+sfTkError_t sfDevXM125Distance::getThresholdMethod(uint32_t &method)
 {
     return _theBus->readRegister(SFE_XM125_DISTANCE_THRESHOLD_METHOD, method);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::setDistanceThresholdMethod(uint32_t method)
+sfTkError_t sfDevXM125Distance::setThresholdMethod(uint32_t method)
 {
     return _theBus->writeRegister(SFE_XM125_DISTANCE_THRESHOLD_METHOD, method);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistancePeakSorting(uint32_t &peak)
+sfTkError_t sfDevXM125Distance::getPeakSorting(uint32_t &peak)
 {
     return _theBus->readRegister(SFE_XM125_DISTANCE_PEAK_SORTING, peak);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::setDistancePeakSorting(uint32_t peak)
+sfTkError_t sfDevXM125Distance::setPeakSorting(uint32_t peak)
 {
     return _theBus->writeRegister(SFE_XM125_DISTANCE_PEAK_SORTING, peak);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistanceNumFramesRecordedThreshold(uint32_t &thresh)
+sfTkError_t sfDevXM125Distance::getNumFramesRecordedThreshold(uint32_t &thresh)
 {
     return _theBus->readRegister(SFE_XM125_DISTANCE_NUM_FRAMES_RECORDED_THRESH, thresh);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::setDistanceNumFramesRecordedThreshold(uint32_t thresh)
+sfTkError_t sfDevXM125Distance::setNumFramesRecordedThreshold(uint32_t thresh)
 {
     return _theBus->writeRegister(SFE_XM125_DISTANCE_NUM_FRAMES_RECORDED_THRESH, thresh);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistanceFixedAmpThreshold(uint32_t &thresh)
+sfTkError_t sfDevXM125Distance::getFixedAmpThreshold(uint32_t &thresh)
 {
     return _theBus->readRegister(SFE_XM125_DISTANCE_FIXED_AMPLITUDE_THRESHOLD_VAL, thresh);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::setDistanceFixedAmpThreshold(uint32_t thresh)
+sfTkError_t sfDevXM125Distance::setFixedAmpThreshold(uint32_t thresh)
 {
     return _theBus->writeRegister(SFE_XM125_DISTANCE_FIXED_AMPLITUDE_THRESHOLD_VAL, thresh);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistanceThresholdSensitivity(uint32_t &thresh)
+sfTkError_t sfDevXM125Distance::getThresholdSensitivity(uint32_t &thresh)
 {
     return _theBus->readRegister(SFE_XM125_DISTANCE_THREHSOLD_SENSITIVITY, thresh);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::setDistanceThresholdSensitivity(uint32_t thresh)
+sfTkError_t sfDevXM125Distance::setThresholdSensitivity(uint32_t thresh)
 {
     return _theBus->writeRegister(SFE_XM125_DISTANCE_THREHSOLD_SENSITIVITY, thresh);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistanceReflectorShape(uint32_t &shape)
+sfTkError_t sfDevXM125Distance::getReflectorShape(uint32_t &shape)
 {
     return _theBus->readRegister(SFE_XM125_DISTANCE_REFLECTOR_SHAPE, shape);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::setDistanceReflectorShape(uint32_t shape)
+sfTkError_t sfDevXM125Distance::setReflectorShape(uint32_t shape)
 {
     return _theBus->writeRegister(SFE_XM125_DISTANCE_REFLECTOR_SHAPE, shape);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistanceFixedStrengthThresholdValue(int32_t &thresh)
+sfTkError_t sfDevXM125Distance::getFixedStrengthThresholdValue(int32_t &thresh)
 {
     return _theBus->readRegister(SFE_XM125_DISTANCE_FIXED_STRENGTH_THRESHOLD_VAL, *((uint32_t *)&thresh));
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::setDistanceFixedStrengthThresholdValue(int32_t thresh)
+sfTkError_t sfDevXM125Distance::setFixedStrengthThresholdValue(int32_t thresh)
 {
     return _theBus->writeRegister(SFE_XM125_DISTANCE_FIXED_STRENGTH_THRESHOLD_VAL, *((uint32_t *)&thresh));
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::getDistanceMeasureOneWakeup(bool &measure)
+sfTkError_t sfDevXM125Distance::getMeasureOneWakeup(bool &measure)
 {
     uint8_t value;
     sfTkError_t retVal = _theBus->readRegister(SFE_XM125_DISTANCE_MEASURE_ON_WAKEUP, value);
@@ -718,74 +718,74 @@ sfTkError_t sfDevXM125Distance::getDistanceMeasureOneWakeup(bool &measure)
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::setDistanceMeasureOneWakeup(bool measure)
+sfTkError_t sfDevXM125Distance::setMeasureOneWakeup(bool measure)
 {
     uint8_t value = static_cast<uint8_t>(measure);
     return _theBus->writeRegister(SFE_XM125_DISTANCE_MEASURE_ON_WAKEUP, value);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::setDistanceCommand(uint32_t command)
+sfTkError_t sfDevXM125Distance::setCommand(uint32_t command)
 {
     return _theBus->writeRegister(SFE_XM125_DISTANCE_COMMAND, command);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::distanceApplyConfiguration()
+sfTkError_t sfDevXM125Distance::applyConfiguration()
 {
-    return setDistanceCommand(SFE_XM125_DISTANCE_APPLY_CONFIGURATION);
+    return setCommand(SFE_XM125_DISTANCE_APPLY_CONFIGURATION);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::distanceStart()
+sfTkError_t sfDevXM125Distance::start()
 {
-    return setDistanceCommand(SFE_XM125_DISTANCE_START_DETECTOR);
+    return setCommand(SFE_XM125_DISTANCE_START_DETECTOR);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::distanceStop()
+sfTkError_t sfDevXM125Distance::stop()
 {
-    return setDistanceCommand(SFE_XM125_DISTANCE_STOP_DETECTOR);
+    return setCommand(SFE_XM125_DISTANCE_STOP_DETECTOR);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::distanceCalibrate()
+sfTkError_t sfDevXM125Distance::calibrate()
 {
-    return setDistanceCommand(SFE_XM125_DISTANCE_CALIBRATE);
+    return setCommand(SFE_XM125_DISTANCE_CALIBRATE);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::distanceRecalibrate()
+sfTkError_t sfDevXM125Distance::recalibrate()
 {
-    return setDistanceCommand(SFE_XM125_DISTANCE_RECALIBRATE);
+    return setCommand(SFE_XM125_DISTANCE_RECALIBRATE);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::distanceEnableUartLogs()
+sfTkError_t sfDevXM125Distance::enableUartLogs()
 {
-    return setDistanceCommand(SFE_XM125_DISTANCE_ENABLE_UART_LOGS);
+    return setCommand(SFE_XM125_DISTANCE_ENABLE_UART_LOGS);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::distanceDisableUartLogs()
+sfTkError_t sfDevXM125Distance::disableUartLogs()
 {
-    return setDistanceCommand(SFE_XM125_DISTANCE_DISABLE_UART_LOGS);
+    return setCommand(SFE_XM125_DISTANCE_DISABLE_UART_LOGS);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::distanceLogConfiguration()
+sfTkError_t sfDevXM125Distance::logConfiguration()
 {
-    return setDistanceCommand(SFE_XM125_DISTANCE_LOG_CONFIGURATION);
+    return setCommand(SFE_XM125_DISTANCE_LOG_CONFIGURATION);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::distanceReset()
+sfTkError_t sfDevXM125Distance::reset()
 {
-    return setDistanceCommand(SFE_XM125_DISTANCE_RESET_MODULE);
+    return setCommand(SFE_XM125_DISTANCE_RESET_MODULE);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Distance::distanceBusyWait()
+sfTkError_t sfDevXM125Distance::busyWait()
 {
     sfTkError_t retVal = 0;
     uint32_t regVal = 0;

@@ -21,7 +21,7 @@ sfTkError_t sfDevXM125Presence::begin(sfTkII2C *theBus)
 
     // Check errors from device application
     uint32_t presenceError = 0;
-    retVal = getPresenceDetectorError(presenceError);
+    retVal = getDetectorError(presenceError);
     if (retVal != ksfTkErrOk)
         return retVal;
 
@@ -32,52 +32,52 @@ sfTkError_t sfDevXM125Presence::begin(sfTkII2C *theBus)
     return ksfTkErrOk;
 }
 //-------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::presenceDetectorStart(uint32_t startValue, uint32_t endValue)
+sfTkError_t sfDevXM125Presence::detectorStart(uint32_t startValue, uint32_t endValue)
 {
     // *** Presence Sensor Setup ***
     uint32_t errorStatus = 0;
 
     // Reset sensor configuration to reapply configuration registers
-    if (setPresenceCommand(SFE_XM125_PRESENCE_RESET_MODULE) != ksfTkErrOk)
+    if (setCommand(SFE_XM125_PRESENCE_RESET_MODULE) != ksfTkErrOk)
         return 1;
 
     sftk_delay_ms(100); // give time for command to set
 
     // Check detector status error and busy bits
-    if (getPresenceDetectorErrorStatus(errorStatus) != ksfTkErrOk)
+    if (getDetectorErrorStatus(errorStatus) != ksfTkErrOk)
         return 2;
 
     if (errorStatus != 0)
         return 3;
 
     // Set Presence Start register
-    if (setPresenceStart(startValue) != ksfTkErrOk)
+    if (setStart(startValue) != ksfTkErrOk)
         return 4;
 
     sftk_delay_ms(100); // give time for command to set
 
     // Set End register
-    if (setPresenceEnd(endValue) != ksfTkErrOk)
+    if (setEnd(endValue) != ksfTkErrOk)
         return 5;
 
     sftk_delay_ms(100); // give time for command to set
 
     // Apply configuration
-    if (setPresenceCommand(SFE_XM125_PRESENCE_APPLY_CONFIGURATION) != ksfTkErrOk)
+    if (setCommand(SFE_XM125_PRESENCE_APPLY_CONFIGURATION) != ksfTkErrOk)
     {
         // Check for errors
-        getPresenceDetectorErrorStatus(errorStatus);
+        getDetectorErrorStatus(errorStatus);
         return errorStatus != 0 ? 6 : 7;
     }
 
     sftk_delay_ms(100); // give time for command to set
 
     // Poll detector status until busy bit is cleared
-    if (presenceBusyWait() != ksfTkErrOk)
+    if (busyWait() != ksfTkErrOk)
         return 8;
 
     // Check detector error status
-    sfTkError_t retVal = getPresenceDetectorErrorStatus(errorStatus);
+    sfTkError_t retVal = getDetectorErrorStatus(errorStatus);
     if (retVal != ksfTkErrOk || errorStatus != 0)
         return 9;
 
@@ -86,28 +86,28 @@ sfTkError_t sfDevXM125Presence::presenceDetectorStart(uint32_t startValue, uint3
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::getPresenceDistanceValuemm(uint32_t &presenceVal)
+sfTkError_t sfDevXM125Presence::getDistanceValuemm(uint32_t &presenceVal)
 {
     // Check error bits
     uint32_t errorStatus = 0;
     uint32_t presenceStatus = 0;
 
-    sfTkError_t retVal = getPresenceDetectorErrorStatus(errorStatus);
+    sfTkError_t retVal = getDetectorErrorStatus(errorStatus);
     if (retVal != ksfTkErrOk || errorStatus != 0)
         return ksfTkErrFail;
 
     // Start detector
-    if (setPresenceCommand(SFE_XM125_PRESENCE_START_DETECTOR) != ksfTkErrOk)
+    if (setCommand(SFE_XM125_PRESENCE_START_DETECTOR) != ksfTkErrOk)
         return ksfTkErrFail;
 
     sftk_delay_ms(100);
 
     // Poll detector status until busy bit is cleared
-    if (presenceBusyWait() != ksfTkErrOk)
+    if (busyWait() != ksfTkErrOk)
         return ksfTkErrFail;
 
     // Verify that no error bits are set in the detector status register
-    retVal = getPresenceDetectorErrorStatus(errorStatus);
+    retVal = getDetectorErrorStatus(errorStatus);
     if (retVal != ksfTkErrOk || errorStatus != 0)
         return ksfTkErrFail;
 
@@ -121,7 +121,7 @@ sfTkError_t sfDevXM125Presence::getPresenceDistanceValuemm(uint32_t &presenceVal
 
     // If presence or a sticky presence is detected, get the distance and return
     if (bPresenceDetected)
-        return getPresenceDistance(presenceVal);
+        return getDistance(presenceVal);
 
     // If no presence detected, return 0
     presenceVal = 0;
@@ -129,7 +129,7 @@ sfTkError_t sfDevXM125Presence::getPresenceDistanceValuemm(uint32_t &presenceVal
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::getPresenceDetectorVersion(uint32_t &major, uint32_t &minor, uint32_t &patch)
+sfTkError_t sfDevXM125Presence::getDetectorVersion(uint32_t &major, uint32_t &minor, uint32_t &patch)
 {
     sfTkError_t retVal;
     uint32_t regVal = 0;
@@ -146,22 +146,22 @@ sfTkError_t sfDevXM125Presence::getPresenceDetectorVersion(uint32_t &major, uint
     return retVal;
 }
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::getPresenceDetectorError(uint32_t &error)
+sfTkError_t sfDevXM125Presence::getDetectorError(uint32_t &error)
 {
     return _theBus->readRegister(SFE_XM125_PRESENCE_PROTOCOL_STATUS, error);
 }
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::getPresenceMeasureCounter(uint32_t &counter)
+sfTkError_t sfDevXM125Presence::getMeasureCounter(uint32_t &counter)
 {
     return _theBus->readRegister(SFE_XM125_PRESENCE_MEASURE_COUNTER, counter);
 }
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::getPresenceDetectorStatus(uint32_t &status)
+sfTkError_t sfDevXM125Presence::getDetectorStatus(uint32_t &status)
 {
     return _theBus->readRegister(SFE_XM125_PRESENCE_DETECTOR_STATUS, status);
 }
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::getPresenceDetectorErrorStatus(uint32_t &status)
+sfTkError_t sfDevXM125Presence::getDetectorErrorStatus(uint32_t &status)
 {
     sfTkError_t retVal = 0;
     uint32_t regVal = 0;
@@ -215,7 +215,7 @@ sfTkError_t sfDevXM125Presence::getPresenceDetectorErrorStatus(uint32_t &status)
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::getPresenceDetectorPresenceDetected(uint32_t &detected)
+sfTkError_t sfDevXM125Presence::getDetectorPresenceDetected(uint32_t &detected)
 {
     // Read from 16-Bit Register
     sfTkError_t retVal = _theBus->readRegister(SFE_XM125_PRESENCE_RESULT, detected);
@@ -227,7 +227,7 @@ sfTkError_t sfDevXM125Presence::getPresenceDetectorPresenceDetected(uint32_t &de
     return retVal;
 }
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::getPresenceDetectorPresenceStickyDetected(uint32_t &sticky)
+sfTkError_t sfDevXM125Presence::getDetectorPresenceStickyDetected(uint32_t &sticky)
 {
 
     // Read from 16-Bit Register
@@ -240,7 +240,7 @@ sfTkError_t sfDevXM125Presence::getPresenceDetectorPresenceStickyDetected(uint32
     return retVal;
 }
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::getPresenceDetectorRegError(uint32_t &error)
+sfTkError_t sfDevXM125Presence::getDetectorRegError(uint32_t &error)
 {
     sfTkError_t retVal = _theBus->readRegister(SFE_XM125_PRESENCE_RESULT, error);
 
@@ -251,7 +251,7 @@ sfTkError_t sfDevXM125Presence::getPresenceDetectorRegError(uint32_t &error)
     return retVal;
 }
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::getPresenceTemperature(uint32_t &temp)
+sfTkError_t sfDevXM125Presence::getTemperature(uint32_t &temp)
 {
     sfTkError_t retVal = _theBus->readRegister(SFE_XM125_PRESENCE_DISTANCE, temp);
 
@@ -261,45 +261,45 @@ sfTkError_t sfDevXM125Presence::getPresenceTemperature(uint32_t &temp)
     return retVal;
 }
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::getPresenceDistance(uint32_t &distance)
+sfTkError_t sfDevXM125Presence::getDistance(uint32_t &distance)
 {
     return _theBus->readRegister(SFE_XM125_PRESENCE_DISTANCE, distance);
 }
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::getPresenceIntraPresenceScore(uint32_t &intra)
+sfTkError_t sfDevXM125Presence::getIntraPresenceScore(uint32_t &intra)
 {
     return _theBus->readRegister(SFE_XM125_INTRA_PRESENCE_SCORE, intra);
 }
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::getPresenceInterPresenceScore(uint32_t &inter)
+sfTkError_t sfDevXM125Presence::getInterPresenceScore(uint32_t &inter)
 {
     return _theBus->readRegister(SFE_XM125_INTER_PRESENCE, inter);
 }
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::getPresenceSweepsPerFrame(uint32_t &sweeps)
+sfTkError_t sfDevXM125Presence::getSweepsPerFrame(uint32_t &sweeps)
 {
     return _theBus->readRegister(SFE_XM125_PRESENCE_SWEEPS_PER_FRAME, sweeps);
 }
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::setPresenceSweepsPerFrame(uint32_t sweeps)
+sfTkError_t sfDevXM125Presence::setSweepsPerFrame(uint32_t sweeps)
 {
     return _theBus->writeRegister(SFE_XM125_PRESENCE_SWEEPS_PER_FRAME, sweeps);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::getPresenceInterFramePresenceTimeout(uint32_t &time)
+sfTkError_t sfDevXM125Presence::getInterFramePresenceTimeout(uint32_t &time)
 {
     return _theBus->readRegister(SFE_XM125_PRESENCE_INTER_FRAME_TIMEOUT, time);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::setPresenceInterFramePresenceTimeout(uint32_t time)
+sfTkError_t sfDevXM125Presence::setInterFramePresenceTimeout(uint32_t time)
 {
     return _theBus->writeRegister(SFE_XM125_PRESENCE_INTER_FRAME_TIMEOUT, time);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::getPresenceInterPhaseBoostEnabled(bool &en)
+sfTkError_t sfDevXM125Presence::getInterPhaseBoostEnabled(bool &en)
 {
     size_t readBytes = 0;
     uint8_t value;
@@ -310,14 +310,14 @@ sfTkError_t sfDevXM125Presence::getPresenceInterPhaseBoostEnabled(bool &en)
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::setPresenceInterPhaseBoostEnabled(bool en)
+sfTkError_t sfDevXM125Presence::setInterPhaseBoostEnabled(bool en)
 {
     uint8_t value = en ? 1 : 0;
     return _theBus->writeRegisterUInt8(SFE_XM125_PRESENCE_INTER_PHASE_BOOST_ENABLED, value);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::getPresenceIntraDetectionEnabled(bool &en)
+sfTkError_t sfDevXM125Presence::getIntraDetectionEnabled(bool &en)
 {
     uint8_t value;
     sfTkError_t retVal = _theBus->readRegisterUInt8(SFE_XM125_PRESENCE_INTRA_DETECTION_ENABLED, value);
@@ -327,122 +327,122 @@ sfTkError_t sfDevXM125Presence::getPresenceIntraDetectionEnabled(bool &en)
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::setPresenceInterDetectionEnabled(bool en)
+sfTkError_t sfDevXM125Presence::setInterDetectionEnabled(bool en)
 {
     uint8_t value = en ? 1 : 0;
     return _theBus->writeRegister(SFE_XM125_PRESENCE_INTRA_DETECTION_ENABLED, (uint8_t *)&value, sizeof(uint8_t));
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::getPresenceFrameRate(uint32_t &rate)
+sfTkError_t sfDevXM125Presence::getFrameRate(uint32_t &rate)
 {
     return _theBus->readRegister(SFE_XM125_PRESENCE_FRAME_RATE, rate);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::setPresenceFrameRate(uint32_t rate)
+sfTkError_t sfDevXM125Presence::setFrameRate(uint32_t rate)
 {
     return _theBus->writeRegister(SFE_XM125_PRESENCE_FRAME_RATE, rate);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::getPresenceIntraDetectionThreshold(uint32_t &thresh)
+sfTkError_t sfDevXM125Presence::getIntraDetectionThreshold(uint32_t &thresh)
 {
     return _theBus->readRegister(SFE_XM125_PRESENCE_INTRA_DETECTION_THRESHOLD, thresh);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::setPresenceIntraDetectionThreshold(uint32_t thresh)
+sfTkError_t sfDevXM125Presence::setIntraDetectionThreshold(uint32_t thresh)
 {
     return _theBus->writeRegister(SFE_XM125_PRESENCE_INTRA_DETECTION_THRESHOLD, thresh);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::getPresenceInterDetectionThreshold(uint32_t &thresh)
+sfTkError_t sfDevXM125Presence::getInterDetectionThreshold(uint32_t &thresh)
 {
     return _theBus->readRegister(SFE_XM125_PRESENCE_INTER_DETECTION_THRESHOLD, thresh);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::setPresenceInterDetectionThreshold(uint32_t thresh)
+sfTkError_t sfDevXM125Presence::setInterDetectionThreshold(uint32_t thresh)
 {
     return _theBus->writeRegister(SFE_XM125_PRESENCE_INTER_DETECTION_THRESHOLD, thresh);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::getPresenceInterFrameDeviationTime(uint32_t &time)
+sfTkError_t sfDevXM125Presence::getInterFrameDeviationTime(uint32_t &time)
 {
     return _theBus->readRegister(SFE_XM125_PRESENCE_INTER_FRAME_DEVIATION, time);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::setPresenceInterFrameDeviationTime(uint32_t time)
+sfTkError_t sfDevXM125Presence::setInterFrameDeviationTime(uint32_t time)
 {
     return _theBus->writeRegister(SFE_XM125_PRESENCE_INTER_FRAME_DEVIATION, time);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::getPresenceInterFrameFastCutoff(uint32_t &cut)
+sfTkError_t sfDevXM125Presence::getInterFrameFastCutoff(uint32_t &cut)
 {
     return _theBus->readRegister(SFE_XM125_PRESENCE_INTER_FRAME_FAST_CUTOFF, cut);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::setPresenceInterFrameFastCutoff(uint32_t cut)
+sfTkError_t sfDevXM125Presence::setInterFrameFastCutoff(uint32_t cut)
 {
     return _theBus->writeRegister(SFE_XM125_PRESENCE_INTER_FRAME_FAST_CUTOFF, cut);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::getPresenceInterFrameSlowCutoff(uint32_t &cut)
+sfTkError_t sfDevXM125Presence::getInterFrameSlowCutoff(uint32_t &cut)
 {
     return _theBus->readRegister(SFE_XM125_PRESENCE_INTER_FRAME_SLOW_CUTOFF, cut);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::setPresenceInterFrameSlowCutoff(uint32_t cut)
+sfTkError_t sfDevXM125Presence::setInterFrameSlowCutoff(uint32_t cut)
 {
     return _theBus->writeRegister(SFE_XM125_PRESENCE_INTER_FRAME_SLOW_CUTOFF, cut);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::getPresenceIntraFrameTimeConst(uint32_t &time)
+sfTkError_t sfDevXM125Presence::getIntraFrameTimeConst(uint32_t &time)
 {
     return _theBus->readRegister(SFE_XM125_PRESENCE_INTRA_FRAME_TIME_CONST, time);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::setPresenceIntraFrameTimeConst(uint32_t time)
+sfTkError_t sfDevXM125Presence::setIntraFrameTimeConst(uint32_t time)
 {
     return _theBus->writeRegister(SFE_XM125_PRESENCE_INTRA_FRAME_TIME_CONST, time);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::getPresenceIntraOutputTimeConst(uint32_t &time)
+sfTkError_t sfDevXM125Presence::getIntraOutputTimeConst(uint32_t &time)
 {
     return _theBus->readRegister(SFE_XM125_PRESENCE_INTRA_OUTPUT_TIME_CONST, time);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::setPresenceIntraOutputTimeConst(uint32_t time)
+sfTkError_t sfDevXM125Presence::setIntraOutputTimeConst(uint32_t time)
 {
     return _theBus->writeRegister(SFE_XM125_PRESENCE_INTRA_OUTPUT_TIME_CONST, time);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::getPresenceInterOutputTimeConst(uint32_t &time)
+sfTkError_t sfDevXM125Presence::getInterOutputTimeConst(uint32_t &time)
 {
     return _theBus->readRegister(SFE_XM125_PRESENCE_INTER_OUTPUT_TIME_CONST, time);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::setPresenceInterOutputTimeConst(uint32_t time)
+sfTkError_t sfDevXM125Presence::setInterOutputTimeConst(uint32_t time)
 {
     return _theBus->writeRegister(SFE_XM125_PRESENCE_INTER_OUTPUT_TIME_CONST, time);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::getPresenceAutoProfileEn(bool &en)
+sfTkError_t sfDevXM125Presence::getAutoProfileEn(bool &en)
 {
     size_t readBytes = 0;
     uint8_t value;
@@ -453,14 +453,14 @@ sfTkError_t sfDevXM125Presence::getPresenceAutoProfileEn(bool &en)
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::setPresenceAutoProfileEn(bool en)
+sfTkError_t sfDevXM125Presence::setAutoProfileEn(bool en)
 {
     uint8_t value = en ? 1 : 0;
     return _theBus->writeRegister(SFE_XM125_PRESENCE_AUTO_PROFILE_ENABLED, (uint8_t *)&value, sizeof(uint8_t));
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::getPresenceAutoStepLengthEn(bool &en)
+sfTkError_t sfDevXM125Presence::getAutoStepLengthEn(bool &en)
 {
     size_t readBytes = 0;
     uint8_t value;
@@ -471,62 +471,62 @@ sfTkError_t sfDevXM125Presence::getPresenceAutoStepLengthEn(bool &en)
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::setPresenceAutoStepLengthEn(bool en)
+sfTkError_t sfDevXM125Presence::setAutoStepLengthEn(bool en)
 {
     uint8_t value = en ? 1 : 0;
     return _theBus->writeRegister(SFE_XM125_PRESENCE_AUTO_STEP_LENGTH_ENABLED, (uint8_t *)&value, sizeof(uint8_t));
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::getPresenceManualProfile(uint32_t &prof)
+sfTkError_t sfDevXM125Presence::getManualProfile(uint32_t &prof)
 {
     return _theBus->readRegister(SFE_XM125_PRESENCE_MANUAL_PROFILE, prof);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::setPresenceManualProfile(uint32_t prof)
+sfTkError_t sfDevXM125Presence::setManualProfile(uint32_t prof)
 {
     return _theBus->writeRegister(SFE_XM125_PRESENCE_MANUAL_PROFILE, prof);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::getPresenceManualStepLength(uint32_t &length)
+sfTkError_t sfDevXM125Presence::getManualStepLength(uint32_t &length)
 {
     return _theBus->readRegister(SFE_XM125_PRESENCE_MANUAL_STEP_LENGTH, length);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::setPresenceManualStepLength(uint32_t length)
+sfTkError_t sfDevXM125Presence::setManualStepLength(uint32_t length)
 {
     return _theBus->writeRegister(SFE_XM125_PRESENCE_MANUAL_STEP_LENGTH, length);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::getPresenceStart(uint32_t &start)
+sfTkError_t sfDevXM125Presence::getStart(uint32_t &start)
 {
     return _theBus->readRegister(SFE_XM125_PRESENCE_START, start);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::setPresenceStart(uint32_t start)
+sfTkError_t sfDevXM125Presence::setStart(uint32_t start)
 {
     return _theBus->writeRegister(SFE_XM125_PRESENCE_START, start);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::getPresenceEnd(uint32_t &end)
+sfTkError_t sfDevXM125Presence::getEnd(uint32_t &end)
 {
     return _theBus->readRegister(SFE_XM125_PRESENCE_END, end);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::setPresenceEnd(uint32_t end)
+sfTkError_t sfDevXM125Presence::setEnd(uint32_t end)
 {
     return _theBus->writeRegister(SFE_XM125_PRESENCE_END, end);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::getPresenceResetFilters(bool &reset)
+sfTkError_t sfDevXM125Presence::getResetFilters(bool &reset)
 {
 
     size_t readBytes = 0;
@@ -538,79 +538,79 @@ sfTkError_t sfDevXM125Presence::getPresenceResetFilters(bool &reset)
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::setPresenceResetFilters(bool reset)
+sfTkError_t sfDevXM125Presence::setResetFilters(bool reset)
 {
     uint8_t value = reset ? 1 : 0;
     return _theBus->writeRegister(SFE_XM125_PRESENCE_RESET_FILTERS_ON_PREPARE, &value, sizeof(uint8_t));
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::getPresenceHWAAS(uint32_t &avg)
+sfTkError_t sfDevXM125Presence::getHWAAS(uint32_t &avg)
 {
     return _theBus->readRegister(SFE_XM125_PRESENCE_HWAAS, avg);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::setPresenceHWAAS(uint32_t avg)
+sfTkError_t sfDevXM125Presence::setHWAAS(uint32_t avg)
 {
     return _theBus->writeRegister(SFE_XM125_PRESENCE_HWAAS, avg);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::getPresenceDetectionOnGPIO(uint32_t &detected)
+sfTkError_t sfDevXM125Presence::getDetectionOnGPIO(uint32_t &detected)
 {
     return _theBus->readRegister(SFE_XM125_PRESENCE_DETECTION_ON_GPIO, detected);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::setPresenceDetectionOnGPIO(uint32_t detected)
+sfTkError_t sfDevXM125Presence::setDetectionOnGPIO(uint32_t detected)
 {
     return _theBus->writeRegister(SFE_XM125_PRESENCE_DETECTION_ON_GPIO, detected);
 }
 
-sfTkError_t sfDevXM125Presence::setPresenceCommand(uint32_t cmd)
+sfTkError_t sfDevXM125Presence::setCommand(uint32_t cmd)
 {
     return _theBus->writeRegister(SFE_XM125_PRESENCE_COMMAND, cmd);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::presenceApplyConfiguration()
+sfTkError_t sfDevXM125Presence::applyConfiguration()
 {
-    return setPresenceCommand(SFE_XM125_PRESENCE_START_DETECTOR);
+    return setCommand(SFE_XM125_PRESENCE_START_DETECTOR);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::presenceStart()
+sfTkError_t sfDevXM125Presence::start()
 {
-    return setPresenceCommand(SFE_XM125_PRESENCE_START_DETECTOR);
+    return setCommand(SFE_XM125_PRESENCE_START_DETECTOR);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::presenceStop()
+sfTkError_t sfDevXM125Presence::stop()
 {
-    return setPresenceCommand(SFE_XM125_PRESENCE_STOP_DETECTOR);
+    return setCommand(SFE_XM125_PRESENCE_STOP_DETECTOR);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::presenceEnableUartLogs()
+sfTkError_t sfDevXM125Presence::enableUartLogs()
 {
-    return setPresenceCommand(SFE_XM125_PRESENCE_ENABLE_UART_LOGS);
+    return setCommand(SFE_XM125_PRESENCE_ENABLE_UART_LOGS);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::presenceDisableUartLogs()
+sfTkError_t sfDevXM125Presence::disableUartLogs()
 {
-    return setPresenceCommand(SFE_XM125_PRESENCE_DISABLE_UART_LOGS);
+    return setCommand(SFE_XM125_PRESENCE_DISABLE_UART_LOGS);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::presenceLogConfiguration()
+sfTkError_t sfDevXM125Presence::logConfiguration()
 {
-    return setPresenceCommand(SFE_XM125_PRESENCE_LOG_CONFIGURATION);
+    return setCommand(SFE_XM125_PRESENCE_LOG_CONFIGURATION);
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::getPresenceBusy(uint32_t &busy)
+sfTkError_t sfDevXM125Presence::getBusy(uint32_t &busy)
 {
     // Read from 16-Bit Register
 
@@ -623,7 +623,7 @@ sfTkError_t sfDevXM125Presence::getPresenceBusy(uint32_t &busy)
 }
 
 //--------------------------------------------------------------------------------
-sfTkError_t sfDevXM125Presence::presenceBusyWait()
+sfTkError_t sfDevXM125Presence::busyWait()
 {
     uint32_t regVal = 0;
 

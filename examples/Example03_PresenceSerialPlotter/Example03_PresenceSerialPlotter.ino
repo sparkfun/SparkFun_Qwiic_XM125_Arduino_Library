@@ -68,7 +68,7 @@ void setup()
     delay(200);
 
     // Start the sensor with default register values
-    int32_t setupError = radarSensor.presenceDetectorStart();
+    int32_t setupError = radarSensor.detectorStart();
     if (setupError != 0)
     {
         Serial.print("Presence Detection Start Setup Error: ");
@@ -83,14 +83,14 @@ void setup()
 void loop()
 {
     // Busy wait loop until data is ready
-    radarSensor.presenceBusyWait();
+    radarSensor.busyWait();
 
     // Get the presence distance value and print out if no errors
-    presValError = radarSensor.getPresenceDistanceValuemm(distance);
+    presValError = radarSensor.getDistanceValuemm(distance);
 
     if (presValError == 0)
     {
-        radarSensor.getPresenceDistance(distance);
+        radarSensor.getDistance(distance);
         Serial.println(distance);
     }
 

@@ -72,10 +72,10 @@ void setup()
 
     // *** Presence Sensor Setup ***
     // Reset sensor configuration to reapply configuration registers
-    radarSensor.setPresenceCommand(SFE_XM125_PRESENCE_RESET_MODULE);
+    radarSensor.setCommand(SFE_XM125_PRESENCE_RESET_MODULE);
 
     // Check error and busy bits
-    radarSensor.getPresenceDetectorErrorStatus(errorStatus);
+    radarSensor.getDetectorErrorStatus(errorStatus);
     if (errorStatus != 0)
     {
         Serial.print("Detector status error: ");
@@ -85,30 +85,30 @@ void setup()
     delay(100);
 
     // Set Start register
-    if (radarSensor.setPresenceStart(beginReading) != 0)
+    if (radarSensor.setStart(beginReading) != 0)
     {
         Serial.println("Presence Start Error");
     }
-    radarSensor.getPresenceStart(startVal);
+    radarSensor.getStart(startVal);
     Serial.print("Start Val: ");
     Serial.println(startVal);
 
     delay(100);
     // Set End register
-    if (radarSensor.setPresenceEnd(endReading) != 0)
+    if (radarSensor.setEnd(endReading) != 0)
     {
         Serial.println("Presence End Error");
     }
-    radarSensor.getPresenceEnd(endVal);
+    radarSensor.getEnd(endVal);
     Serial.print("End Val: ");
     Serial.println(endVal);
     delay(100);
 
     // Apply configuration
-    if (radarSensor.setPresenceCommand(SFE_XM125_PRESENCE_APPLY_CONFIGURATION) != 0)
+    if (radarSensor.setCommand(SFE_XM125_PRESENCE_APPLY_CONFIGURATION) != 0)
     {
         // Check for errors
-        radarSensor.getPresenceDetectorErrorStatus(errorStatus);
+        radarSensor.getDetectorErrorStatus(errorStatus);
         if (errorStatus != 0)
         {
             Serial.print("Detector status error: ");
@@ -119,13 +119,13 @@ void setup()
     }
 
     // Poll detector status until busy bit is cleared
-    if (radarSensor.presenceBusyWait() != 0)
+    if (radarSensor.busyWait() != 0)
     {
         Serial.print("Busy wait error");
     }
 
     // Check detector status
-    radarSensor.getPresenceDetectorErrorStatus(errorStatus);
+    radarSensor.getDetectorErrorStatus(errorStatus);
     if (errorStatus != 0)
     {
         Serial.print("Detector status error: ");
@@ -140,7 +140,7 @@ void setup()
 void loop()
 {
     // Check error bits
-    radarSensor.getPresenceDetectorErrorStatus(errorStatus);
+    radarSensor.getDetectorErrorStatus(errorStatus);
     if (errorStatus != 0)
     {
         Serial.print("Detector status error: ");
@@ -148,19 +148,19 @@ void loop()
     }
 
     // Start detector
-    if (radarSensor.setPresenceCommand(SFE_XM125_PRESENCE_START_DETECTOR) != 0)
+    if (radarSensor.setCommand(SFE_XM125_PRESENCE_START_DETECTOR) != 0)
     {
         Serial.println("Start detector error");
     }
 
     // Poll detector status until busy bit is cleared - CHECK ON THIS!
-    if (radarSensor.presenceBusyWait() != 0)
+    if (radarSensor.busyWait() != 0)
     {
         Serial.println("Busy wait error");
     }
 
     // Verify that no error bits are set in the detector status register
-    radarSensor.getPresenceDetectorErrorStatus(errorStatus);
+    radarSensor.getDetectorErrorStatus(errorStatus);
     if (errorStatus != 0)
     {
         Serial.print("Detector status error: ");
@@ -168,12 +168,12 @@ void loop()
     }
 
     // Read detector result register and determine detection status
-    radarSensor.getPresenceDetectorPresenceDetected(presenceDetected);
-    radarSensor.getPresenceDetectorPresenceStickyDetected(presenceDetectedSticky);
+    radarSensor.getDetectorPresenceDetected(presenceDetected);
+    radarSensor.getDetectorPresenceStickyDetected(presenceDetectedSticky);
 
     if ((presenceDetected == 1) | (presenceDetectedSticky == 1))
     {
-        radarSensor.getPresenceDistance(distance);
+        radarSensor.getDistance(distance);
         Serial.print("Presence Detected: ");
         Serial.print(distance);
         Serial.println("mm");

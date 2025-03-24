@@ -70,10 +70,10 @@ void setup()
 
     // Presence Sensor Setup
     // Reset sensor configuration to reapply configuration registers
-    radarSensor.setPresenceCommand(SFE_XM125_PRESENCE_RESET_MODULE);
+    radarSensor.setCommand(SFE_XM125_PRESENCE_RESET_MODULE);
 
     // Check error and busy bits
-    radarSensor.getPresenceDetectorErrorStatus(errorStatus);
+    radarSensor.getDetectorErrorStatus(errorStatus);
     if (errorStatus != 0)
     {
         Serial.print("Detector status error: ");
@@ -83,19 +83,19 @@ void setup()
     delay(100);
 
     // Turn presence detection on GPIO0 on
-    if (radarSensor.setPresenceDetectionOnGPIO(1) != 0)
+    if (radarSensor.setDetectionOnGPIO(1) != 0)
     {
         Serial.println("GPIO0 Pin Setup Error");
     }
-    radarSensor.getPresenceDetectionOnGPIO(gpioUsage);
+    radarSensor.getDetectionOnGPIO(gpioUsage);
     Serial.print("GPIO0 Detection Status: ");
     Serial.println(gpioUsage);
 
     // Apply configuration
-    if (radarSensor.setPresenceCommand(SFE_XM125_PRESENCE_APPLY_CONFIGURATION) != 0)
+    if (radarSensor.setCommand(SFE_XM125_PRESENCE_APPLY_CONFIGURATION) != 0)
     {
         // Check for errors
-        radarSensor.getPresenceDetectorErrorStatus(errorStatus);
+        radarSensor.getDetectorErrorStatus(errorStatus);
         if (errorStatus != 0)
         {
             Serial.print("Detector status error: ");
@@ -106,13 +106,13 @@ void setup()
     }
 
     // Poll detector status until busy bit is cleared
-    if (radarSensor.presenceBusyWait() != 0)
+    if (radarSensor.busyWait() != 0)
     {
         Serial.print("Busy wait error");
     }
 
     // Check detector status
-    radarSensor.getPresenceDetectorErrorStatus(errorStatus);
+    radarSensor.getDetectorErrorStatus(errorStatus);
     if (errorStatus != 0)
     {
         Serial.print("Detector status error: ");
@@ -127,10 +127,10 @@ void setup()
 void loop()
 {
     // Busy wait loop until data is ready
-    radarSensor.presenceBusyWait();
+    radarSensor.busyWait();
 
     // Get the presence distance value and print out if no errors
-    presValError = radarSensor.getPresenceDistanceValuemm(distance);
+    presValError = radarSensor.getDistanceValuemm(distance);
 
     if (presValError == 0)
     {

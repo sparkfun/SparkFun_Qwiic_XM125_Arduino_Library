@@ -68,12 +68,12 @@ void setup()
 
     // Distance Sensor Setup
     // Reset sensor configuration to reapply configuration registers
-    radarSensor.setDistanceCommand(SFE_XM125_DISTANCE_RESET_MODULE);
+    radarSensor.setCommand(SFE_XM125_DISTANCE_RESET_MODULE);
 
-    radarSensor.distanceBusyWait();
+    radarSensor.busyWait();
 
     // Check error and busy bits
-    radarSensor.getDistanceDetectorErrorStatus(errorStatus);
+    radarSensor.getDetectorErrorStatus(errorStatus);
     if (errorStatus != 0)
     {
         Serial.print("Detector status error: ");
@@ -83,30 +83,30 @@ void setup()
     delay(100);
 
     // Set Start register
-    if (radarSensor.setDistanceStart(beginReading) != 0)
+    if (radarSensor.setStart(beginReading) != 0)
     {
         Serial.println("Distance Start Error");
     }
-    radarSensor.getDistanceStart(startVal);
+    radarSensor.getStart(startVal);
     Serial.print("Start Val: ");
     Serial.println(startVal);
 
     delay(100);
     // Set End register
-    if (radarSensor.setDistanceEnd(endReading) != 0)
+    if (radarSensor.setEnd(endReading) != 0)
     {
         Serial.println("Distance End Error");
     }
-    radarSensor.getDistanceEnd(endVal);
+    radarSensor.getEnd(endVal);
     Serial.print("End Val: ");
     Serial.println(endVal);
     delay(100);
 
     // Apply configuration
-    if (radarSensor.setDistanceCommand(SFE_XM125_DISTANCE_APPLY_CONFIGURATION) != 0)
+    if (radarSensor.setCommand(SFE_XM125_DISTANCE_APPLY_CONFIGURATION) != 0)
     {
         // Check for errors
-        radarSensor.getDistanceDetectorErrorStatus(errorStatus);
+        radarSensor.getDetectorErrorStatus(errorStatus);
         if (errorStatus != 0)
         {
             Serial.print("Detector status error: ");
@@ -117,13 +117,13 @@ void setup()
     }
 
     // Poll detector status until busy bit is cleared
-    if (radarSensor.distanceBusyWait() != 0)
+    if (radarSensor.busyWait() != 0)
     {
         Serial.print("Busy wait error");
     }
 
     // Check detector status
-    radarSensor.getDistanceDetectorErrorStatus(errorStatus);
+    radarSensor.getDetectorErrorStatus(errorStatus);
     if (errorStatus != 0)
     {
         Serial.print("Detector status error: ");
@@ -153,7 +153,7 @@ void outputResults(uint sample, uint32_t distance, int32_t strength)
 void loop()
 {
     // Check error bits
-    radarSensor.getDistanceDetectorErrorStatus(errorStatus);
+    radarSensor.getDetectorErrorStatus(errorStatus);
     if (errorStatus != 0)
     {
         Serial.print("Detector status error: ");
@@ -161,19 +161,19 @@ void loop()
     }
 
     // Start detector
-    if (radarSensor.setDistanceCommand(SFE_XM125_DISTANCE_START_DETECTOR) != 0)
+    if (radarSensor.setCommand(SFE_XM125_DISTANCE_START_DETECTOR) != 0)
     {
         Serial.println("Start detector error");
     }
 
     // Poll detector status until busy bit is cleared - CHECK ON THIS!
-    if (radarSensor.distanceBusyWait() != 0)
+    if (radarSensor.busyWait() != 0)
     {
         Serial.println("Busy wait error");
     }
 
     // Verify that no error bits are set in the detector status register
-    radarSensor.getDistanceDetectorErrorStatus(errorStatus);
+    radarSensor.getDetectorErrorStatus(errorStatus);
     if (errorStatus != 0)
     {
         Serial.print("Detector status error: ");
@@ -181,60 +181,60 @@ void loop()
     }
 
     // Check MEASURE_DISTANCE_ERROR for measurement failed
-    radarSensor.getDistanceMeasureDistanceError(measDistErr);
+    radarSensor.getMeasureDistanceError(measDistErr);
     if (measDistErr == 1)
     {
         Serial.println("Measure Distance Error");
     }
 
     // Recalibrate device if calibration error is triggered
-    radarSensor.getDistanceCalibrationNeeded(calibrateNeeded);
+    radarSensor.getCalibrationNeeded(calibrateNeeded);
     if (calibrateNeeded == 1)
     {
         Serial.println("Calibration Needed - Recalibrating.. ");
         // Calibrate device (write RECALIBRATE command)
-        radarSensor.setDistanceCommand(SFE_XM125_DISTANCE_RECALIBRATE);
+        radarSensor.setCommand(SFE_XM125_DISTANCE_RECALIBRATE);
     }
 
     // Read PeakX Distance and PeakX Strength registers for the number of distances detected
-    radarSensor.getDistancePeak0Distance(distancePeak);
-    radarSensor.getDistancePeak0Strength(distancePeakStrength);
+    radarSensor.getPeak0Distance(distancePeak);
+    radarSensor.getPeak0Strength(distancePeakStrength);
     outputResults(0, distancePeak, distancePeakStrength);
 
-    radarSensor.getDistancePeak1Distance(distancePeak);
-    radarSensor.getDistancePeak1Strength(distancePeakStrength);
+    radarSensor.getPeak1Distance(distancePeak);
+    radarSensor.getPeak1Strength(distancePeakStrength);
     outputResults(1, distancePeak, distancePeakStrength);
 
-    radarSensor.getDistancePeak2Distance(distancePeak);
-    radarSensor.getDistancePeak2Strength(distancePeakStrength);
+    radarSensor.getPeak2Distance(distancePeak);
+    radarSensor.getPeak2Strength(distancePeakStrength);
     outputResults(2, distancePeak, distancePeakStrength);
 
-    radarSensor.getDistancePeak3Distance(distancePeak);
-    radarSensor.getDistancePeak3Strength(distancePeakStrength);
+    radarSensor.getPeak3Distance(distancePeak);
+    radarSensor.getPeak3Strength(distancePeakStrength);
     outputResults(3, distancePeak, distancePeakStrength);
 
-    radarSensor.getDistancePeak4Distance(distancePeak);
-    radarSensor.getDistancePeak4Strength(distancePeakStrength);
+    radarSensor.getPeak4Distance(distancePeak);
+    radarSensor.getPeak4Strength(distancePeakStrength);
     outputResults(4, distancePeak, distancePeakStrength);
 
-    radarSensor.getDistancePeak5Distance(distancePeak);
-    radarSensor.getDistancePeak5Strength(distancePeakStrength);
+    radarSensor.getPeak5Distance(distancePeak);
+    radarSensor.getPeak5Strength(distancePeakStrength);
     outputResults(5, distancePeak, distancePeakStrength);
 
-    radarSensor.getDistancePeak6Distance(distancePeak);
-    radarSensor.getDistancePeak6Strength(distancePeakStrength);
+    radarSensor.getPeak6Distance(distancePeak);
+    radarSensor.getPeak6Strength(distancePeakStrength);
     outputResults(6, distancePeak, distancePeakStrength);
 
-    radarSensor.getDistancePeak7Distance(distancePeak);
-    radarSensor.getDistancePeak7Strength(distancePeakStrength);
+    radarSensor.getPeak7Distance(distancePeak);
+    radarSensor.getPeak7Strength(distancePeakStrength);
     outputResults(7, distancePeak, distancePeakStrength);
 
-    radarSensor.getDistancePeak8Distance(distancePeak);
-    radarSensor.getDistancePeak8Strength(distancePeakStrength);
+    radarSensor.getPeak8Distance(distancePeak);
+    radarSensor.getPeak8Strength(distancePeakStrength);
     outputResults(8, distancePeak, distancePeakStrength);
 
-    radarSensor.getDistancePeak9Distance(distancePeak);
-    radarSensor.getDistancePeak9Strength(distancePeakStrength);
+    radarSensor.getPeak9Distance(distancePeak);
+    radarSensor.getPeak9Strength(distancePeakStrength);
     outputResults(9, distancePeak, distancePeakStrength);
 
     // Half a second delay for easier readings
