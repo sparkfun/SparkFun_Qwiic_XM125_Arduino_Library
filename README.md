@@ -9,7 +9,7 @@ Arduino Library for the SparkFun Pulsed Coherent Radar Sensor
 ![Release](https://img.shields.io/github/v/release/sparkfun/SparkFun_Qwiic_XM125_Arduino_Library)
 ![Release Date](https://img.shields.io/github/release-date/sparkfun/SparkFun_Qwiic_XM125_Arduino_Library)
 ![Documentation - build](https://img.shields.io/github/actions/workflow/status/sparkfun/SparkFun_Qwiic_XM125_Arduino_Library/build-deploy-ghpages.yml?label=doc%20build)
-![Compile - Test](https://img.shields.io/github/actions/workflow/status/sparkfun/SparkFun_Qwiic_XM125_Arduino_Library/test-compile-sketch.yml?label=compile%20test)
+![Compile - Test](https://img.shields.io/github/actions/workflow/status/sparkfun/SparkFun_Qwiic_XM125_Arduino_Library/compile-sketch.yml?label=compile%20test)
 ![GitHub issues](https://img.shields.io/github/issues/sparkfun/SparkFun_Qwiic_XM125_Arduino_Library)
 
 The [SparkFun Pulsed Coherent Radar Sensor - Acconeer XM125 (SEN-24540)](https://www.sparkfun.com/sparkfun-pulsed-coherent-radar-sensor-acconeer-xm125-qwiic.html) brings powerful 60 GHz radar technology to your projects. This sensor isn't limited to surface detection; it can see through walls, cabinets, and even pockets (depending on the material), making it perfect for unique applications. Measure distances with millimeter precision, detect motion, the speed of an object, or even gestures!
@@ -39,6 +39,17 @@ This library provides a extensive interface that enables the following functiona
 |Distance Detection | `i2c_distance_detector` | `SparkFunXM125Distance`|
 |Presence Detection | `i2c_presence_detector` | `SparkFunXM125Presence`|
 
+## Documentation
+
+|Reference | Description |
+|---|---|
+|[Quick Reference](https://docs.sparkfun.com/SparkFun_Qwiic_XM125_Arduino_Library/class_qw_dev_x_m125.html)| A quick reference API for the the main library object ```QwDevXM125```|
+|[Full Documentation](https://docs.sparkfun.com/SparkFun_Qwiic_XM125_Arduino_Library/)| The full documentation and API for this Arduino library|
+|[SparkFun Pulsed Coherent Radar Sensor](https://github.com/sparkfun/SparkFun_Qwiic_Pulsed_Radar_Sensor_XM125)| Hardware GitHub Repository|
+|[Hook Up Guide](https://docs.sparkfun.com/SparkFun_Qwiic_Pulsed_Radar_Sensor_XM125/introduction/) | Hardware Overview and Quick Start for the XM125 Qwiic Development Board |
+
+
+
 ## Examples
 
 The following examples are provided with the library
@@ -55,6 +66,7 @@ The following examples are provided with the library
 |[Distance Serial Plotter](examples/Example08_DistanceSerialPlotter/Example08_DistanceSerialPlotter.ino)|This example prints out the distance values of the 0 distance channels to the serial plotter tool in Arduino.|
 |[Distance Advanced Settings](examples/Example09_DistanceAdvancedSettings/Example09_DistanceAdvancedSettings.ino)|The sensor is initialized, then the distance (mm) and advanced values are output to the terminal. |
   
+
 ## Documentation
 
 The full API and use documentation for this library is provided [here](https://docs.sparkfun.com/SparkFun_Qwiic_XM125_Arduino_Library/). For a quick reference, the main methods available in the library are listed [here](https://docs.sparkfun.com/SparkFun_Qwiic_XM125_Arduino_Library/class_qw_dev_x_m125.html).

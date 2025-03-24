@@ -15,7 +15,7 @@
 sfTkError_t sfDevXM125Presence::begin(sfTkII2C *theBus)
 {
     // call super to get the device connection working
-    sfTkError_t retVal = sfDevXM125Core::begin(theBus);
+    sfTkError_t retVal = sfDevXM125Core::init(theBus);
     if (retVal != ksfTkErrOk)
         return retVal;
 
