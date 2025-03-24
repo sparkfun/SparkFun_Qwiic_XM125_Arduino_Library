@@ -65,7 +65,7 @@ void setup()
     }
 
     // Start the sensor with default register values
-    int32_t setupError = radarSensor.presenceDetectorStart(MY_XM125_RANGE_START, MY_XM125_RANGE_END);
+    int32_t setupError = radarSensor.detectorStart(MY_XM125_RANGE_START, MY_XM125_RANGE_END);
     if (setupError != 0)
     {
         Serial.print("Presence Detection Start Setup Error: ");
@@ -84,11 +84,11 @@ void setup()
 void loop()
 {
     // Busy wait loop until data is ready
-    radarSensor.presenceBusyWait();
+    radarSensor.busyWait();
 
     // Get the presence distance value and print out if no errors.
-    // Note - this returns if Presense is detected now, or since last check (sticky)
-    presValError = radarSensor.getPresenceDistanceValuemm(distance);
+    // Note - this returns if Presence is detected now, or since last check (sticky)
+    presValError = radarSensor.getDistanceValuemm(distance);
 
     if (presValError == 0)
     {

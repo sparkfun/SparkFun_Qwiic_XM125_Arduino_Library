@@ -69,7 +69,7 @@ void setup()
     delay(200);
 
     // Start the sensor with default register values
-    int32_t setupError = radarSensor.presenceDetectorStart();
+    int32_t setupError = radarSensor.detectorStart();
     if (setupError != 0)
     {
         Serial.print("Presence Detection Start Setup Error: ");
@@ -84,7 +84,7 @@ void setup()
 void loop()
 {
     // Check error bits
-    radarSensor.getPresenceDetectorErrorStatus(errorStatus);
+    radarSensor.getDetectorErrorStatus(errorStatus);
     if (errorStatus != 0)
     {
         Serial.print("Detector status error: ");
@@ -92,19 +92,19 @@ void loop()
     }
 
     // Start detector
-    if (radarSensor.setPresenceCommand(SFE_XM125_PRESENCE_START_DETECTOR) != 0)
+    if (radarSensor.setCommand(SFE_XM125_PRESENCE_START_DETECTOR) != 0)
     {
         Serial.println("Start detector error");
     }
 
     // Poll detector status until busy bit is cleared - CHECK ON THIS!
-    if (radarSensor.presenceBusyWait() != 0)
+    if (radarSensor.busyWait() != 0)
     {
         Serial.println("Busy wait error");
     }
 
     // Verify that no error bits are set in the detector status register
-    radarSensor.getPresenceDetectorErrorStatus(errorStatus);
+    radarSensor.getDetectorErrorStatus(errorStatus);
     if (errorStatus != 0)
     {
         Serial.print("Detector status error: ");
@@ -112,18 +112,18 @@ void loop()
     }
 
     // Read detector result register and determine detection status
-    radarSensor.getPresenceDetectorPresenceDetected(presenceDetected);
-    radarSensor.getPresenceDetectorPresenceStickyDetected(presenceDetectedSticky);
+    radarSensor.getDetectorPresenceDetected(presenceDetected);
+    radarSensor.getDetectorPresenceStickyDetected(presenceDetectedSticky);
 
     if ((presenceDetected == 1) || (presenceDetectedSticky == 1))
     {
-        radarSensor.getPresenceDistance(distance);
+        radarSensor.getDistance(distance);
         Serial.print("Presence Detected: ");
         Serial.print(distance);
         Serial.println("mm");
 
-        radarSensor.getPresenceIntraPresenceScore(intraScore);
-        radarSensor.getPresenceInterPresenceScore(interScore);
+        radarSensor.getIntraPresenceScore(intraScore);
+        radarSensor.getInterPresenceScore(interScore);
 
         Serial.print("Intra-Presence Score: ");
         Serial.println(intraScore);
