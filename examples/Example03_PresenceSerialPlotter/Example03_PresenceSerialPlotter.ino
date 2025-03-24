@@ -11,7 +11,7 @@
   SparkFun Electronics
   Date: 2024/1/22
   SparkFun code, firmware, and software is released under the MIT License.
-	Please see LICENSE.md for further details.
+    Please see LICENSE.md for further details.
 
   Hardware Connections:
   QWIIC --> QWIIC
@@ -21,15 +21,15 @@
   Feel like supporting our work? Buy a board from SparkFun!
   https://www.sparkfun.com/products/ - Qwiic XM125 Breakout
 */
-#include <Arduino.h>
 #include "SparkFun_Qwiic_XM125_Arduino_Library.h"
+#include <Arduino.h>
 
-SfeXM125 radarSensor;
+SparkFunXM125Presence radarSensor;
 
 // I2C default address
 uint8_t i2cAddress = SFE_XM125_I2C_ADDRESS;
 
-// Presence distance values 
+// Presence distance values
 uint32_t distance = 0;
 uint32_t presenceDetected = 0;
 uint32_t presenceDetectedSticky = 0;
@@ -52,7 +52,7 @@ void setup()
 
     // If begin is successful (0), then start example
     int startErr = radarSensor.begin(i2cAddress, Wire);
-    if(startErr == 1)
+    if (startErr == 1)
     {
         Serial.println("Begin");
     }
@@ -61,17 +61,18 @@ void setup()
         Serial.print("Start Error Code: ");
         Serial.println(startErr);
         Serial.println("Device failed to setup - Freezing code.");
-        while(1); // Runs forever
+        while (1)
+            ; // Runs forever
     }
 
     delay(200);
 
     // Start the sensor with default register values
-    int32_t setupError = radarSensor.presenceDetectorStart();
-    if(setupError != 0)
+    int32_t setupError = radarSensor.detectorStart();
+    if (setupError != 0)
     {
-      Serial.print("Presence Detection Start Setup Error: ");
-      Serial.println(setupError); 
+        Serial.print("Presence Detection Start Setup Error: ");
+        Serial.println(setupError);
     }
 
     // New line and delay for easier reading
@@ -82,15 +83,15 @@ void setup()
 void loop()
 {
     // Busy wait loop until data is ready
-    radarSensor.presenceBusyWait();
+    radarSensor.busyWait();
 
     // Get the presence distance value and print out if no errors
-    presValError = radarSensor.getPresenceDistanceValuemm(distance);
+    presValError = radarSensor.getDistanceValuemm(distance);
 
-    if(presValError == 0)
+    if (presValError == 0)
     {
-      radarSensor.getPresenceDistance(distance);
-      Serial.println(distance);
+        radarSensor.getDistance(distance);
+        Serial.println(distance);
     }
 
     // Delay 0.5 seconds between readings

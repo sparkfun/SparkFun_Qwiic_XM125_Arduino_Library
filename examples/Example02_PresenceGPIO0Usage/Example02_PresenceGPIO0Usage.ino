@@ -4,14 +4,14 @@
   Using the Acconeer XM125 A121 60GHz Pulsed Coherent Radar Sensor.
 
   This example shows how operate the XM125 when the device is in Presence Reading Mode.
-  The sensor is initialized, then the presence values will print out to the terminal 
-  and trigger the GPIO0 pin high when there is a presence detected. 
+  The sensor is initialized, then the presence values will print out to the terminal
+  and trigger the GPIO0 pin high when there is a presence detected.
 
   By: Madison Chodikov
   SparkFun Electronics
   Date: 2024/1/22
   SparkFun code, firmware, and software is released under the MIT License.
-	Please see LICENSE.md for further details.
+    Please see LICENSE.md for further details.
 
   Hardware Connections:
   QWIIC --> QWIIC
@@ -21,15 +21,15 @@
   Feel like supporting our work? Buy a board from SparkFun!
   https://www.sparkfun.com/products/ - Qwiic XM125 Breakout
 */
-#include <Arduino.h>
 #include "SparkFun_Qwiic_XM125_Arduino_Library.h"
+#include <Arduino.h>
 
-SfeXM125 radarSensor;
+SparkFunXM125Presence radarSensor;
 
 // I2C default address
 uint8_t i2cAddress = SFE_XM125_I2C_ADDRESS;
 
-// Presence distance values 
+// Presence distance values
 uint32_t distance = 0;
 uint32_t presenceDetected = 0;
 uint32_t presenceDetectedSticky = 0;
@@ -46,14 +46,14 @@ void setup()
 {
     // Start serial
     Serial.begin(115200);
-    Serial.println("XM125 Example 2: Presence GPIO0 Pin Usage");    
+    Serial.println("XM125 Example 2: Presence GPIO0 Pin Usage");
     Serial.println("");
 
     Wire.begin();
 
     // If begin is successful (0), then start example
     int startErr = radarSensor.begin(i2cAddress, Wire);
-    if(startErr == 1)
+    if (startErr == 1)
     {
         Serial.println("Begin");
     }
@@ -62,84 +62,85 @@ void setup()
         Serial.print("Start Error Code: ");
         Serial.println(startErr);
         Serial.println("Device failed to setup - Freezing code.");
-        while(1); // Runs forever
+        while (1)
+            ; // Runs forever
     }
 
     delay(200);
 
-  // Presence Sensor Setup
+    // Presence Sensor Setup
     // Reset sensor configuration to reapply configuration registers
-    radarSensor.setPresenceCommand(SFE_XM125_PRESENCE_RESET_MODULE);
+    radarSensor.setCommand(SFE_XM125_PRESENCE_RESET_MODULE);
 
-    // Check error and busy bits 
-    radarSensor.getPresenceDetectorErrorStatus(errorStatus);
-    if(errorStatus != 0)
+    // Check error and busy bits
+    radarSensor.getDetectorErrorStatus(errorStatus);
+    if (errorStatus != 0)
     {
-      Serial.print("Detector status error: ");
-      Serial.println(errorStatus);
+        Serial.print("Detector status error: ");
+        Serial.println(errorStatus);
     }
 
     delay(100);
 
-    // Turn presence detection on GPIO0 on 
-    if(radarSensor.setPresenceDetectionOnGPIO(1) != 0)
+    // Turn presence detection on GPIO0 on
+    if (radarSensor.setDetectionOnGPIO(1) != 0)
     {
-      Serial.println("GPIO0 Pin Setup Error");
+        Serial.println("GPIO0 Pin Setup Error");
     }
-    radarSensor.getPresenceDetectionOnGPIO(gpioUsage);
+    radarSensor.getDetectionOnGPIO(gpioUsage);
     Serial.print("GPIO0 Detection Status: ");
     Serial.println(gpioUsage);
 
-    // Apply configuration 
-    if(radarSensor.setPresenceCommand(SFE_XM125_PRESENCE_APPLY_CONFIGURATION) != 0)
+    // Apply configuration
+    if (radarSensor.setCommand(SFE_XM125_PRESENCE_APPLY_CONFIGURATION) != 0)
     {
-      // Check for errors
-      radarSensor.getPresenceDetectorErrorStatus(errorStatus);
-      if(errorStatus != 0)
-      {
-        Serial.print("Detector status error: ");
-        Serial.println(errorStatus);
-      }
-  
-      Serial.println("Configuration application error");
+        // Check for errors
+        radarSensor.getDetectorErrorStatus(errorStatus);
+        if (errorStatus != 0)
+        {
+            Serial.print("Detector status error: ");
+            Serial.println(errorStatus);
+        }
+
+        Serial.println("Configuration application error");
     }
 
     // Poll detector status until busy bit is cleared
-    if(radarSensor.presenceBusyWait() != 0)
+    if (radarSensor.busyWait() != 0)
     {
-      Serial.print("Busy wait error");
+        Serial.print("Busy wait error");
     }
 
-    // Check detector status 
-    radarSensor.getPresenceDetectorErrorStatus(errorStatus);
-    if(errorStatus != 0)
+    // Check detector status
+    radarSensor.getDetectorErrorStatus(errorStatus);
+    if (errorStatus != 0)
     {
-      Serial.print("Detector status error: ");
-      Serial.println(errorStatus);
+        Serial.print("Detector status error: ");
+        Serial.println(errorStatus);
     }
 
     Serial.println();
-    
+
     delay(1000);
 }
 
 void loop()
 {
     // Busy wait loop until data is ready
-    radarSensor.presenceBusyWait();
+    radarSensor.busyWait();
 
     // Get the presence distance value and print out if no errors
-    presValError = radarSensor.getPresenceDistanceValuemm(distance);
+    presValError = radarSensor.getDistanceValuemm(distance);
 
-    if(presValError == 0)
+    if (presValError == 0)
     {
-      Serial.print("Presence Detected: ");
-      Serial.print(distance);
-      Serial.println("mm");
+        Serial.print("Presence Detected: ");
+        Serial.print(distance);
+        Serial.println("mm");
     }
     else
     {
-      Serial.println("Error returning presence distance value");
+        Serial.println("Error returning presence distance value");
     }
 
     // Delay 0.5 seconds between readings
