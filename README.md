@@ -64,13 +64,6 @@ The following examples are provided with the library
 |[Distance Serial Plotter](examples/Example08_DistanceSerialPlotter/Example08_DistanceSerialPlotter.ino)|This example prints out the distance values of the 0 distance channels to the serial plotter tool in Arduino.|
 |[Distance Advanced Settings](examples/Example09_DistanceAdvancedSettings/Example09_DistanceAdvancedSettings.ino)|The sensor is initialized, then the distance (mm) and advanced values are output to the terminal. |
   
-## Documentation
-
-The full API and use documentation for this library is provided [here](https://docs.sparkfun.com/SparkFun_Qwiic_XM125_Arduino_Library/). For a quick reference, the main methods available in the library are listed [here](https://docs.sparkfun.com/SparkFun_Qwiic_XM125_Arduino_Library/class_qw_dev_x_m125.html).
-
-Curious about the hardware this board works with - visit the SparkFun Pulsed Coherent Radar Sensor [hardware repository](https://github.com/sparkfun/SparkFun_Qwiic_Pulsed_Radar_Sensor_XM125).
-
-The Hookup Guide for the SparkFun Qwiic Soil Moisture Sensor is available [here](https://docs.sparkfun.com/SparkFun_Qwiic_Pulsed_Radar_Sensor_XM125/introduction/).
 
 ## License Information
 
