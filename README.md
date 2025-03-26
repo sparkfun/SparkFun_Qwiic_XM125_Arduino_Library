@@ -43,7 +43,8 @@ This library provides a extensive interface that enables the following functiona
 
 |Reference | Description |
 |---|---|
-|[Quick Reference](https://docs.sparkfun.com/SparkFun_Qwiic_XM125_Arduino_Library/class_qw_dev_x_m125.html)| A quick reference API for the the main library object ```QwDevXM125```|
+|[Quick Reference - Distance](https://docs.sparkfun.com/SparkFun_Qwiic_XM125_Arduino_Library/classsf_dev_x_m125_distance.html)| A quick reference API for the the main library object for the Distance Application|
+|[Quick Presence - Distance](https://docs.sparkfun.com/SparkFun_Qwiic_XM125_Arduino_Library/classsf_dev_x_m125_presence.html)| A quick reference API for the the main library object for the Distance Application|
 |[Full Documentation](https://docs.sparkfun.com/SparkFun_Qwiic_XM125_Arduino_Library/)| The full documentation and API for this Arduino library|
 |[SparkFun Pulsed Coherent Radar Sensor](https://github.com/sparkfun/SparkFun_Qwiic_Pulsed_Radar_Sensor_XM125)| Hardware GitHub Repository|
 |[Hook Up Guide](https://docs.sparkfun.com/SparkFun_Qwiic_Pulsed_Radar_Sensor_XM125/introduction/) | Hardware Overview and Quick Start for the XM125 Qwiic Development Board |
@@ -64,7 +65,6 @@ The following examples are provided with the library
 |[Distance Serial Plotter](examples/Example08_DistanceSerialPlotter/Example08_DistanceSerialPlotter.ino)|This example prints out the distance values of the 0 distance channels to the serial plotter tool in Arduino.|
 |[Distance Advanced Settings](examples/Example09_DistanceAdvancedSettings/Example09_DistanceAdvancedSettings.ino)|The sensor is initialized, then the distance (mm) and advanced values are output to the terminal. |
   
-
 ## License Information
 
 This product is ***open source***!
