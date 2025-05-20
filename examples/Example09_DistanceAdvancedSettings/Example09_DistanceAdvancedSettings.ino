@@ -137,7 +137,7 @@ void setup()
 
 // Handy helpful output function
 
-void outputResults(uint sample, uint32_t distance, int32_t strength)
+void outputResults(uint8_t sample, uint32_t distance, int32_t strength)
 {
     if (distance == 0)
         return;
