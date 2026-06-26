@@ -25,9 +25,9 @@ sfTkError_t sfDevXM125Core::init(sfTkII2C *theBus)
         return ksfTkErrBusNotInit;
 
     // Check if the provided address is valid
-    if (theBus->address() != SFE_XM125_I2C_ADDRESS)
+    if (theBus->address() != SFE_XM125_I2C_ADDRESS && theBus->address() != 0x51 && theBus->address() != 0x53){
         return ksfTkErrFail;
-
+    }
     // Sets communication bus
     _theBus = theBus;
 
